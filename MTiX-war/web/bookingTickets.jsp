@@ -536,7 +536,7 @@
                             var promotionPrice = [];
                             var remains = [];
                             var currentPrice;
-                            var remainCapacityFree;
+                            var remainsCapacityFree;
                            
                             var selectedSection;
                             <c:forEach items="${sections}" var="section">
@@ -569,8 +569,8 @@
 
                                     }
                                 });
-                                console.log("=====reserved ajax " + closedSections);
-                                console.log(closedSectionsCapacity);
+                                console.log("=====reserved ajax " + reservedSections);
+                                console.log("===reserved capacity "+reservedSectionsCapacity);
 
                                 $.ajax({
                                     url: "sessionPriceList?type=${type}&id=" + selectedSession,
@@ -586,7 +586,7 @@
                                     async: false,
                                     success: function (result) {
                                         remains = result;
-                                        console.log(remains);
+                                        console.log("=====Fix Seating Check Sales "+remains);
                                     }
                                 });
                                 
@@ -599,20 +599,22 @@
                                     async: false,
                                     success: function (result) {
                                         remainsCapacityFree = result;
-                                        console.log(remainsCapacityFree);
+                                        console.log("====Free check sales "+remainsCapacityFree);
                                     }
                                 });
                                 
                            
                                 
                                 for (var i = 0; i < closedSectionsCapacity.length; i++) {
-                                    remainCapacityFree -= closedSectionsCapacity[i];
+                                    remainsCapacityFree -= closedSectionsCapacity[i];
                                 }
+                                console.log("====Free check sales111 "+remainsCapacityFree);
                                 for (var i = 0; i < reservedSectionsCapacity.length; i++) {
-                                    remainCapacityFree -= reservedSectionsCapacity[i];
+                                    console.log("===minus reseved capacity"+reservedSectionsCapacity[i]);
+                                    remainsCapacityFree -= reservedSectionsCapacity[i];
 
                                 }
-                                console.log("=====remainCapacityFree " + remainCapacityFree);
+                                console.log("=====remainsCapacityFree222 " + remainsCapacityFree);
 
                             <%}%>
                             <%if (seatOption.equals("Free Seating")) {%>
@@ -655,9 +657,9 @@
 
                             <%if (seatOption.equals("Free Seating")) {%>
                                 if (selectedPromotion == 0) {
-                                    if (remainCapacityFree < 10) {
+                                    if (remainsCapacityFree < 10) {
                                         var str = "<option></option>";
-                                        for (var i = 1; i <= remainCapacityFree; i++) {
+                                        for (var i = 1; i <= remainsCapacityFree; i++) {
                                             str += "<option value=" + i + ">" + i + "</option>";
 
                                         }
@@ -679,9 +681,9 @@
                                         }
 
                                         else {
-                                            if (remainCapacityFree < 10) {
+                                            if (remainsCapacityFree < 10) {
                                                 var str = "<option></option>";
-                                                for (var i = 1; i <= remainCapacityFree; i++) {
+                                                for (var i = 1; i <= remainsCapacityFree; i++) {
                                                     str += "<option value=" + i + ">" + i + "</option>";
 
                                                 }

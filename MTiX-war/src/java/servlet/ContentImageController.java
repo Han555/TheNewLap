@@ -42,7 +42,7 @@ public class ContentImageController extends HttpServlet {
 
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("C:/Users/Student-ID/Desktop/Project/contentManagement/" + fileName));
+            img = ImageIO.read(new File("/Users/catherinexiong/Desktop/contentManagement/" + fileName));
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(img, ext, baos);

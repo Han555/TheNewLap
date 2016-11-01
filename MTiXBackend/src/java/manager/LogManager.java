@@ -29,7 +29,7 @@ public class LogManager {
                 sb.append(chars[random.nextInt(chars.length)]);
             }           
             String newFileName = new String(sb);
-            newFileName = "C:/Users/Student-ID/Desktop/Project/MTiXFile" + newFileName + ".log";
+            newFileName = "/Users/catherinexiong/Desktop/Log/MTiXFile" + newFileName + ".log";
             fh = new FileHandler(newFileName);
             System.out.println("log file name: " + newFileName);
             

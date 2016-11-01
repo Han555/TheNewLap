@@ -25,6 +25,8 @@ public class PropertyEntity implements Serializable {
     private String propertyName;
     private Integer propertyNo;
     private Integer capacity;
+//    private String mainFileName;
+//    private String layoutFileName;
     
     
     @OneToMany(orphanRemoval = true,mappedBy="property")
@@ -67,7 +69,7 @@ public class PropertyEntity implements Serializable {
     
     }
     
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
