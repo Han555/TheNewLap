@@ -11,3 +11,21 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/MTiXBackend/nbproject/private/
+/PASBack/nbproject/private/
+/PASFront/nbproject/private/
+/MTiX-ejb/nbproject/private/
+/nbproject/private/
+/MTiX-war/nbproject/private/
+/MTiX-ejb/build/
+/MTiX-ejb/dist/
+/MTiX-war/build/
+/build/
+/MTiX-war/dist/
+/MTiXBackend/build/
+/MTiXBackend/dist/
+/PASFront/dist/
+/PASFront/build/
+/PASBack/build/
+/PASBack/dist/
+/dist/

@@ -240,5 +240,27 @@ public class RegisterSession implements RegisterSessionLocal {
             Logger.getLogger(RegisterSession.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @Override
+    public Boolean editCustomerProfile(String username, String age, String mobileNumber, String first, String last, String birth) {
+        try {
+            Query q = entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.username=" + "'" + username + "'");
+            UserEntity u = (UserEntity)q.getSingleResult();
+            SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+            Date dob = format1.parse(birth);
+            u.setAge(Integer.valueOf(age));
+            u.setFirstName(first);
+            u.setLastName(last);
+            u.setMobileNumber(mobileNumber);
+            u.setDOB(dob);
+            entityManager.merge(u);
+            entityManager.flush();
+            return true;
+            
+        } catch (java.text.ParseException ex) {
+            Logger.getLogger(RegisterSession.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
 
 }

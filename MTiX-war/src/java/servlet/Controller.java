@@ -39,7 +39,10 @@ import session.stateless.commoninfrastucture.UnlockAccountSessionLocal;
 import session.stateless.propertymanagement.SeatingPlanManagementBeanLocal;
 import session.stateless.propertymanagement.ReservePropertyBeanLocal;
 import entity.SubEvent;
+import entity.UserEntity;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.Cookie;
 import manager.ProductManager;
@@ -562,7 +565,47 @@ public class Controller extends HttpServlet {
                 }
                 request.setAttribute("records", records);
                 request.getRequestDispatcher("/shoppingCart.jsp").forward(request, response);
-            } else if (action.equals("addToCartSuccessSection")) {
+            } else if (action.equals("customerProfile")) {
+                String username = (String) request.getSession(false).getAttribute("username");
+                System.out.println("====Profile Username: " + username);
+                System.out.println(username);
+                UserEntity u = sessionManager.getUserByUsername(username);
+                request.setAttribute("first", u.getFirstName());
+                request.setAttribute("last", u.getLastName());
+                request.setAttribute("email",u.getUsername() );
+                request.setAttribute("phone", u.getMobileNumber());
+                request.setAttribute("age", u.getAge());
+                Date dob = u.getDOB();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(dob);
+                request.setAttribute("day", cal.get(Calendar.DAY_OF_MONTH));
+                request.setAttribute("month", cal.get(Calendar.MONTH));
+                request.setAttribute("year", cal.get(Calendar.YEAR));
+                request.getRequestDispatcher("/customerProfile.jsp").forward(request, response);
+            } else if (action.equals("editProfile")) {
+                String username = (String) request.getSession(false).getAttribute("username");
+                System.out.println("====editProfile Username: " + username);
+                System.out.println(username);
+                
+                
+                Boolean edit =registerManager.editCustomerProfile(username,request.getParameter("age"), request.getParameter("phone"), request.getParameter("first"), request.getParameter("last"), request.getParameter("day"), request.getParameter("month"), request.getParameter("year"));
+                if(edit){
+                    request.setAttribute("edit","true");
+                } else {request.setAttribute("edit","false");}
+                UserEntity u = sessionManager.getUserByUsername(username);
+                request.setAttribute("first", u.getFirstName());
+                request.setAttribute("last", u.getLastName());
+                request.setAttribute("email",u.getUsername() );
+                request.setAttribute("phone", u.getMobileNumber());
+                request.setAttribute("age", u.getAge());
+                Date dob = u.getDOB();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(dob);
+                request.setAttribute("day", cal.get(Calendar.DAY_OF_MONTH));
+                request.setAttribute("month", cal.get(Calendar.MONTH));
+                request.setAttribute("year", cal.get(Calendar.YEAR));
+                request.getRequestDispatcher("/customerProfile.jsp").forward(request, response);
+            }else if (action.equals("addToCartSuccessSection")) {
                 String username = (String) request.getSession(false).getAttribute("username");
                 System.out.println("====addToCartSuccessSection Username: " + username);
                 System.out.println(username);

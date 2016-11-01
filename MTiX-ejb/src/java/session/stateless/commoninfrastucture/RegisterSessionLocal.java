@@ -38,6 +38,8 @@ public interface RegisterSessionLocal {
 
     public void createCustomer(String username, String password, String mobileNumber, String salt, String first, String last, String birth);
 
+    public Boolean editCustomerProfile(String username, String age, String mobileNumber, String first, String last, String birth);
+
   
     
 }

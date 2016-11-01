@@ -86,4 +86,11 @@ public class RegisterManager {
         birth = birth.concat("/"+year);
         registerSessionLocal.createCustomer(username, hashedPassword, mobileNumber, salt,first,last,birth);
     }
+     public Boolean editCustomerProfile(String username, String age,String mobileNumber,String first, String last, String day, String month, String year) {
+        
+        String birth = day;
+        birth = birth.concat("/"+month);
+        birth = birth.concat("/"+year);
+        return registerSessionLocal.editCustomerProfile(username, age, mobileNumber,first,last,birth);
+    }
 }
