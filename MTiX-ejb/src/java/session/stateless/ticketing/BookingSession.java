@@ -333,5 +333,11 @@ public class BookingSession implements BookingSessionLocal {
         
         return freeRemain;
     }
+    
+    public UserEntity getUserByUsername(String username) {
+        Query q = em.createQuery("SELECT u FROM UserEntity u WHERE u.username=:username");
+        q.setParameter("username", username);
+        return (UserEntity) q.getSingleResult();
+    }
 
 }

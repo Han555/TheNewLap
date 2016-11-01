@@ -7,6 +7,7 @@ package manager;
 import entity.Promotion;
 import entity.SectionEntity;
 import entity.SessionEntity;
+import entity.UserEntity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -73,5 +74,8 @@ public class SessionManager {
     }
     public Integer getFreeTicketSalesBySessionId(Long id,String type){
         return bsbl.getFreeTicketSalesBySessionId(id,type);
+    }
+    public UserEntity getUserByUsername(String username){
+        return bsbl.getUserByUsername(username);
     }
 }

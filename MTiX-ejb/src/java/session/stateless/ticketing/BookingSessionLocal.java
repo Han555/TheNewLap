@@ -8,6 +8,7 @@ package session.stateless.ticketing;
 import entity.Promotion;
 import entity.SectionEntity;
 import entity.SessionEntity;
+import entity.UserEntity;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +50,8 @@ public interface BookingSessionLocal {
    
 
     public Integer getFreeTicketSalesBySessionId(Long id, String type);
+
+    public UserEntity getUserByUsername(String username);
 
    
 }
