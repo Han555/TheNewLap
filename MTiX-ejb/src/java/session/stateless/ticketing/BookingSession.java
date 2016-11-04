@@ -55,7 +55,7 @@ public class BookingSession implements BookingSessionLocal {
 
     @Override
     public List<SessionEntity> getSessionsBySubeventId(Long id) {
-        Event e = rpm.getEventById(id);
+        SubEvent e = rpm.getSubEventById(id);
         Query q = em.createQuery("SELECT s FROM SessionEntity s WHERE s.subEvent=:subevent");
         q.setParameter("subevent", e);
         return q.getResultList();

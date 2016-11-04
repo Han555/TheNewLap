@@ -1549,4 +1549,59 @@ public class ProductSession implements ProductSessionLocal {
         }
         return userEmail;
     }
+    
+    
+    @Override
+    public List<ArrayList> getEventSessionNo(){
+        Query q = em.createQuery("SELECT a FROM Event a WHERE a.user.userId=:id");
+        q.setParameter("id", user.getUserId());
+
+        List<ArrayList> eventList = new ArrayList();
+        ArrayList list;
+
+        for (Object o : q.getResultList()) {
+            Event eventEntity = (Event) o;
+            list = new ArrayList();
+            em.refresh(eventEntity);
+
+            if (!eventEntity.getHasSubEvent()) { //no subEvent
+                list.add(eventEntity.getName());
+                list.add(eventEntity.getSessions().size());
+                eventList.add(list);
+            }
+        }
+
+        q = em.createQuery("SELECT a FROM SubEvent a WHERE a.user.userId=:id");
+        q.setParameter("id", user.getUserId());
+
+        for (Object o : q.getResultList()) {
+            SubEvent subEventEntity = (SubEvent) o;
+            em.refresh(subEventEntity);
+            list = new ArrayList();
+            
+            list.add(subEventEntity.getName());
+            list.add(subEventEntity.getSessions().size());
+            eventList.add(list);
+        }
+        return eventList;
+    }
+    
+    @Override
+    public List<ArrayList> getPropertyCoordinates (long id){
+        PropertyEntity propertyEntity = em.find(PropertyEntity.class, id);
+        List<ArrayList> property = new ArrayList();
+        em.refresh(propertyEntity);
+        
+        for (Object o : propertyEntity.getSections()){
+            SectionEntity sectionEntity = (SectionEntity) o;
+            em.refresh(sectionEntity);
+            ArrayList data = new ArrayList();
+            data.add(sectionEntity.getCoords()); //0
+            data.add(sectionEntity.getNumberInProperty()); //1
+            data.add(sectionEntity.getCategory().getCategoryNum()); //2
+            property.add(data);
+        }
+        
+        return property;
+    }
 }

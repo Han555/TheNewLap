@@ -5,24 +5,32 @@
  */
 package servlet;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.awt.Color;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
-import javax.imageio.ImageIO;
+import java.text.DecimalFormat;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.entity.StandardEntityCollection;
+import org.jfree.chart.labels.PieSectionLabelGenerator;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
  * @author JingYing
  */
-@WebServlet(name = "ContentImageController", urlPatterns = {"/ContentImageController"})
-public class ContentImageController extends HttpServlet {
+@WebServlet(name = "SalesReportPieChart", urlPatterns = {"/SalesReportPieChart"})
+public class SalesReportPieChart extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,28 +43,46 @@ public class ContentImageController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String fileName = request.getParameter("id");
-         int no = fileName.indexOf(".");
-         String ext = fileName.substring(no+1);
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        int totalTickets = Integer.valueOf(request.getParameter("totalTickets"));
+        int totalSoldTickets = Integer.valueOf(request.getParameter("totalSoldTickets"));
 
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement/" + fileName));
+        dataset.setValue(
+                "Unsold Tickets", new Double(totalTickets - totalSoldTickets));
+        dataset.setValue(
+                "Sold Tickets", new Double(totalSoldTickets));
 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(img, ext, baos);
-            baos.flush();
+        JFreeChart chart = ChartFactory.createPieChart(
+                "Ticket Sales", // chart title
+                dataset, // data
+                true, // include legend
+                true,
+                false);
 
-            byte[] imageInByte = baos.toByteArray();
-            response.setContentType("image/"+ext);
-            response.setContentLength(imageInByte.length);
+        PiePlot plot = (PiePlot) chart.getPlot();
+        plot.setSectionPaint("Unsold Tickets", Color.DARK_GRAY);
+        plot.setSectionPaint("Sold Tickets", Color.CYAN);
+        plot.setExplodePercent("Unsold Tickets", 0.10);
+        plot.setSimpleLabels(true);
+        plot.setBackgroundPaint(Color.WHITE);
+        
+        PieSectionLabelGenerator gen = new StandardPieSectionLabelGenerator(
+            "{0}: {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+        plot.setLabelGenerator(gen);
 
-            response.getOutputStream().write(imageInByte);
-            baos.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        final ChartRenderingInfo info = new ChartRenderingInfo(new StandardEntityCollection());
+
+        int width = 500; /* Width of the image */
+
+        int height = 400; /* Height of the image */
+
+
+        response.setContentType(
+                "image/png");
+        OutputStream out = response.getOutputStream();
+
+        ChartUtilities.writeChartAsPNG(out, chart,
+                400, 300, info);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

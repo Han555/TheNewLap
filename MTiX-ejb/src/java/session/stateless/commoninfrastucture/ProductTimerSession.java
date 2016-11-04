@@ -121,7 +121,7 @@ public class ProductTimerSession implements ProductTimerSessionLocal {
 
                     for (Object o : session.getTicketSales()) {
                         TicketSales ticketSales = (TicketSales) o;
-                        if (session.getSeatOption().equals("Free Seating")) {
+                        if (session.getSeatOption() != null && session.getSeatOption().equals("Free Seating")) {
                             isFreeSeating = true;
                             actualSalesForFreeSeating += ticketSales.getTicketQuantity();
                         } else {
@@ -266,7 +266,7 @@ public class ProductTimerSession implements ProductTimerSessionLocal {
 
                     for (Object o : session.getTicketSales()) {
                         TicketSales ticketSales = (TicketSales) o;
-                        if (session.getSeatOption().equals("Free Seating")) {
+                        if (session.getSeatOption() != null && session.getSeatOption().equals("Free Seating")) {
                             isFreeSeating = true;
                             actualSalesForFreeSeating += ticketSales.getTicketQuantity();
                         } else {
@@ -411,7 +411,7 @@ public class ProductTimerSession implements ProductTimerSessionLocal {
 
                     for (Object o : session.getTicketSales()) {
                         TicketSales ticketSales = (TicketSales) o;
-                        if (session.getSeatOption().equals("Free Seating")) {
+                        if (session.getSeatOption() != null && session.getSeatOption().equals("Free Seating")) {
                             isFreeSeating = true;
                             actualSalesForFreeSeating += ticketSales.getTicketQuantity();
                         } else {

@@ -175,7 +175,7 @@ public class GetAllProductDetails implements GetAllProductDetailsLocal {
             for (Object o : session.getTicketSales()) {
                 TicketSales ticketSales = (TicketSales) o;
                 System.out.println("GET ALL PRODUCT DETAILS ------ session : " + session.getSeatOption().toString() + "END");
-                if (session.getSeatOption().equals("Free Seating")) {
+                if (session.getSeatOption() != null && session.getSeatOption().equals("Free Seating")) {
                     System.out.println("INNNNNNNNNNNNNNNNNNNNNNNNNN");
                     isFreeSeating = true;
                     actualSalesForFreeSeating += ticketSales.getTicketQuantity();
@@ -199,7 +199,7 @@ public class GetAllProductDetails implements GetAllProductDetailsLocal {
 
             //Comparing the sales percentage
             for (int i = 0; i < actualSales.length; i++) {
-                if (isFreeSeating || session.getSeatOption().equals("Free Seating")) {
+                if (session.getSeatOption() != null && (isFreeSeating || session.getSeatOption().equals("Free Seating"))) {
                     double totalSalesNumber = 0;
                     for (int j = 0; j < totalSales.length; j++){
                         totalSalesNumber += totalSales[j];

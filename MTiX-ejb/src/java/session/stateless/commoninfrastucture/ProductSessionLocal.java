@@ -84,6 +84,10 @@ public interface ProductSessionLocal {
     public List<ArrayList> getAlerts(long id, String type);
 
     public ArrayList getEventOrganizersEmail();
+
+    public List<ArrayList> getEventSessionNo();
+
+    public List<ArrayList> getPropertyCoordinates(long id);
     
   
 

@@ -182,7 +182,7 @@ public class WebContentBean implements WebContentBeanLocal {
             OutputStream out = null;
             InputStream filecontent = null;
 
-            out = new FileOutputStream(new File("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            out = new FileOutputStream(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName + "." + ext));
             filecontent = filePart.getInputStream();
 
@@ -325,7 +325,7 @@ public class WebContentBean implements WebContentBeanLocal {
                 webContentEntity.create(eventTitle, synopsis, fileName + "." + ext, details, rules, programDetails, startDate, endDate);
             }
 
-            Path path = Paths.get("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            Path path = Paths.get("C:/Users/Student-ID/Desktop/Project/contentManagement" + File.separator
                     + fileName + "." + ext);
             Files.delete(path);
             Thread.sleep(1000);
@@ -334,7 +334,7 @@ public class WebContentBean implements WebContentBeanLocal {
             OutputStream out = null;
             InputStream filecontent = null;
 
-            out = new FileOutputStream(new File("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            out = new FileOutputStream(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName + "." + ext));
             filecontent = filePart.getInputStream();
 
@@ -374,7 +374,7 @@ public class WebContentBean implements WebContentBeanLocal {
                 webContentEntity = subevent.getContent();
             }
 
-            Path path = Paths.get("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            Path path = Paths.get("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + webContentEntity.getFileName());
             Files.delete(path);
             Thread.sleep(1000);
@@ -537,7 +537,7 @@ public class WebContentBean implements WebContentBeanLocal {
             OutputStream out = null;
             InputStream filecontent = null;
 
-            out = new FileOutputStream(new File("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            out = new FileOutputStream(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName));
             filecontent = filePart.getInputStream();
 
@@ -605,7 +605,7 @@ public class WebContentBean implements WebContentBeanLocal {
 
             String fileName = companyProfile.getFileName(); 
             
-            Path path = Paths.get("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            Path path = Paths.get("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName);
             Files.delete(path);
             Thread.sleep(1000);
@@ -614,7 +614,7 @@ public class WebContentBean implements WebContentBeanLocal {
             OutputStream out = null;
             InputStream filecontent = null;
 
-            out = new FileOutputStream(new File("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            out = new FileOutputStream(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName));
             filecontent = filePart.getInputStream();
 

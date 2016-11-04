@@ -45,12 +45,12 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <img src="images/Content/MTiXWeb.png" width="300px" alt="Flower" height="300px">
+                        <img src="/MTiX-war/images/Content/MTiXWeb.png" width="300px" alt="Flower" height="300px">
                     </div>
 
                     <% for (int i = 1; i <= data.size(); i++) {%>
                     <div class="item">
-                        <a href="ContentController?action=viewEventWebpage&id=<%=data.get(i - 1).get(0)%>"><img src="ContentImageController?id=<%=data.get(i - 1).get(2)%>" width="150px" height="150px"></a>
+                        <a href="/MTiX-war/ContentController/MTiX/viewEventWebpage/<%=data.get(i - 1).get(0)%>/<%=data.get(i - 1).get(1).toString().replaceAll("\\s","")%>"><img src="/MTiX-war/ContentImageController?id=<%=data.get(i - 1).get(2)%>" width="150px" height="150px"></a>
                         <div class="carousel-caption">
                             <h3><%=data.get(i - 1).get(1)%></h3>
                         </div>
@@ -90,16 +90,16 @@
                 <h5 class="title">Promotions</h5> 
             </div>
             <div class="image">
-                <a href="ContentController?action=creditCardPromotion"><img src="/MTiX-war/images/Content/creditcards.jpg" width="150px" height="150px"></a>
+                <a href="/MTiX-war/ContentController/MTiX/creditCardPromotion"><img src="/MTiX-war/images/Content/creditcards.jpg" width="150px" height="150px"></a>
                 <h6>Credit Card Promotion</h6></div>
             <div class="image">
-                <a href="ContentController?action=volumeDiscountPromotion"><img src="images/Content/volume_discount.png" width="150px" height="150px"></a>
+                <a href="/MTiX-war/ContentController/MTiX/volumeDiscountPromotion"><img src="/MTiX-war/images/Content/volume_discount.png" width="150px" height="150px"></a>
                 <h6>Volume Discount Promotion</h6></div>   
         </div>
         <div class="col-md-6 ">
             <div class="card">
                 <div class="header">
-                    <h5 class="title" >Events</h5> 
+                    <h5 class="title" >Events </h5> 
                 </div>
                 <div id ="eventList">
 
@@ -117,11 +117,6 @@
                             <option value="sports">Sports</option>
                         </select></td>
                 </tr>
-<!--                <tr>
-                    <div class="image">
-                <a href="ContentController?action=volumeDiscountPromotion"><img src="images/Content/About-Us.png" width="150px" height="150px"></a>
-                <h6>Volume Discount Promotion</h6></div> 
-                </tr>-->
             </table>
         </div>
     </div>
@@ -135,12 +130,12 @@
         var str = "";
         var x = $('#eventType').val();
         $.ajax({
-            url: "ContentEventTypeController?type=All",
+            url: "/MTiX-war/ContentEventTypeController?type=All",
             success: function (result) {
                 eventList = result;
                 for (var i = 1; i <= result.length; i++) {
                     str += "<div class=\"card-body \"> <div class=\"col-md-4 \"><div class=\"image\">";
-                    str += "<a href=\"ContentController?action=viewEventWebpage&id=" + result[i - 1].id + "\"><img src=\"ContentImageController?id=" + result[i - 1].fileName + "\" width=\"150px\" height=\"150px\"></a>";
+                    str += "<a href=\"/MTiX-war/ContentController/MTiX/viewEventWebpage/" + result[i - 1].id + "/" + result[i - 1].linkName + "\"><img src=\"/MTiX-war/ContentImageController?id=" + result[i - 1].fileName + "\" width=\"150px\" height=\"150px\"></a>";
                     str += "<h6>" + result[i - 1].eventTitle + "</h6></div></div>";
                     if (i % no == 0) {
                         str += "</div><div class=\"card-body \">"
@@ -158,12 +153,12 @@
         var str = "";
         var x = $('#eventType').val();
         $.ajax({
-            url: "ContentEventTypeController?type=" + x,
+            url: "/MTiX-war/ContentEventTypeController?type=" + x,
             success: function (result) {
                 eventList = result;
                 for (var i = 1; i <= result.length; i++) {
                     str += "<div class=\"card-body \"> <div class=\"col-md-4 \"><div class=\"image\">";
-                    str += "<a href=\"ContentController?action=viewEventWebpage&id=" + result[i - 1].id + "\"><img src=\"ContentImageController?id=" + result[i - 1].fileName + "\" width=\"150px\" height=\"150px\"></a>";
+                    str += "<a href=\"/MTiX-war/ContentController/MTiX/viewEventWebpage/" + result[i - 1].id + "/" + result[i - 1].linkName + "\"><img src=\"/MTiX-war/ContentImageController?id=" + result[i - 1].fileName + "\" width=\"150px\" height=\"150px\"></a>";
                     str += "<h6>" + result[i - 1].eventTitle + "</h6></div></div>";
                     if (i % no == 0) {
                         str += "</div><div class=\"card-body \">"
@@ -175,5 +170,4 @@
         });
     }
     ;</script>
-
 <jsp:include page="footer.jsp" />

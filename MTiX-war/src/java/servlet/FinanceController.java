@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import manager.PaymentManager;
 import session.stateless.PaymentSessionLocal;
+import session.stateless.contentmanagement.WebsiteManagementBeanLocal;
 
 /**
  *
@@ -25,6 +27,9 @@ import session.stateless.PaymentSessionLocal;
  */
 @WebServlet(name = "FinanceController", urlPatterns = {"/FinanceController", "/FinanceController?*"})
 public class FinanceController extends HttpServlet {
+
+    @EJB
+    private WebsiteManagementBeanLocal webManagementBean;
 
     @EJB
     private PaymentSessionLocal paymentSession;
@@ -75,6 +80,10 @@ public class FinanceController extends HttpServlet {
                 String promotion = request.getParameter("promotion");
                 paymentManager.createRecord(currentUser, receiver, eventName, ticketQuantity, amount, promotion);
                 request.setAttribute("username", currentUser);
+                String companyLogo = webManagementBean.getCompanyLogo();
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
                 request.getRequestDispatcher("/testBuy.jsp").forward(request, response);
             } else if (action.equals("viewPayment")) {
 
@@ -84,7 +93,7 @@ public class FinanceController extends HttpServlet {
                 if (paymentNo != null) {
                     System.out.println("Entered view payment no not null");
                     paymentManager.updateTicketTakings(paymentNo);
-                    
+
                     //currentUser = name;
                     System.out.println("username: " + currentUser);
                     paymentManager.updatePaymentStatus(paymentNo);
@@ -102,8 +111,12 @@ public class FinanceController extends HttpServlet {
                     System.out.println("Name: " + name);
                     ArrayList<String> paymentRecord = paymentManager.getRecordDetails(paymentNo);
                     String timeStamp = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
-                    double finalPrice = (3.0 *  Double.parseDouble(paymentRecord.get(5)) )+ Double.parseDouble(paymentRecord.get(6));
+                    double finalPrice = (3.0 * Double.parseDouble(paymentRecord.get(5))) + Double.parseDouble(paymentRecord.get(6));
                     String amount = String.valueOf(finalPrice);
+                    String companyLogo = webManagementBean.getCompanyLogo();
+                    List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+                    request.setAttribute("propertyData", propertyData);
+                    request.setAttribute("CompanyLogo", companyLogo);
                     paymentManager.sendEmail(name, "is3102mtix@gmail.com", "Invoice From MTiX\nInvoice date: " + timeStamp + "\nInvoiced to: " + name + "\nAddress: " + paymentRecord.get(0) + "\nCountry: " + paymentRecord.get(1) + "\nZip Code: " + paymentRecord.get(2) + " " + paymentRecord.get(3) + "\nEvent: " + paymentRecord.get(4) + "\nTicket Qunatity: " + paymentRecord.get(5) + "\nTotal Amount($): " + amount + "\nTransaction Date: " + timeStamp + "\n\nNote: This is a Computer generated invoice and thus requires no signature.", "MTiX Invoice", "smtp.gmail.com");
                     request.getRequestDispatcher("/paymentRecords.jsp").forward(request, response);
 
@@ -124,6 +137,10 @@ public class FinanceController extends HttpServlet {
                     request.setAttribute("recordSize", String.valueOf(recordPage.size()));
                     request.setAttribute("currentPage", page);
                     request.setAttribute("inbox", recordPage);
+                    String companyLogo = webManagementBean.getCompanyLogo();
+                    List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+                    request.setAttribute("propertyData", propertyData);
+                    request.setAttribute("CompanyLogo", companyLogo);
                     request.getRequestDispatcher("/paymentRecords.jsp").forward(request, response);
                 }
 
@@ -136,7 +153,8 @@ public class FinanceController extends HttpServlet {
 
                 request.setAttribute("quantity", request.getParameter("ticket"));
                 request.setAttribute("price", paymentManager.convertPrices(request.getParameter("ticket"), request.getParameter("amount")));
-
+                String companyLogo = webManagementBean.getCompanyLogo();
+                request.setAttribute("CompanyLogo", companyLogo);
                 request.setAttribute("paymentid", request.getParameter("paymentid"));
                 request.getRequestDispatcher("/makePayment.jsp").forward(request, response);
             } else if (action.equals("addAddress")) {
@@ -155,13 +173,17 @@ public class FinanceController extends HttpServlet {
                 request.setAttribute("city", city);
                 request.setAttribute("zip", zip);
                 paymentManager.addAddress(id, address, country, city, zip);
+                String companyLogo = webManagementBean.getCompanyLogo();
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
                 request.getRequestDispatcher("/paymentConfirmation.jsp").forward(request, response);
             } else if (action.equals("requestRefund")) {
                 String id = request.getParameter("paymentid");
                 String timeStamp = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
-              
+
                 String eventDate = paymentSession.retrieveEventDate(id);
-                System.out.println("event date : "+ eventDate);
+                System.out.println("event date : " + eventDate);
                 if (paymentManager.checkRefundValidity(timeStamp, eventDate)) {
                     System.out.println("Allow refund!");
                     paymentManager.getRefund(id);
@@ -177,6 +199,10 @@ public class FinanceController extends HttpServlet {
                     request.setAttribute("recordSize", String.valueOf(recordPage.size()));
                     request.setAttribute("currentPage", page);
                     request.setAttribute("inbox", recordPage);
+                    String companyLogo = webManagementBean.getCompanyLogo();
+                    List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+                    request.setAttribute("propertyData", propertyData);
+                    request.setAttribute("CompanyLogo", companyLogo);
                     request.getRequestDispatcher("/paymentRecords.jsp").forward(request, response);
                 } else {
 
@@ -194,10 +220,13 @@ public class FinanceController extends HttpServlet {
                     request.setAttribute("recordSize", String.valueOf(recordPage.size()));
                     request.setAttribute("currentPage", page);
                     request.setAttribute("inbox", recordPage);
+                    String companyLogo = webManagementBean.getCompanyLogo();
+                    List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+                    request.setAttribute("propertyData", propertyData);
+                    request.setAttribute("CompanyLogo", companyLogo);
                     request.getRequestDispatcher("/paymentRecords.jsp").forward(request, response);
                 }
 
-                
             }
         } catch (Exception ex) {
             ex.printStackTrace();

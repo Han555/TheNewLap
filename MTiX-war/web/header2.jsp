@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -18,19 +20,72 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900' rel='stylesheet' type='text/css'>
         <!-- start menu -->
-        <link href="css/style.css" rel='stylesheet' type='text/css' />
-        <link href="css/megamenu.css" rel="stylesheet" type="text/css" media="all" />
-        <script type="text/javascript" src="js/megamenu.js"></script>
+        <link href="/MTiX-war/css/style.css" rel='stylesheet' type='text/css' />
+        <link href="/MTiX-war/css/megamenu.css" rel="stylesheet" type="text/css" media="all" />
+        <script type="text/javascript" src="/MTiX-war/js/megamenu.js"></script>
         <script>$(document).ready(function () {
         $(".megamenu").megamenu();
     });</script>
-        <script src="js/menu_jquery.js"></script>
-        <script src="js/simpleCart.min.js"></script>
+        <script src="/MTiX-war/js/menu_jquery.js"></script>
+        <script src="/MTiX-war/js/simpleCart.min.js"></script>
         <!--<script type="text/javascript" src="js/jquery-scrollto.js"></script>-->
         <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+         <% String fileName = request.getAttribute("CompanyLogo").toString();
+            List<ArrayList> propertyData = (List<ArrayList>) request.getAttribute("propertyData");
+        %>
     </head>
     <body>
+                <style>.search-form .form-group {
+                float: right !important;
+                transition: all 0.35s, border-radius 0s;
+                width: 32px;
+                height: 32px;
+                background-color: #fff;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+                border-radius: 25px;
+                border: 1px solid #ccc;
+            }
+            .search-form .form-group input.form-control {
+                padding-right: 20px;
+                border: 0 none;
+                background: transparent;
+                box-shadow: none;
+                display:block;
+            }
+            .search-form .form-group input.form-control::-webkit-input-placeholder {
+                display: none;
+            }
+            .search-form .form-group input.form-control:-moz-placeholder {
+                /* Firefox 18- */
+                display: none;
+            }
+            .search-form .form-group input.form-control::-moz-placeholder {
+                /* Firefox 19+ */
+                display: none;
+            }
+            .search-form .form-group input.form-control:-ms-input-placeholder {
+                display: none;
+            }
+            .search-form .form-group:hover,
+            .search-form .form-group.hover {
+                width: 100%;
+                border-radius: 4px 25px 25px 4px;
+            }
+            .search-form .form-group span.form-control-feedback {
+                position: absolute;
+                top: -1px;
+                right: -2px;
+                z-index: 2;
+                display: block;
+                width: 34px;
+                height: 34px;
+                line-height: 34px;
+                text-align: center;
+                color: #3596e0;
+                left: initial;
+                font-size: 14px;
+            }</style>
         <!-- header_top -->
          <div class="header_bg">
             <div class="container">
@@ -38,8 +93,8 @@
                 <div class="header">
                     <div class="head-t">
                         <div class="logo">
-                            <a href="index.html"><img src="images/Content/logo.gif" style="width:60px;height:60px;" class="img-responsive" alt=""/> </a>
-                        </div>
+                            <a href="/MTiX-war/ContentController/MTiX/Home"><img src="/MTiX-war/ContentImageController?id=<%=fileName%>" style="width:60px;height:60px;" class="img-responsive" alt=""/> </a>
+                         </div>
                         <!--		<div class="logo">
                                                 <a href="index.html"><img src="images/sistic.png" style="width:80px;height:80px;" class="img-responsive" alt=""/> </a>
                                         </div>-->
@@ -50,17 +105,24 @@
                             <div class="rgt-bottom" style="margin-top:40px;">
 
                                 <div class="reg" style="float:right">
-                                    <a href="Controller?action=loginCustomer"><span style=" color:#696763;">&nbsp&nbspREGISTER</span></a>
+                                    <a href="/MTiX-war/Controller?action=loginCustomer"><span style=" color:#696763;">&nbsp&nbspREGISTER</span></a>
                                 </div>
                                 <div class="reg" style="float:right" >
                                     <div class="login"  >
-                                        <div id="loginContainer"><a href="Controller?action=loginCustomer" ><span style=" color:#696763;text-align:center;">Login</span></a>
+                                        <div id="loginContainer"><a href="/MTiX-war/Controller?action=loginCustomer" ><span style=" color:#696763;text-align:center;">Login</span></a>
 
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="clearfix"> </div>
+                                <div><form action="/MTiX-war/ContentSearchEventController" class="search-form">
+                                    <div class="form-group has-feedback">
+                                        <label for="search" class="sr-only">Search</label>
+                                        <input type="text" class="form-control" name="search" id="search" placeholder="search">
+                                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                    </div>
+                                </form></div>
                             </div>
                         </div>
                         <!--		<div class="search">
@@ -89,7 +151,7 @@
                                             <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
                                             <li><a href="#">Profile</a></li>
-                                                <c:url var="checkout" value="Controller?action=shopCart" />
+                                                <c:url var="checkout" value="/MTiX-war/Controller?action=shopCart" />
                                             <li><a href="${checkout}">Check Out</a></li>
                                                 <c:url var="logout" value="LogOutController" />
                                             <li><a href="${logout}">Log Out</a></li>
@@ -104,7 +166,7 @@
                             </div>
                             <div style="float:right">
                                 <div class="cart box_1" >
-                                    <a href="Controller?action=shopCart">
+                                    <a href="/MTiX-war/Controller?action=shopCart">
                                         <!--                                <h3> <span class="simpleCart_total" style=" color:#696763;">$0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity" style=" color:#696763;">0</span> <span style=" color:#696763;">items</span>)
                                         --><img src="images/bag.png" alt="">
                                     </a>	
@@ -112,7 +174,7 @@
                                     <div class="clearfix"> </div><div class="clearfix"> </div>
                                 </div>
                                 <div class="create_btn" style="margin-left:10px">
-                                    <a href="Controller?action=shopCart">CHECKOUT</a>
+                                    <a href="/MTiX-war/Controller?action=shopCart">CHECKOUT</a>
                                 </div>
                             </div>
                             <div class="clearfix"> </div>
@@ -132,29 +194,17 @@
 
                     <!-- start header menu -->
                     <ul class="megamenu skyblue" style="background-color:white;">
-                        <li class="grid"><a class="color1" href="Controller?action=loginSuccess"><span style=" color:#696763;">Home</span></a></li>
+                        <li class="grid"><a class="color1" href="/MTiX-war/ContentController/MTiX/Home"><span style=" color:#696763;">Home</span></a></li>
                         <li class="grid"><a class="color2" href="#"><span style=" color:#696763;">Find an event</span></a>
                             <div class="megapanel">
                                 <div class="row">
                                     <div class="col1">
                                         <div class="h_nav">
-                                            <h4> <b>What's On Today</b> </h4>
-                                            <ul>
-                                                <li><a href="women.html">JayChou Concert</a></li>
-                                                <li><a href="women.html">One Direction Concert</a></li>
-                                                <li><a href="women.html">Little Mix Concert</a></li>
-                                                <li><a href="women.html">Tennis Event</a></li>
-                                                <li><a href="women.html">Badminton Event</a></li>
-                                            </ul>	
-                                        </div>							
-                                    </div>
-                                    <div class="col1">
-                                        <div class="h_nav">
                                             <h4 style=" color:#696763;"><b>Categories</b></h4>
                                             <ul>
-                                                <li><a href="women.html">Concert</a></li>
-                                                <li><a href="women.html">Dance</a></li>
-                                                <li><a href="women.html">Sports</a></li>
+                                                <li><a href="/MTiX-war/ContentController/MTIX/displayConcertEvents">Concert</a></li>
+                                                <li><a href="/MTiX-war/ContentController/MTIX/displayDanceEvents">Dance</a></li>
+                                                <li><a href="/MTiX-war/ContentController/MTIX/displaySportsEvents">Sports</a></li>
                                             </ul>	
                                         </div>							
                                     </div>
@@ -162,11 +212,10 @@
                                         <div class="h_nav">
                                             <h4 style=" color:#696763;">Venues</h4>
                                             <ul>
-                                                <li><a href="women.html">Merlion Indoor Stadium</a></li>
-                                                <li><a href="women.html">Merlion Outdoor Stadium</a></li>
-                                                <li><a href="women.html">Merlion Concert Hall</a></li>
-                                                <li><a href="women.html">Merlion Theater</a></li>
-                                            </ul>	
+                                                <%for (int i = 0; i < propertyData.size(); i++){ %>
+                                                <li><a href="/MTiX-war/ContentController/MTIX/displayVenueEvents/<%=propertyData.get(i).get(0)%>/<%=propertyData.get(i).get(1).toString().replaceAll("\\s","")%>"><%=propertyData.get(i).get(1)%></a></li>
+                                                <%}%>
+                                            </ul>
                                         </div>												
                                     </div>
                                     <div class="col1">

@@ -13,6 +13,7 @@ public class WebEventsContentModel {
     private long id;
     private String eventTitle;
     private String fileName;
+    private String linkName;
 
     public long getId() {
         return id;
@@ -36,6 +37,14 @@ public class WebEventsContentModel {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getLinkName() {
+        return linkName;
+    }
+
+    public void setLinkName(String linkName) {
+        this.linkName = linkName;
     }
     
     

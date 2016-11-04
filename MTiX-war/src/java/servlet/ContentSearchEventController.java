@@ -5,24 +5,26 @@
  */
 package servlet;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.imageio.ImageIO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import session.stateless.contentmanagement.WebsiteManagementBeanLocal;
 
 /**
  *
  * @author JingYing
  */
-@WebServlet(name = "ContentImageController", urlPatterns = {"/ContentImageController"})
-public class ContentImageController extends HttpServlet {
+@WebServlet(name = "ContentSearchEventController", urlPatterns = {"/ContentSearchEventController"})
+public class ContentSearchEventController extends HttpServlet {
+     @EJB
+    private WebsiteManagementBeanLocal webManagementBean;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,28 +37,20 @@ public class ContentImageController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String fileName = request.getParameter("id");
-         int no = fileName.indexOf(".");
-         String ext = fileName.substring(no+1);
-
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement/" + fileName));
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(img, ext, baos);
-            baos.flush();
-
-            byte[] imageInByte = baos.toByteArray();
-            response.setContentType("image/"+ext);
-            response.setContentLength(imageInByte.length);
-
-            response.getOutputStream().write(imageInByte);
-            baos.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        
+            String keyword = request.getParameter("search");;
+            String companyLogo = webManagementBean.getCompanyLogo();
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            
+            List<ArrayList> byTypes = webManagementBean.searchEngineBasedOnTypes(keyword);
+            List<ArrayList> byEvents = webManagementBean.searchEvents(keyword);
+            
+            System.out.println("BY EVENT SIZE IS " + byEvents.size());
+            request.setAttribute("byTypes", byTypes);
+            request.setAttribute("byEvents", byEvents);
+            request.setAttribute("propertyData", propertyData);
+            request.setAttribute("CompanyLogo", companyLogo);
+            request.getRequestDispatcher("/searchEngine.jsp").forward(request, response); 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
