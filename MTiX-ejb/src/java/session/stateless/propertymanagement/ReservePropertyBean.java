@@ -5,6 +5,7 @@
  */
 package session.stateless.propertymanagement;
 
+import entity.CompanyEntity;
 import entity.EquipmentEntity;
 import entity.Event;
 import entity.MaintenanceScheduleEntity;
@@ -54,14 +55,16 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
         return user;
     }
 
-    private Boolean checkPropertyConflict(Date startDate, Date endDate, Long propertyId) {
-        Query query = em.createQuery("SELECT e FROM Event e WHERE e.property = :property AND e.start <= :endDate AND e.end >= :startDate");
+    private Boolean checkPropertyConflict(Date startDate, Date endDate, Long propertyId,CompanyEntity company) {
+        Query query = em.createQuery("SELECT e FROM Event e WHERE e.property = :property AND e.company = :company AND e.start <= :endDate AND e.end >= :startDate");
         query.setParameter("property", spm.getPropertyById(propertyId));
+        query.setParameter("company", company);
         query.setParameter("startDate", startDate);
         query.setParameter("endDate", endDate);
         List resultList = query.getResultList();
-        Query query2 = em.createQuery("SELECT e FROM SubEvent e WHERE e.property = :property AND e.start <= :endDate AND e.end >= :startDate");
+        Query query2 = em.createQuery("SELECT e FROM SubEvent e WHERE e.property = :property AND e.company = :company AND e.start <= :endDate AND e.end >= :startDate");
         query2.setParameter("property", spm.getPropertyById(propertyId));
+        query.setParameter("company", company);
         query2.setParameter("startDate", startDate);
         query2.setParameter("endDate", endDate);
         List resultList2 = query2.getResultList();
@@ -120,11 +123,11 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
     }
 
     @Override
-    public Boolean checkUser(String username) {
+    public Boolean checkUser(CompanyEntity company,String username) {
         try {
             System.out.println("check user entry 1" );
             System.out.println("check user username: " + username);
-            Query q = em.createQuery("SELECT a FROM UserEntity a"); // WHERE a.username=:name
+            Query q = em.createQuery("SELECT a FROM UserEntity a WHERE a.company=:company"); // WHERE a.username=:name
             System.out.println("check user entry 2" );
             //q.setParameter("name", username);
             //UserEntity user = (UserEntity) q.getSingleResult(); The user will be point to the real user here
@@ -152,8 +155,8 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
     }
 
     @Override
-    public Event addNewEvent(String eventName, String eventDescription, Date startDateTime, Date endDateTime, Long propertyId, String email,String type) {
-        if (!checkPropertyConflict(startDateTime, endDateTime, propertyId) && !checkMaintenanceConflict(startDateTime, endDateTime, propertyId)) {
+    public Event addNewEvent(CompanyEntity company,String eventName, String eventDescription, Date startDateTime, Date endDateTime, Long propertyId, String email,String type) {
+        if (!checkPropertyConflict(startDateTime, endDateTime, propertyId,company) && !checkMaintenanceConflict(startDateTime, endDateTime, propertyId)) {
             UserEntity user = getUserByEmail(email);
             Event event = new Event();
             event.setName(eventName);
@@ -164,6 +167,7 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
             event.setType(type);
             event.setProperty(spm.getPropertyById(propertyId));
             event.setUser(user);
+            event.setCompany(company);
             //  event.setStatus("Pending");
             em.persist(event);
             em.flush();
@@ -176,8 +180,8 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
     }
 
     @Override
-    public SubEvent addNewSubEvent(String eventName, Date start, Date end, Long propertyId, Long eId, String email,String type) {
-        if (!checkPropertyConflict(start, end, propertyId) && !checkMaintenanceConflict(start, end, propertyId)) {
+    public SubEvent addNewSubEvent(CompanyEntity company,String eventName, Date start, Date end, Long propertyId, Long eId, String email,String type) {
+        if (!checkPropertyConflict(start, end, propertyId,company) && !checkMaintenanceConflict(start, end, propertyId)) {
             UserEntity user = getUserByEmail(email);
             Event event = getEventById(eId);
             System.out.println(eId + event.getName());
@@ -191,6 +195,7 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
             subevent.setProperty(spm.getPropertyById(propertyId));
             subevent.setUser(user);
             subevent.setEvent(event);
+            subevent.setCompany(company);
             //  event.setStatus("Pending");
             em.persist(subevent);
             em.flush();
@@ -222,16 +227,16 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
         return event;
     }
     @Override
-    public List<PropertyEntity> getAvailableProperties(String eventcate, String eventScale, String daterange) throws ParseException {
+    public List<PropertyEntity> getAvailableProperties(CompanyEntity company,String eventcate, String eventScale, String daterange) throws ParseException {
         String[] parts = daterange.split("-");
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         Date startDate = df.parse(parts[0]);
         Date endDate = df.parse(parts[1]);
 
-        List<PropertyEntity> pList = spm.getAllProperties();
+        List<PropertyEntity> pList = spm.getAllPropertiesByCompany(company);
         List<PropertyEntity> aList = new ArrayList();
         for (PropertyEntity p : pList) {
-            if ((!checkPropertyConflict(startDate, endDate, p.getId())) && (!checkMaintenanceConflict(startDate, endDate, p.getId()))) {
+            if ((!checkPropertyConflict(startDate, endDate, p.getId(),company)) && (!checkMaintenanceConflict(startDate, endDate, p.getId()))) {
                 aList.add(p);
 
             }

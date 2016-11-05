@@ -5,6 +5,7 @@
  */
 package session.stateless.propertymanagement;
 
+import entity.CompanyEntity;
 import entity.EquipmentEntity;
 import entity.Event;
 import entity.ManpowerEntity;
@@ -38,7 +39,7 @@ public interface ReservePropertyBeanLocal {
 
     public Event addNewEventWithSub(String eventName, String eventDescription, String eoEmail);
 
-    public Boolean checkUser(String username);
+//    public Boolean checkUser(String username);
 
     public List<Event> getEventReservationByProperty(Long propertyId);
 
@@ -70,15 +71,23 @@ public interface ReservePropertyBeanLocal {
 
     public List<SubEvent> getListOfSubEvent(Event event);
 
-    public List<PropertyEntity> getAvailableProperties(String eventcate, String eventScale, String daterange) throws ParseException;
+//    public List<PropertyEntity> getAvailableProperties(String eventcate, String eventScale, String daterange) throws ParseException;
 
     public List<PropertyEntity> getReservationSearchResult(List<PropertyEntity> properties, String eventcate, String eventScale) throws ParseException;
 
-    public Event addNewEvent(String eventName, String eventDescription, Date startDateTime, Date endDateTime, Long propertyId, String email, String type);
+//    public Event addNewEvent(String eventName, String eventDescription, Date startDateTime, Date endDateTime, Long propertyId, String email, String type);
 
     //public SubEvent addNewSubEvent(String eventName, Date start, Date end, Long propertyId, Long eId, String email);
 
-    public SubEvent addNewSubEvent(String eventName, Date start, Date end, Long propertyId, Long eId, String email, String type);
+//    public SubEvent addNewSubEvent(String eventName, Date start, Date end, Long propertyId, Long eId, String email, String type);
+
+    public List<PropertyEntity> getAvailableProperties(CompanyEntity company, String eventcate, String eventScale, String daterange) throws ParseException;
+
+    public Event addNewEvent(CompanyEntity company, String eventName, String eventDescription, Date startDateTime, Date endDateTime, Long propertyId, String email, String type);
+
+    public SubEvent addNewSubEvent(CompanyEntity company, String eventName, Date start, Date end, Long propertyId, Long eId, String email, String type);
+
+    public Boolean checkUser(CompanyEntity company, String username);
 
 
     

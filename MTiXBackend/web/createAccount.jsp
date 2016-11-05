@@ -40,7 +40,7 @@
                         <form id="contact_form" action="${formAction}" method="POST">
                             <div class="form-group" style="padding-bottom: 50px;">
 
-                                <label for="eventdaterange" class="col-sm-2 control-label">Email Username</label>
+                                <label for="username" class="col-sm-2 control-label">Email Username</label>
                                 <div class="col-sm-6">
                                     <input type="email" name="username" id="username" class="form-control" value="" required
                                            data-fv-notempty-message="Email username is required">
@@ -49,7 +49,7 @@
                             </div>
                             <div class="form-group" style="padding-bottom: 50px;">
 
-                                <label for="eventdaterange" class="col-sm-2 control-label">Role</label>
+                                <label for="role" class="col-sm-2 control-label">Role</label>
                                 <div class="col-sm-6">
                                     <select class="js-example-basic-single js-states" style="width: 100%" name="role" id="role">
                                         <option value="product manager">product manager</option>

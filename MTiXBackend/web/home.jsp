@@ -69,7 +69,7 @@
                         <img src="assets/img/faces/propertymanagement.jpg" style="width:300 px;height:300px">
                         <div class="caption">
                             <h3 style="text-align: center">Property Management System</h3>
-                            <p><c:url var="linkHref" value="/BackController?action=propertyMain" /><a href="${linkHref}" class="btn btn-primary" role="button">Enter</a> </p>
+                            <p><c:url var="linkHref" value="/BackPropertyController?action=propertyMain" /><a href="${linkHref}" class="btn btn-primary" role="button">Enter</a> </p>
                         </div>
                     </div>
                 </div>

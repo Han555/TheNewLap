@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -25,6 +26,9 @@ public class TicketTakingsEntity implements Serializable {
     private String event;
     private String cost;
     private String ticketTakings;
+    
+    @ManyToOne
+    private CompanyEntity company;
 
     public TicketTakingsEntity() {
     }
@@ -76,6 +80,16 @@ public class TicketTakingsEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public CompanyEntity getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyEntity company) {
+        this.company = company;
+    }
+    
+    
 
     @Override
     public int hashCode() {

@@ -30,7 +30,8 @@ public class CompanyProfile implements Serializable {
     private String career;
     private String otherDetails;
     
-    private UserEntity user; 
+    private UserEntity user;     
+    private CompanyEntity company;
 
     public Long getId() {
         return id;
@@ -39,7 +40,7 @@ public class CompanyProfile implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public String getFileName() {
         return fileName;
     }
@@ -103,6 +104,16 @@ public class CompanyProfile implements Serializable {
     public void setUser(UserEntity user) {
         this.user = user;
     }
+
+    public CompanyEntity getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyEntity company) {
+        this.company = company;
+    }
+    
+    
 
     @Override
     public int hashCode() {

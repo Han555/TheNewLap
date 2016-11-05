@@ -147,7 +147,7 @@
                                             <div style="background-color: aqua"><h2><s><i><font face="casteller"><%=cap%></font></i></s></h2></div>  
                                         </td>  
                                         <td><input type="text" name="cap1" placeholder="Captcha" value="" required /></td>  
-                                        <td><input type="hidden" name="cap2" value='<%=cap%>' readonly="readonly" </td>  
+                                        <td><input type="hidden" name="cap2" value='<%=cap%>' /> </td>  
                                     </tr>  
                                 </tbody>  
                             </table> 

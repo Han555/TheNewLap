@@ -22,7 +22,7 @@
                     <img src="img/seatallocation.jpg" alt="concert_main" style="width:300 px;height:300px">
                     <div class="caption">
                         <h3 style="text-align: center">Seating Plan Management</h3>
-                        <p><c:url var="linkHref" value="/BackController?action=viewAllProperty" /><a href="${linkHref}" class="btn btn-primary" role="button">Enter</a> </p>
+                        <p><c:url var="linkHref" value="/BackPropertyController?action=seatingMain" /><a href="${linkHref}" class="btn btn-primary" role="button">Enter</a> </p>
                     </div>
                 </div>
             </div>

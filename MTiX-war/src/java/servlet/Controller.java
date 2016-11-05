@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import entity.CompanyEntity;
 import session.stateless.ticketing.BookingSessionLocal;
 import entity.Event;
 import entity.Promotion;
@@ -417,11 +418,12 @@ public class Controller extends HttpServlet {
                 request.setAttribute("registered", "false");
                 request.getRequestDispatcher("/loginCustomer.jsp").forward(request, response);
             } else if (action.equals("regisCustomer")) {
-                System.out.println("email: " + request.getAttribute("email") + "name: " + request.getAttribute("first") + request.getAttribute("last") + "===psw: " + request.getAttribute("password") + request.getAttribute("password2") + request.getAttribute("phone") + request.getAttribute("day") + request.getAttribute("month") + request.getAttribute("year"));
-                if (request.getParameter("cap1").equals(request.getParameter("cap2"))) {
+                System.out.println("email: " + request.getParameter("email") + "name: " + request.getParameter("first") + request.getParameter("last") + "===psw: " + request.getParameter("password") + request.getParameter("password2") + request.getParameter("phone") + request.getParameter("day") + request.getParameter("month") + request.getParameter("year")+"===CAP1: "+request.getParameter("cap1")+"===CAP2: "+request.getParameter("cap2"));
+                if (request.getParameter("cap1").toLowerCase().equals(request.getParameter("cap2"))) {
                     if (!(registerManager.checkConflict(request.getParameter("email").trim()))) {
                         if (request.getParameter("password").equals(request.getParameter("password2"))) {
-                            registerManager.regisCustomer(request.getParameter("email").trim(), request.getParameter("password"), request.getParameter("phone"), request.getParameter("first"), request.getParameter("last"), request.getParameter("day"), request.getParameter("month"), request.getParameter("year"));
+                            CompanyEntity company = registerManager.getCompanyEntityById(Long.valueOf("1"));
+                            registerManager.regisCustomer(company,request.getParameter("email").trim(), request.getParameter("password"), request.getParameter("phone"), request.getParameter("first"), request.getParameter("last"), request.getParameter("day"), request.getParameter("month"), request.getParameter("year"));
 
                             registerManager.sendEmail(request.getParameter("email").trim(), "is3102mtix@gmail.com", "Please click the link to do the verfication of your account http://localhost:8080/MTiX-war/Controller?action=verifyCustomerMain" + "&name=" + request.getParameter("email").trim(), "MTiX Account Verification", "smtp.gmail.com");
                             request.setAttribute("registered", "true");

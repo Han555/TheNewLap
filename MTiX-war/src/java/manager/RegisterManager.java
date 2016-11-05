@@ -5,6 +5,7 @@
  */
 package manager;
 
+import entity.CompanyEntity;
 import java.util.List;
 import java.util.Vector;
 import session.stateless.commoninfrastucture.RegisterSessionLocal;
@@ -74,7 +75,7 @@ public class RegisterManager {
         registerSessionLocal.createAdmin();
     }
     
-     public void regisCustomer(String username, String password, String mobileNumber,String first, String last, String day, String month, String year) {
+     public void regisCustomer(CompanyEntity company, String username, String password, String mobileNumber,String first, String last, String day, String month, String year) {
         String salt;
         SecurityManager secure = new SecurityManager();
         byte[] secureSalt = secure.getNextSalt();
@@ -84,7 +85,7 @@ public class RegisterManager {
         String birth = day;
         birth = birth.concat("/"+month);
         birth = birth.concat("/"+year);
-        registerSessionLocal.createCustomer(username, hashedPassword, mobileNumber, salt,first,last,birth);
+        registerSessionLocal.createCustomer(company,username, hashedPassword, mobileNumber, salt,first,last,birth);
     }
      public Boolean editCustomerProfile(String username, String age,String mobileNumber,String first, String last, String day, String month, String year) {
         
@@ -93,4 +94,8 @@ public class RegisterManager {
         birth = birth.concat("/"+year);
         return registerSessionLocal.editCustomerProfile(username, age, mobileNumber,first,last,birth);
     }
+     
+     public CompanyEntity getCompanyEntityById(Long id){
+         return registerSessionLocal.getCompanyEntityById(id);
+     }
 }

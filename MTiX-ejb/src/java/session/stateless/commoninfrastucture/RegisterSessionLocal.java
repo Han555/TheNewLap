@@ -5,6 +5,7 @@
  */
 package session.stateless.commoninfrastucture;
 
+import entity.CompanyEntity;
 import java.util.List;
 import java.util.Vector;
 import javax.ejb.Local;
@@ -36,9 +37,13 @@ public interface RegisterSessionLocal {
 
     void adminCreateUser(String username, String password, String mobileNumber, String salt, String role);
 
-    public void createCustomer(String username, String password, String mobileNumber, String salt, String first, String last, String birth);
+   
 
     public Boolean editCustomerProfile(String username, String age, String mobileNumber, String first, String last, String birth);
+
+    public void createCustomer(CompanyEntity company, String username, String password, String mobileNumber, String salt, String first, String last, String birth);
+
+    public CompanyEntity getCompanyEntityById(Long id);
 
   
     

@@ -5,12 +5,15 @@
  */
 package session.stateless.propertymanagement;
 
+import entity.CompanyEntity;
 import entity.PropertyEntity;
 import entity.SeatEntity;
 import entity.SectionCategoryEntity;
 import entity.SectionEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -59,4 +62,16 @@ public interface SeatingPlanManagementBeanLocal {
     public List<SectionCategoryEntity> getAllCategoryInOneProperty(Long propertyId);
 
     public Long getPropertyByName(String name);
+
+   
+
+   
+
+//    public Boolean createSectionsUnderProperty(Long propertyId, ArrayList<String> cNameArr, ArrayList<String[]> cSectionsArr, ArrayList<String> sectionsArr, ArrayList<String> capacity);
+
+   
+
+    public Long CreateNewProperty(CompanyEntity company, Part propertyMain, Part propertyLayout, Part data, String title, Integer capacity, Integer rental, String[] types, String recommend, String ext1, String ext2, String ext3);
+
+    public List<PropertyEntity> getAllPropertiesByCompany(CompanyEntity company);
 }

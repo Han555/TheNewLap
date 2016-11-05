@@ -741,80 +741,80 @@ public class BackController extends HttpServlet {
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
                 request.getRequestDispatcher("/subReservationSearch.jsp").forward(request, response);
-            } else if (action.equals("reservationSearchResult")) {
+//            } else if (action.equals("reservationSearchResult")) {
+//
+//                try {
+////                    HttpSession session = request.getSession();
+////                    Long eventid = (Long) session.getAttribute("eventid");
+//                    String type = request.getParameter("eventcate");
+////                    System.out.println("=======session get eventid" + eventid);
+////                    request.setAttribute("eventid", eventid);
+//                    List<PropertyEntity> aProperties = rm.getAvailableProperties(request);
+//                    if (aProperties.isEmpty()) {
+//                        request.setAttribute("errormsg", " Please note: The date range you entered conflicts with an exsiting reservation or a maintenance shedule  ");
+//                        request.setAttribute("role", role);
+//                        request.setAttribute("username", currentUser);
+//                        request.getRequestDispatcher("/reservationSearch.jsp").forward(request, response);
+//                    } else {
+//                        List<PropertyEntity> properties = rm.getReservationSearchResult(aProperties, request);
+//                        List<PropertyEntity> pRList = rm.checkRecommendation(properties, request);
+//                        String daterange = request.getParameter("daterange");
+//                        if (properties.isEmpty()) {
+//                            request.setAttribute("errormsg", " Please note: There are no suitable venues matching the number of your expected auidence and type of event  ");
+//                            request.setAttribute("role", role);
+//                            request.setAttribute("username", currentUser);
+//                            request.getRequestDispatcher("/reservationSearch.jsp").forward(request, response);
+//                        } else {
+//                            request.setAttribute("pList", properties);
+//                            request.setAttribute("pRList", pRList);
+//                            request.setAttribute("daterange", daterange);
+//                            request.setAttribute("type", type);
+//                            request.setAttribute("role", role);
+//                            request.setAttribute("username", currentUser);
+//                            request.getRequestDispatcher("/reservationSearchResult.jsp").forward(request, response);
+//                        }
+//                    }
+//                } catch (ParseException ex) {
+//                    Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
 
-                try {
+//            } else if (action.equals("subReservationSearchResult")) {
+//
+//                try {
 //                    HttpSession session = request.getSession();
 //                    Long eventid = (Long) session.getAttribute("eventid");
-                    String type = request.getParameter("eventcate");
+//                    String type = request.getParameter("eventcate");
 //                    System.out.println("=======session get eventid" + eventid);
 //                    request.setAttribute("eventid", eventid);
-                    List<PropertyEntity> aProperties = rm.getAvailableProperties(request);
-                    if (aProperties.isEmpty()) {
-                        request.setAttribute("errormsg", " Please note: The date range you entered conflicts with an exsiting reservation or a maintenance shedule  ");
-                        request.setAttribute("role", role);
-                        request.setAttribute("username", currentUser);
-                        request.getRequestDispatcher("/reservationSearch.jsp").forward(request, response);
-                    } else {
-                        List<PropertyEntity> properties = rm.getReservationSearchResult(aProperties, request);
-                        List<PropertyEntity> pRList = rm.checkRecommendation(properties, request);
-                        String daterange = request.getParameter("daterange");
-                        if (properties.isEmpty()) {
-                            request.setAttribute("errormsg", " Please note: There are no suitable venues matching the number of your expected auidence and type of event  ");
-                            request.setAttribute("role", role);
-                            request.setAttribute("username", currentUser);
-                            request.getRequestDispatcher("/reservationSearch.jsp").forward(request, response);
-                        } else {
-                            request.setAttribute("pList", properties);
-                            request.setAttribute("pRList", pRList);
-                            request.setAttribute("daterange", daterange);
-                            request.setAttribute("type", type);
-                            request.setAttribute("role", role);
-                            request.setAttribute("username", currentUser);
-                            request.getRequestDispatcher("/reservationSearchResult.jsp").forward(request, response);
-                        }
-                    }
-                } catch (ParseException ex) {
-                    Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            } else if (action.equals("subReservationSearchResult")) {
-
-                try {
-                    HttpSession session = request.getSession();
-                    Long eventid = (Long) session.getAttribute("eventid");
-                    String type = request.getParameter("eventcate");
-                    System.out.println("=======session get eventid" + eventid);
-                    request.setAttribute("eventid", eventid);
-                    List<PropertyEntity> aProperties = rm.getAvailableProperties(request);
-                    if (aProperties.isEmpty()) {
-                        request.setAttribute("errormsg", " Please note: The date range you entered conflicts with an exsiting reservation or a maintenance shedule  ");
-                        request.setAttribute("role", role);
-                        request.setAttribute("username", currentUser);
-                        request.getRequestDispatcher("/subReservationSearch.jsp").forward(request, response);
-                    } else {
-                        List<PropertyEntity> properties = rm.getReservationSearchResult(aProperties, request);
-                        List<PropertyEntity> pRList = rm.checkRecommendation(properties, request);
-                        String daterange = request.getParameter("daterange");
-                        if (properties.isEmpty()) {
-                            request.setAttribute("errormsg", " Please note: There are no suitable venues matching the number of your expected auidence and type of event  ");
-                            request.setAttribute("role", role);
-                            request.setAttribute("username", currentUser);
-                            request.getRequestDispatcher("/subReservationSearch.jsp").forward(request, response);
-                        } else {
-                            request.setAttribute("pList", properties);
-                            request.setAttribute("pRList", pRList);
-                            request.setAttribute("daterange", daterange);
-                            request.setAttribute("type",type);
-                            request.setAttribute("role", role);
-                            request.setAttribute("username", currentUser);
-                            request.getRequestDispatcher("/subReservationSearchResult.jsp").forward(request, response);
-                        }
-                    }
-                } catch (ParseException ex) {
-                    Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+//                    List<PropertyEntity> aProperties = rm.getAvailableProperties(request);
+//                    if (aProperties.isEmpty()) {
+//                        request.setAttribute("errormsg", " Please note: The date range you entered conflicts with an exsiting reservation or a maintenance shedule  ");
+//                        request.setAttribute("role", role);
+//                        request.setAttribute("username", currentUser);
+//                        request.getRequestDispatcher("/subReservationSearch.jsp").forward(request, response);
+//                    } else {
+//                        List<PropertyEntity> properties = rm.getReservationSearchResult(aProperties, request);
+//                        List<PropertyEntity> pRList = rm.checkRecommendation(properties, request);
+//                        String daterange = request.getParameter("daterange");
+//                        if (properties.isEmpty()) {
+//                            request.setAttribute("errormsg", " Please note: There are no suitable venues matching the number of your expected auidence and type of event  ");
+//                            request.setAttribute("role", role);
+//                            request.setAttribute("username", currentUser);
+//                            request.getRequestDispatcher("/subReservationSearch.jsp").forward(request, response);
+//                        } else {
+//                            request.setAttribute("pList", properties);
+//                            request.setAttribute("pRList", pRList);
+//                            request.setAttribute("daterange", daterange);
+//                            request.setAttribute("type",type);
+//                            request.setAttribute("role", role);
+//                            request.setAttribute("username", currentUser);
+//                            request.getRequestDispatcher("/subReservationSearchResult.jsp").forward(request, response);
+//                        }
+//                    }
+//                } catch (ParseException ex) {
+//                    Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//
             } else if (action.equals("concertHallSelected")) {
                 HttpSession session = request.getSession();
                 String daterange = (String) session.getAttribute("daterange");
@@ -857,130 +857,131 @@ public class BackController extends HttpServlet {
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
                 request.getRequestDispatcher("/subTheaterSelected.jsp").forward(request, response);
-            } else if (action.equals("saveNewEvent")) {
-                String daterange = request.getParameter("daterange");
-                String pname = request.getParameter("pname");
-                //String idStr = request.getParameter("propertyId");
-                String ename = request.getParameter("eventname");
-                String eDes = request.getParameter("eventdes");
-                String email = request.getParameter("eoemail");
-                String type = request.getParameter("type");
-                System.out.println("Entered save new event 1.");
-                System.out.println("email save new event: " + email);
-                boolean checkUser = rm.checkUser(email);
-                Long pid = spm.getPropertyByName(pname);
-
-                request.setAttribute("role", role);
-                request.setAttribute("username", currentUser);
-                if (checkUser) {
-                    System.out.println("Entered save new event 2.");
-                    Event event = rm.addNewEvent(ename, eDes, daterange, pid, email,type);
-                    if (event != null) {
-                        System.out.println("Entered save new event 3.");
-                        request.setAttribute("event", event);
-                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                        request.setAttribute("start", format.format(event.getStart()));
-                        request.setAttribute("end", format.format(event.getEnd()));
-                        request.getRequestDispatcher("/saveNewEvent.jsp").forward(request, response);
-                    } else {
-                        System.out.println("Entered save new event 4.");
-                        request.setAttribute("msg", "error when creating the reservation");
-                        if (pname.equals("Merlion Concert Hall")) {
-                            System.out.println("Entered save new event 5.");
-                            request.getRequestDispatcher("/concertHallSelected.jsp").forward(request, response);
-                        } else {
-                            System.out.println("Entered save new event 6.");
-                            request.getRequestDispatcher("/theaterSelected.jsp").forward(request, response);
-                        }
-                    }
-                } else {
-                    request.setAttribute("userResult", "Please note: The email you entered is not a valid user. Please enter again.");
-                    if (pname.equals("Merlion Concert Hall")) {
-                        request.setAttribute("eventname", ename);
-                        request.setAttribute("eventdes", eDes);
-
-                        request.setAttribute("eventdes", eDes);
-                        request.getRequestDispatcher("/concertHallSelected.jsp").forward(request, response);
-                    } else {
-                        request.setAttribute("eventname", ename);
-                        request.setAttribute("eventdes", eDes);
-                        request.getRequestDispatcher("/theaterSelected.jsp").forward(request, response);
-                    }
-
-                }
-
-                // 
-            } else if (action.equals("saveNewSubEvent")) {
-                String daterange = request.getParameter("daterange");
-                String pname = request.getParameter("pname");
-                // String idStr = request.getParameter("propertyId");
-                String eidStr = request.getParameter("eventid");
-                String ename = request.getParameter("eventname");
-                //String eDes = request.getParameter("eventdes");
-                String email = request.getParameter("eoemail");
-                String type = request.getParameter("type");
-                System.out.println("========Add New Sub Event" + daterange + pname + eidStr + ename + email+type);
-                boolean checkUser = rm.checkUser(email);
-                Long pid = spm.getPropertyByName(pname);
-
-                request.setAttribute("role", role);
-                request.setAttribute("username", currentUser);
-
-                if (checkUser) {
-                    SubEvent subevent = rm.addNewSubEvent(ename, daterange, pid, Long.valueOf(eidStr), email,type);
-                    if (subevent != null) {
-                        List<SubEvent> subevents = rm.getListOfSubEvent(subevent.getEvent());
-                        request.setAttribute("subevents", subevents);
-                        for (SubEvent e : subevents) {
-                            System.out.println(e.getName());
-                        }
-                        request.setAttribute("eventid", eidStr);
-                        // DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                        //request.setAttribute("start", format.format(subevent.getStart()));
-                        //request.setAttribute("end", format.format(subevent.getEnd()));
-                        request.getRequestDispatcher("/saveNewSubEvent.jsp").forward(request, response);
-                    } else {
-                        request.setAttribute("msg", "error when creating the reservation");
-                        if ((spm.getPropertyById(pid).getPropertyName()).equals("Merlion Concert Hall")) {
-                            request.getRequestDispatcher("/subConcertHallSelected.jsp").forward(request, response);
-                        } else {
-                            request.getRequestDispatcher("/subTheaterSelected.jsp").forward(request, response);
-                        }
-                    }
-                } else {
-                    request.setAttribute("userResult", "Please note: The email you entered is not a valid user. Please enter again.");
-                    if ((spm.getPropertyById(pid).getPropertyName()).equals("Merlion Concert Hall")) {
-                        request.getRequestDispatcher("/subConcertHallSelected.jsp").forward(request, response);
-                    } else {
-                        request.getRequestDispatcher("/subTheaterSelected.jsp").forward(request, response);
-                    }
-
-                }
-                // 
-            } else if (action.equals("createEventWithSub")) {
+//            } else if (action.equals("saveNewEvent")) {
+//                String daterange = request.getParameter("daterange");
+//                String pname = request.getParameter("pname");
+//                //String idStr = request.getParameter("propertyId");
+//                String ename = request.getParameter("eventname");
+//                String eDes = request.getParameter("eventdes");
+//                String email = request.getParameter("eoemail");
+//                String type = request.getParameter("type");
+//                System.out.println("Entered save new event 1.");
+//                System.out.println("email save new event: " + email);
+//                boolean checkUser = rm.checkUser(email);
+//                Long pid = spm.getPropertyByName(pname);
+//
+//                request.setAttribute("role", role);
+//                request.setAttribute("username", currentUser);
+//                if (checkUser) {
+//                    System.out.println("Entered save new event 2.");
+//                    Event event = rm.addNewEvent(ename, eDes, daterange, pid, email,type);
+//                    if (event != null) {
+//                        System.out.println("Entered save new event 3.");
+//                        request.setAttribute("event", event);
+//                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//                        request.setAttribute("start", format.format(event.getStart()));
+//                        request.setAttribute("end", format.format(event.getEnd()));
+//                        request.getRequestDispatcher("/saveNewEvent.jsp").forward(request, response);
+//                    } else {
+//                        System.out.println("Entered save new event 4.");
+//                        request.setAttribute("msg", "error when creating the reservation");
+//                        if (pname.equals("Merlion Concert Hall")) {
+//                            System.out.println("Entered save new event 5.");
+//                            request.getRequestDispatcher("/concertHallSelected.jsp").forward(request, response);
+//                        } else {
+//                            System.out.println("Entered save new event 6.");
+//                            request.getRequestDispatcher("/theaterSelected.jsp").forward(request, response);
+//                        }
+//                    }
+//                } else {
+//                    request.setAttribute("userResult", "Please note: The email you entered is not a valid user. Please enter again.");
+//                    if (pname.equals("Merlion Concert Hall")) {
+//                        request.setAttribute("eventname", ename);
+//                        request.setAttribute("eventdes", eDes);
+//
+//                        request.setAttribute("eventdes", eDes);
+//                        request.getRequestDispatcher("/concertHallSelected.jsp").forward(request, response);
+//                    } else {
+//                        request.setAttribute("eventname", ename);
+//                        request.setAttribute("eventdes", eDes);
+//                        request.getRequestDispatcher("/theaterSelected.jsp").forward(request, response);
+//                    }
+//
+//                }
+//
+//                // 
+//            } 
+//            }   else if (action.equals("saveNewSubEvent")) {
+//                String daterange = request.getParameter("daterange");
+//                String pname = request.getParameter("pname");
+//                // String idStr = request.getParameter("propertyId");
+//                String eidStr = request.getParameter("eventid");
+//                String ename = request.getParameter("eventname");
+//                //String eDes = request.getParameter("eventdes");
+//                String email = request.getParameter("eoemail");
+//                String type = request.getParameter("type");
+//                System.out.println("========Add New Sub Event" + daterange + pname + eidStr + ename + email+type);
+//                boolean checkUser = rm.checkUser(email);
+//                Long pid = spm.getPropertyByName(pname);
+//
+//                request.setAttribute("role", role);
+//                request.setAttribute("username", currentUser);
+//
+//                if (checkUser) {
+//                    SubEvent subevent = rm.addNewSubEvent(ename, daterange, pid, Long.valueOf(eidStr), email,type);
+//                    if (subevent != null) {
+//                        List<SubEvent> subevents = rm.getListOfSubEvent(subevent.getEvent());
+//                        request.setAttribute("subevents", subevents);
+//                        for (SubEvent e : subevents) {
+//                            System.out.println(e.getName());
+//                        }
+//                        request.setAttribute("eventid", eidStr);
+//                        // DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//                        //request.setAttribute("start", format.format(subevent.getStart()));
+//                        //request.setAttribute("end", format.format(subevent.getEnd()));
+//                        request.getRequestDispatcher("/saveNewSubEvent.jsp").forward(request, response);
+//                    } else {
+//                        request.setAttribute("msg", "error when creating the reservation");
+//                        if ((spm.getPropertyById(pid).getPropertyName()).equals("Merlion Concert Hall")) {
+//                            request.getRequestDispatcher("/subConcertHallSelected.jsp").forward(request, response);
+//                        } else {
+//                            request.getRequestDispatcher("/subTheaterSelected.jsp").forward(request, response);
+//                        }
+//                    }
+//                } else {
+//                    request.setAttribute("userResult", "Please note: The email you entered is not a valid user. Please enter again.");
+//                    if ((spm.getPropertyById(pid).getPropertyName()).equals("Merlion Concert Hall")) {
+//                        request.getRequestDispatcher("/subConcertHallSelected.jsp").forward(request, response);
+//                    } else {
+//                        request.getRequestDispatcher("/subTheaterSelected.jsp").forward(request, response);
+//                    }
+//
+//                }
+//                // 
+//            } else if (action.equals("createEventWithSub")) {
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
                 request.setAttribute("userResult", "");
                 request.getRequestDispatcher("/createEventWithSub.jsp").forward(request, response);
-            } else if (action.equals("saveEventWithSub")) {
-                String eventName = request.getParameter("eventname");
-                String eventDes = request.getParameter("eventdes");
-                String eoemail = request.getParameter("eoemail");
-                System.out.println(eventName + "  " + eventDes + "== == " + eoemail);
-                boolean checkUser = rm.checkUser(eoemail);
-                System.out.println("++++++" + checkUser);
-                request.setAttribute("role", role);
-                request.setAttribute("username", currentUser);
-                if (checkUser) {
-                    request.setAttribute("event", rm.addNewEventWithSub(eventName, eventDes, eoemail));
-
-                    request.getRequestDispatcher("/saveEventWithSub.jsp").forward(request, response);
-
-                } else {
-                    request.setAttribute("userResult", "Please note: The email you entered is not a valid user. Please enter again.");
-
-                    request.getRequestDispatcher("/createEventWithSub.jsp").forward(request, response);
-                }
+//            } else if (action.equals("saveEventWithSub")) {
+//                String eventName = request.getParameter("eventname");
+//                String eventDes = request.getParameter("eventdes");
+//                String eoemail = request.getParameter("eoemail");
+//                System.out.println(eventName + "  " + eventDes + "== == " + eoemail);
+//                boolean checkUser = rm.checkUser(eoemail);
+//                System.out.println("++++++" + checkUser);
+//                request.setAttribute("role", role);
+//                request.setAttribute("username", currentUser);
+//                if (checkUser) {
+//                    request.setAttribute("event", rm.addNewEventWithSub(eventName, eventDes, eoemail));
+//
+//                    request.getRequestDispatcher("/saveEventWithSub.jsp").forward(request, response);
+//
+//                } else {
+//                    request.setAttribute("userResult", "Please note: The email you entered is not a valid user. Please enter again.");
+//
+//                    request.getRequestDispatcher("/createEventWithSub.jsp").forward(request, response);
+//                }
             } else if (action.equals("addExtraEquipment")) {
                 HttpSession session = request.getSession();
                 Long pid = (Long) session.getAttribute("pid");

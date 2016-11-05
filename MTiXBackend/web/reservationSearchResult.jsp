@@ -66,52 +66,35 @@
 
         <div class="row">
             <c:forEach items="${pList}" var="pList">
-                <c:choose>
-                    <c:when test="${pList.propertyName.equals('Merlion Concert Hall')}">
+               
                         <div class="col-md-4">
                             <div class="product-box">
-                                <img src="img/property/concert_main.jpg" alt="concert" class="align-center img-responsive" style="width:300 px;height:300px">
+                                <img src="contentImageController?id=${pList.mainFileName}" alt="${pList.propertyName}" class="align-center img-responsive" style="width:300 px;height:300px">
                                 <c:forEach items="${pRList}" var="pRList">
                                     <c:choose>
-                                        <c:when test="${pRList.propertyName.equals('Merlion Concert Hall')}">
+                                        <c:when test="${pRList.id=='${pList.id}'}">
                                             <div class="urun-title"><span class="glyphicon glyphicon-star"></span> Recommended</div>
                                         </c:when>
                                     </c:choose>
                                 </c:forEach>
-                                <div class="urun-text">Merlion Concert Hall<br>With reverberation chambers and an acoustic canopy<br>More cater for musical performances </div>
-                                <div class="click-arrow-right"><c:url var="linkHref" value="/BackController?action=concertHallSelected" /><a href="${linkHref}"><span class="glyphicon glyphicon-arrow-right"></span></a>
+                                <div class="urun-text">${pList.propertyName}
+                                <div class="click-arrow-right"><c:url var="linkHref" value="/BackPropertyController?action=venueSelected&id=${pList.id}" /><a href="${linkHref}"><span class="glyphicon glyphicon-arrow-right"></span></a>
                                 </div>
                             </div>
                         </div>
 
-                    </c:when>    
-                    <c:when test="${pList.propertyName.equals('Merlion Star Theater')}">
-                        <div class="col-md-4">
-                            <div class="product-box">
-                                <img src="img/property/theater_main.jpg" alt="theater" class="align-center img-responsive" style="width:300 px;height:300px" >
-                                <c:forEach items="${pRList}" var="pRList">
-                                    <c:choose>
-                                        <c:when test="${pRList.propertyName.equals('Merlion Star Theater')}">
-                                            <div class="urun-title"><span class="glyphicon glyphicon-star"></span> Recommended</div>
-                                        </c:when>
-                                    </c:choose>
-                                </c:forEach>
-
-                                <div class="urun-text">Merlion Star Theater <br>With high-end audio, video and production lighting systems for an exceptional audio-visual experience</div>
-                                <div class="click-arrow-right"><c:url var="linkHref" value="/BackController?action=theaterSelected" /><a href="${linkHref}"><span class="glyphicon glyphicon-arrow-right"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </c:when>
-                </c:choose>
+                    </div>
+                
+                
             </c:forEach>
 
 
 
-        </div>
+        
         <% session.setAttribute("daterange", request.getAttribute("daterange"));
         session.setAttribute("type", request.getAttribute("type"));%>
     </div>
 </div>
+    </div>
 
 <jsp:include page="footer.jsp" />

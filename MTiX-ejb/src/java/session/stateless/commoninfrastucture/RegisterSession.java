@@ -5,6 +5,7 @@
  */
 package session.stateless.commoninfrastucture;
 
+import entity.CompanyEntity;
 import entity.RightsEntity;
 import entity.UserEntity;
 import java.text.SimpleDateFormat;
@@ -222,7 +223,7 @@ public class RegisterSession implements RegisterSessionLocal {
     }
 
     @Override
-    public void createCustomer(String username, String password, String mobileNumber, String salt, String first, String last, String birth) {
+    public void createCustomer(CompanyEntity company,String username, String password, String mobileNumber, String salt, String first, String last, String birth) {
         try {
             UserEntity u = new UserEntity();
             SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
@@ -234,7 +235,7 @@ public class RegisterSession implements RegisterSessionLocal {
             int year2 = current.get(Calendar.YEAR);
             Integer age = year2-year1;
             System.out.println("====create customer: DOB: "+year1+"  CURRENT: "+year2+"age: "+age);
-            u.createCustomer(username, password, mobileNumber, salt, first, last, age, dob, 0);
+            u.createCustomer(company,username, password, mobileNumber, salt, first, last, age, dob, 0);
             entityManager.merge(u);
         } catch (java.text.ParseException ex) {
             Logger.getLogger(RegisterSession.class.getName()).log(Level.SEVERE, null, ex);
@@ -261,6 +262,12 @@ public class RegisterSession implements RegisterSessionLocal {
             Logger.getLogger(RegisterSession.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+    
+    @Override
+    public CompanyEntity getCompanyEntityById(Long id){
+        CompanyEntity company = entityManager.find(CompanyEntity.class,id);
+        return company;
     }
 
 }

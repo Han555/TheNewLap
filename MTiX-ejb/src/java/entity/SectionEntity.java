@@ -32,8 +32,8 @@ public class SectionEntity implements Serializable {
     private Integer capacity;
     @Column(length = 1000)
     private String coords;
-    //@Column(length = 1000)
-    //private String seatMap;
+    @Column(length = 1000)
+    private String seatMap;
     
     @ManyToOne
     private PropertyEntity property;
@@ -57,6 +57,16 @@ public class SectionEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getSeatMap() {
+        return seatMap;
+    }
+
+    public void setSeatMap(String seatMap) {
+        this.seatMap = seatMap;
+    }
+    
+    
 
     @Override
     public int hashCode() {

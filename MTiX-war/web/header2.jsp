@@ -22,8 +22,8 @@
         <link href="css/megamenu.css" rel="stylesheet" type="text/css" media="all" />
         <script type="text/javascript" src="js/megamenu.js"></script>
         <script>$(document).ready(function () {
-        $(".megamenu").megamenu();
-    });</script>
+                $(".megamenu").megamenu();
+            });</script>
         <script src="js/menu_jquery.js"></script>
         <script src="js/simpleCart.min.js"></script>
         <!--<script type="text/javascript" src="js/jquery-scrollto.js"></script>-->
@@ -32,7 +32,7 @@
     </head>
     <body>
         <!-- header_top -->
-         <div class="header_bg">
+        <div class="header_bg">
             <div class="container">
 
                 <div class="header">
@@ -88,7 +88,9 @@
                                         <button class="btn btn-sucess dropdown-toggle" type="button" data-toggle="dropdown"><%=username%>
                                             <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#">Profile</a></li>
+                                            <c:url var="profile" value="Controller?action=customerProfile" />
+                                            <li><a href="${profile}">Profile</a></li>
+                                                <c:url var="checkout" value="Controller?action=shopCart" />
                                                 <c:url var="checkout" value="Controller?action=shopCart" />
                                             <li><a href="${checkout}">Check Out</a></li>
                                                 <c:url var="logout" value="LogOutController" />
@@ -188,18 +190,18 @@
                             </div>
                         </li>
                         <li><a class="color4" href="#"><span style=" color:#696763;">Museums</span></a>
-                            
+
                         </li>
                         <li><a class="color6" href="#"><span style=" color:#696763;">Group Deals</span></a>
-                           
+
                         </li>				
 
                         <li><a class="color8" href="#"><span style=" color:#696763;">Travel</span></a>
-                            
+
                         </li>
-<!--                        <li><a class="color9" href="#"><span style=" color:#696763;">WATCHES</span></a>
-                            
-                        </li>-->
+                        <!--                        <li><a class="color9" href="#"><span style=" color:#696763;">WATCHES</span></a>
+                                                    
+                                                </li>-->
                     </ul> 
 
                 </div>

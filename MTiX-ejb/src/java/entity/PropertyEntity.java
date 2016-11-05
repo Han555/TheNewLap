@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -25,8 +26,9 @@ public class PropertyEntity implements Serializable {
     private String propertyName;
     private Integer propertyNo;
     private Integer capacity;
-//    private String mainFileName;
-//    private String layoutFileName;
+    private Double rental;
+    private String mainFileName;
+    private String layoutFileName;
     
     
     @OneToMany(orphanRemoval = true,mappedBy="property")
@@ -56,6 +58,9 @@ public class PropertyEntity implements Serializable {
     private String types;
     
     private String recommend;
+    
+    @ManyToOne
+    private CompanyEntity company;
     
 //    private String layoutPath;
 //    
@@ -123,19 +128,7 @@ public class PropertyEntity implements Serializable {
         this.propertyName = propertyName;
     }
 
-    /**
-     * @return the capacity
-     */
-    public int getCapacity() {
-        return capacity;
-    }
-
-    /**
-     * @param capacity the capacity to set
-     */
-    public void setCapacity(int capacity) {
-        this.setCapacity((Integer) capacity);
-    }
+  
 
     /**
      * @return the events
@@ -151,8 +144,21 @@ public class PropertyEntity implements Serializable {
         this.events = events;
     }
 
+    public Double getRental() {
+        return rental;
+    }
 
- 
+    public void setRental(Double rental) {
+        this.rental = rental;
+    }
+
+
+  /**
+     * @return the capacity
+     */
+    public Integer getCapacity() {
+        return capacity;
+    }
 
     /**
      * @param capacity the capacity to set
@@ -160,6 +166,7 @@ public class PropertyEntity implements Serializable {
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
+    
 
 
 
@@ -298,6 +305,36 @@ public class PropertyEntity implements Serializable {
     public void setRecommend(String recommend) {
         this.recommend = recommend;
     }
+
+    public String getMainFileName() {
+        return mainFileName;
+    }
+
+    public void setMainFileName(String mainFileName) {
+        this.mainFileName = mainFileName;
+    }
+
+    public String getLayoutFileName() {
+        return layoutFileName;
+    }
+
+    public void setLayoutFileName(String layoutFileName) {
+        this.layoutFileName = layoutFileName;
+    }
+
+    public CompanyEntity getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyEntity company) {
+        this.company = company;
+    }
+
+    
+    
+    
+    
+    
 
    
     

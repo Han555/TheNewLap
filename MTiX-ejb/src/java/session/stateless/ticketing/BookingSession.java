@@ -55,8 +55,8 @@ public class BookingSession implements BookingSessionLocal {
 
     @Override
     public List<SessionEntity> getSessionsBySubeventId(Long id) {
-        Event e = rpm.getEventById(id);
-        Query q = em.createQuery("SELECT s FROM SessionEntity s WHERE s.subEvent=:subevent");
+        SubEvent e = rpm.getSubEventById(id);
+        Query q = em.createQuery("SELECT s FROM SessionEntity s WHERE s.subEvent=:subevent ORDER BY s.timeStart");
         q.setParameter("subevent", e);
         return q.getResultList();
     }
@@ -99,6 +99,7 @@ public class BookingSession implements BookingSessionLocal {
         return q.getResultList();
     }
 
+    @Override
     public HashMap<Long, List<Double>> getSessionsPricingByEventId(Long id) {
         Event event = em.find(Event.class, id);
         HashMap<Long, List<Double>> map = new HashMap<Long, List<Double>>();
@@ -334,6 +335,7 @@ public class BookingSession implements BookingSessionLocal {
         return freeRemain;
     }
     
+    @Override
     public UserEntity getUserByUsername(String username) {
         Query q = em.createQuery("SELECT u FROM UserEntity u WHERE u.username=:username");
         q.setParameter("username", username);

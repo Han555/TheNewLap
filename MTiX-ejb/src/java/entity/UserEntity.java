@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -82,6 +83,9 @@ public class UserEntity implements Serializable {
     
     @OneToMany
     private Collection<TicketTakingsEntity> ticketTakings = new ArrayList<TicketTakingsEntity> ();
+    
+    @ManyToOne
+    private CompanyEntity company;
 
     public UserEntity() {
     }
@@ -158,6 +162,15 @@ public class UserEntity implements Serializable {
         this.resetPassword = resetPassword;
     }
 
+    public CompanyEntity getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyEntity company) {
+        this.company = company;
+    }
+    
+
     public void createAccount(String username, String password, String mobileNumber, String salt) {
         this.username = username;
         this.password = password;
@@ -177,7 +190,8 @@ public class UserEntity implements Serializable {
         this.rights.add(rights);
     }
 
-    public void createCustomer(String username, String password, String mobileNumber, String salt, String firstName, String lastName, Integer age, Date DOB, Integer loyaltyPoints) {
+    public void createCustomer(CompanyEntity company,String username, String password, String mobileNumber, String salt, String firstName, String lastName, Integer age, Date DOB, Integer loyaltyPoints) {
+        this.company = company;
         this.username = username;
         this.password = password;
         this.mobileNumber = mobileNumber;

@@ -16,7 +16,7 @@
         <div class="row" >
             <div class="col-sm-6">
                 <!--    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12"> -->
-                <c:url var="linkHref" value="/BackController?action=reservationSearch" />
+                <c:url var="linkHref" value="/BackPropertyController?action=eventReservationSearch" />
                 <a href="${linkHref}">
                     <div class="card green summary-inline">
                         <div class="card-body">
@@ -33,7 +33,7 @@
             </div>
             <div class="col-sm-6">
                 <!--   <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12"> -->
-                <c:url var="linkHref" value="/BackController?action=createEventWithSub" />
+                <c:url var="linkHref" value="/BackPropertyController?action=createEventWithSub" />
                 <a href="${linkHref}">
                     <div class="card green summary-inline">
                         <div class="card-body">

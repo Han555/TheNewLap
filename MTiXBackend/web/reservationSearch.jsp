@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <div class="side-body">
         <div class="page-title">
-            <span class="title">Search Avaliable Venues</span>
+            <span class="title">Search Avaliable Venues in ${companyName}</span>
 
         </div>
 

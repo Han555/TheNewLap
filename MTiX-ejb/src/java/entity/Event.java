@@ -64,6 +64,9 @@ public class Event implements Serializable {
     
     @OneToOne(orphanRemoval= true, mappedBy = "event")
     private WebContentEntity content;
+    @ManyToOne
+    private CompanyEntity company;
+    
 
     public String getType() {
         return type;
@@ -205,6 +208,15 @@ public class Event implements Serializable {
     public void setContent(WebContentEntity content) {
         this.content = content;
     }
+
+    public CompanyEntity getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyEntity company) {
+        this.company = company;
+    }
+    
 
     @Override
     public int hashCode() {
