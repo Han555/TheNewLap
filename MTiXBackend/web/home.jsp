@@ -123,7 +123,7 @@
                     </div>
                 </div>
             </c:if>
-            <c:if test="${(role == 'event organizer')}">
+            <c:if test="${(role == 'super administrator' || role == 'event organizer')}">
                 <div class="col-sm-6 col-md-3">
                     <div class="thumbnail">
                         <img src="img/alert.jpg" alt="ticket_main" style="width:300 px;height:300px">
@@ -153,7 +153,7 @@
                     </div>
                 </div>
             </c:if>
-            <c:if test="${(role == 'content manager')}">
+            <c:if test="${(role == 'super administrator' || role == 'content manager')}">
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
                         <img src="img/web.jpg" alt="theater_main" style="width:300 px;height:300px">

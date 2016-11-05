@@ -41,7 +41,7 @@ public class ContentEventTypeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String type = request.getParameter("type");
+       String type = request.getParameter("type");
         List<WebEventsContentModel> contentList = new ArrayList<WebEventsContentModel>();
         if (!type.equals("All")) {
             List<ArrayList> data = websiteManagementBean.getWebpageListByType(type);
@@ -50,6 +50,7 @@ public class ContentEventTypeController extends HttpServlet {
                 webEventContentModel.setEventTitle(data.get(i).get(1).toString());
                 webEventContentModel.setId(Long.valueOf(data.get(i).get(0).toString()));
                 webEventContentModel.setFileName(data.get(i).get(2).toString());
+                webEventContentModel.setLinkName(data.get(i).get(1).toString().replaceAll("\\s",""));
 
                 contentList.add(webEventContentModel);
             }
@@ -62,6 +63,7 @@ public class ContentEventTypeController extends HttpServlet {
                 webEventContentModel.setEventTitle(data.get(i).get(1).toString());
                 webEventContentModel.setId(Long.valueOf(data.get(i).get(0).toString()));
                 webEventContentModel.setFileName(data.get(i).get(2).toString());
+                webEventContentModel.setLinkName(data.get(i).get(1).toString().replaceAll("\\s",""));
 
                 contentList.add(webEventContentModel);
             }

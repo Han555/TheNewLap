@@ -34,7 +34,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-3">
-            <img src="ContentImageController?id=<%=data.get(i).get(6)%>" width="210px" height="210px">
+            <img src="/MTiX-war/ContentImageController?id=<%=data.get(i).get(6)%>" width="210px" height="210px">
         </div>
         <div class="col-md-7">
             <p><h5><b>Event Name : </b><%=data.get(i).get(3)%></h5></p>
@@ -42,7 +42,7 @@
             <p><h5><b>Promotion Requirement : </b><%=data.get(i).get(5)%></h5></p>
             <p><h5><b>Promotion Discount Rate : </b><%=data.get(i).get(2)%></h5></p>
             <p><h5><b>Promotion Description : </b><%=data.get(i).get(1)%></h5></p>
-            <a href="ContentController?action=viewEventWebpage&id=<%=data.get(i).get(4)%>"><button type="button" class="btn btn-info" style="width: 250px">View Event Webpage</button></a>
+            <a href="/MTiX-war/ContentController/MTiX/viewEventWebpage/<%=data.get(i).get(4)%>/<%=data.get(i).get(3).toString().replaceAll("\\s","")%>"><button type="button" class="btn btn-info" style="width: 250px">View Event Webpage</button></a>
         </div></div><br>
     <%}}%>
 </div>

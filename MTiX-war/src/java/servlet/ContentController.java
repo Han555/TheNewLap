@@ -15,6 +15,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import manager.RegisterManager;
+import session.stateless.commoninfrastucture.RegisterSessionLocal;
 import session.stateless.contentmanagement.WebsiteManagementBeanLocal;
 
 /**
@@ -26,6 +28,8 @@ public class ContentController extends HttpServlet {
 
     @EJB
     private WebsiteManagementBeanLocal webManagementBean;
+    @EJB
+    private RegisterSessionLocal registerSession;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,25 +42,37 @@ public class ContentController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        System.err.println("******** ContentController: " + request.getServletPath());
-        System.err.println("******** ContentController: " + request.getContextPath());
-        System.err.println("******** ContentController: " + request.getPathInfo());
-        System.err.println("******** ContentController: " + request.getRequestURI());
-        
-        
-        String action = request.getParameter("action");
 
-        if (action.equals("doLogin")) {
+//        System.err.println("******** ContentController: " + request.getServletPath());
+//        System.err.println("******** ContentController: " + request.getContextPath());
+//        System.err.println("******** ContentController: " + request.getPathInfo());
+        System.err.println("******** ContentController: " + request.getRequestURI());
+
+        String requestURL = request.getRequestURI();
+        String url[] = requestURL.split("/");
+        System.err.println(url[4]);
+        String action = url[4];
+        RegisterManager registerManager = new RegisterManager(registerSession);
+
+        //String action = request.getParameter("action");
+        if (action.equals("Home")) {
             List<ArrayList> data = webManagementBean.getWebpageList();
+            String companyLogo = webManagementBean.getCompanyLogo();
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            request.setAttribute("propertyData", propertyData);
+            request.setAttribute("CompanyLogo", companyLogo);
             request.setAttribute("data", data);
             request.getRequestDispatcher("/home.jsp").forward(request, response);
         } else if (action.equals("viewEventWebpage")) {
-            String id = request.getParameter("id");
+            String id = url[5];
             ArrayList data = webManagementBean.getEventWebpageInfo(id);
             List<ArrayList> sessions = webManagementBean.getEventSessionInfo(id);
             List<ArrayList> promotions = webManagementBean.getEventPromotionInfo(id);
+
+            String companyLogo = webManagementBean.getCompanyLogo();
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            request.setAttribute("propertyData", propertyData);
+            request.setAttribute("CompanyLogo", companyLogo);
 
             request.setAttribute("data", data);
             request.setAttribute("promotions", promotions);
@@ -64,13 +80,64 @@ public class ContentController extends HttpServlet {
             request.getRequestDispatcher("/viewEventWebpage.jsp").forward(request, response);
         } else if (action.equals("creditCardPromotion")) {
             List<ArrayList> data = webManagementBean.getCreditCardEvents();
+            String companyLogo = webManagementBean.getCompanyLogo();
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            request.setAttribute("propertyData", propertyData);
+            request.setAttribute("CompanyLogo", companyLogo);
             request.setAttribute("data", data);
             request.getRequestDispatcher("/creditCardPromotion.jsp").forward(request, response);
         } else if (action.equals("volumeDiscountPromotion")) {
             List<ArrayList> data = webManagementBean.getVolumeDiscountEvents();
+            String companyLogo = webManagementBean.getCompanyLogo();
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            request.setAttribute("propertyData", propertyData);
+            request.setAttribute("CompanyLogo", companyLogo);
             request.setAttribute("data", data);
             request.getRequestDispatcher("/volumeDiscountPromotion.jsp").forward(request, response);
-        }
+        } else if (action.equals("companyStory")) {
+            ArrayList data = webManagementBean.getCompanyInfo();
+            String companyLogo = webManagementBean.getCompanyLogo();
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            request.setAttribute("propertyData", propertyData);
+            request.setAttribute("CompanyLogo", companyLogo);
+            request.setAttribute("data", data);
+            request.getRequestDispatcher("/companyStory.jsp").forward(request, response);
+        } else if (action.equals("displayConcertEvents")) {
+            List<ArrayList> data = webManagementBean.getEventConcert("concert");
+            String companyLogo = webManagementBean.getCompanyLogo();
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            request.setAttribute("propertyData", propertyData);
+            request.setAttribute("CompanyLogo", companyLogo);
+            request.setAttribute("data", data);
+            request.getRequestDispatcher("/displayConcertEvents.jsp").forward(request, response);
+        } else if (action.equals("displayDanceEvents")) {
+            List<ArrayList> data = webManagementBean.getEventConcert("dance");
+            String companyLogo = webManagementBean.getCompanyLogo();
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            request.setAttribute("propertyData", propertyData);
+            request.setAttribute("CompanyLogo", companyLogo);
+            request.setAttribute("data", data);
+            request.getRequestDispatcher("/displayDanceEvents.jsp").forward(request, response);
+        } else if (action.equals("displaySportsEvents")) {
+            List<ArrayList> data = webManagementBean.getEventConcert("sports");
+            String companyLogo = webManagementBean.getCompanyLogo();
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            request.setAttribute("propertyData", propertyData);
+            request.setAttribute("CompanyLogo", companyLogo);
+            request.setAttribute("data", data);
+            request.getRequestDispatcher("/displaySportsEvents.jsp").forward(request, response);
+        } else if (action.equals("displayVenueEvents")) {
+            String id = url[5];
+            List<ArrayList> data = webManagementBean.getPropertyEvents(id);
+            String companyLogo = webManagementBean.getCompanyLogo();
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            String propertyName = webManagementBean.getPropertyName(Long.valueOf(id));
+            request.setAttribute("propertyName", propertyName);
+            request.setAttribute("propertyData", propertyData);
+            request.setAttribute("CompanyLogo", companyLogo);
+            request.setAttribute("data", data);
+            request.getRequestDispatcher("/displayVenueEvents.jsp").forward(request, response);  
+        } 
 
     }
 

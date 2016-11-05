@@ -24,7 +24,7 @@
     <body>
 
 
-        <c:url var="formAction" value="/ContentController?action=doLogin" />
+        <c:url var="formAction" value="ContentController/MTIX/Home" />
         <div class="container">
             <section id="content">
 
@@ -71,7 +71,7 @@
                     <input id="password" name="password" type="password" placeholder="Password">
 
 
-                    <c:url var="formAction" value="/Controller" />
+                    <%    //<c:url var="formAction" value="/Controller" />%>
                     <input type="submit" value="Log In" /> 
 
 

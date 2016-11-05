@@ -41,19 +41,16 @@
 
 <div class="footer">
 	<div class="container">
-		<div class="col-md-3 cust">
+            <div class="col-md-3 abt">
+			<h4>ABOUT US</h4>
+				<li><a href="/MTiX-war/ContentController/MTiX/companyStory">Company Information</a></li>
+                </div>
+		<div class="col-md-2 cust">
 			<h4>CUSTOMER CARE</h4>
 				<li><a href="#">Help Center</a></li>
 				<li><a href="#">FAQ</a></li>
 				<li><a href="buy.html">How To Buy</a></li>
 				<li><a href="#">Delivery</a></li>
-		</div>
-		<div class="col-md-2 abt">
-			<h4>ABOUT US</h4>
-				<li><a href="#">Our Stories</a></li>
-				<li><a href="#">Press</a></li>
-				<li><a href="#">Career</a></li>
-				<li><a href="contact.html">Contact</a></li>
 		</div>
 		<div class="col-md-2 myac">
 			<h4>MY ACCOUNT</h4>

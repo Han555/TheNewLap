@@ -1256,6 +1256,18 @@ public class BackController extends HttpServlet {
                 List<ArrayList> sectionData = productSession.getReservedSections(i, idType[1]);
                 Date startDate = productSession.getEventStartDate(i, idType[1]);
                 String date = (String) new SimpleDateFormat("yyyy-MM-dd").format(startDate);
+                
+                List<ArrayList> coordinates;
+                
+                if (data != null) {
+                    System.out.println("GET COORDINATES");
+                    coordinates = productSession.getPropertyCoordinates(Long.valueOf(data.get(0).get(5).toString()));
+                } else {
+                    System.out.println("LEt it be null");
+                    coordinates = null;
+                }
+                
+                request.setAttribute("coordinates", coordinates);
                 request.setAttribute("date", date);
                 request.setAttribute("data", data);
                 request.setAttribute("sectionData", sectionData);
@@ -1284,6 +1296,18 @@ public class BackController extends HttpServlet {
                 Long i = Long.valueOf(request.getParameter("id"));
                 List<ArrayList> data = productSession.getSessionReservedSections(i);
                 long propertyID = productSession.getPropertyID(i);
+                
+                 List<ArrayList> coordinates;
+                
+                if (data != null) {
+                    System.out.println("GET COORDINATES");
+                    coordinates = productSession.getPropertyCoordinates(propertyID);
+                } else {
+                    System.out.println("LEt it be null");
+                    coordinates = null;
+                }
+                
+                request.setAttribute("coordinates", coordinates);
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
                 request.setAttribute("data", data);
@@ -1315,6 +1339,16 @@ public class BackController extends HttpServlet {
                 Long i = Long.valueOf(idType[0]);
                 List<ArrayList> data = productSession.searchEventSessions(i, idType[1]);
                 List<ArrayList> price = productSession.getSessionsPricing(i, idType[1]);
+                List<ArrayList> coordinates;
+                
+                if (data != null) {
+                    System.out.println("GET COORDINATES");
+                    coordinates = productSession.getPropertyCoordinates(Long.valueOf(data.get(0).get(5).toString()));
+                } else {
+                    System.out.println("LEt it be null");
+                    coordinates = null;
+                }
+                request.setAttribute("coordinates", coordinates);
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
                 request.setAttribute("data", data);
@@ -1520,6 +1554,19 @@ public class BackController extends HttpServlet {
                 Long i = Long.valueOf(idType[0]);
                 List<ArrayList> data = productSession.searchEventSessions(i, idType[1]);
                 List<ArrayList> sectionData = productSession.getClosedSections(i, idType[1]);
+                List<ArrayList> coordinates;
+                
+                if (data != null) {
+                    System.out.println("GET COORDINATES");
+                    coordinates = productSession.getPropertyCoordinates(Long.valueOf(data.get(0).get(5).toString()));
+                } else {
+                    System.out.println("LEt it be null");
+                    coordinates = null;
+                }
+                
+                request.setAttribute("coordinates", coordinates);
+                
+                
                 request.setAttribute("data", data);
                 request.setAttribute("sectionData", sectionData);
                 request.setAttribute("role", role);
@@ -1561,6 +1608,21 @@ public class BackController extends HttpServlet {
                 Long i = Long.valueOf(request.getParameter("id"));
                 List<ArrayList> data = productSession.getSessionClosedSections(i);
                 long propertyID = productSession.getPropertyID(i);
+                
+                
+                 List<ArrayList> coordinates;
+                
+                if (data != null) {
+                    System.out.println("GET COORDINATES");
+                    coordinates = productSession.getPropertyCoordinates(propertyID);
+                } else {
+                    System.out.println("LEt it be null");
+                    coordinates = null;
+                }
+                
+                request.setAttribute("coordinates", coordinates);
+                
+                
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
                 request.setAttribute("data", data);
@@ -1629,6 +1691,7 @@ public class BackController extends HttpServlet {
                 request.setAttribute("data", data);
                 request.getRequestDispatcher("/viewSalesProgress.jsp").forward(request, response);
             } else if (action.equals("viewProgress")) {
+                productSession.signIn(currentUser);
                 List<ArrayList> data = productSession.getEventList();
                 List<ArrayList> sessionsDetails = getAllProductDetailsLocal.getAllSessions();
                 List<ArrayList> salesDetails = getAllProductDetailsLocal.getSalesDetails();

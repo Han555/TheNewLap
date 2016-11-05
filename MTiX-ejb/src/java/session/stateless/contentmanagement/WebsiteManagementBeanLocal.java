@@ -29,5 +29,21 @@ public interface WebsiteManagementBeanLocal {
     public List<ArrayList> getVolumeDiscountEvents();
 
     public List<ArrayList> getWebpageListByType(String type);
+
+    public String getCompanyLogo();
+
+    public ArrayList getCompanyInfo();
+
+    public List<ArrayList> getEventConcert(String type);
+
+    public List<ArrayList> getAllPropertyName();
+
+    public List<ArrayList> getPropertyEvents(String id);
+
+    public String getPropertyName(Long id);
+
+    public List<ArrayList> searchEngineBasedOnTypes(String keyword);
+
+    public List<ArrayList> searchEvents(String keyword);
     
 }
