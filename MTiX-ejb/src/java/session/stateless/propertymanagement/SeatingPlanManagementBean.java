@@ -77,7 +77,7 @@ public class SeatingPlanManagementBean implements SeatingPlanManagementBeanLocal
 
     }
 
-    public Long CreateNewProperty(CompanyEntity company,Part propertyMain,Part propertyLayout,Part data, String title, Integer capacity,Integer rental, String[] types, String recommend,String ext1,String ext2,String ext3) {
+    public Long CreateNewProperty(CompanyEntity company, Part propertyMain, Part propertyLayout, Part data, String title, Integer capacity, Integer rental, String[] types, String recommend, String ext1, String ext2, String ext3) {
         try {
 
             String type = types[0];
@@ -117,7 +117,7 @@ public class SeatingPlanManagementBean implements SeatingPlanManagementBeanLocal
 
             property.setTypes(type);
             property.setMainFileName(fileName1 + "." + ext1);
-            property.setLayoutFileName(fileName2 + "."+ext2);
+            property.setLayoutFileName(fileName2 + "." + ext2);
             em.persist(property);
             em.flush();
             //Store the file into system
@@ -209,49 +209,38 @@ public class SeatingPlanManagementBean implements SeatingPlanManagementBeanLocal
 //    }
 //
 //}
+    /**
+     * *************************************************************
+     * Get Property, Section, Seat By Id
+     * *************************************************************
+     */
+    @Override
+    public PropertyEntity
+            getPropertyById(Long propertyId) {
+        PropertyEntity property = em.find(PropertyEntity.class, propertyId);
+        return property;
+    }
 
-/**
- * *************************************************************
- * Get Property, Section, Seat By Id
- * *************************************************************
- */
-@Override
-        public PropertyEntity 
+    @Override
+    public SectionEntity
+            getSectionById(Long sectionId) {
+        SectionEntity section = em.find(SectionEntity.class, sectionId);
+        return section;
+    }
 
-getPropertyById(Long propertyId) {
-        PropertyEntity property = em.find(PropertyEntity.class  
+    @Override
+    public SectionCategoryEntity getCategoryById(Long categoryId) {
+        SectionCategoryEntity category = em.find(SectionCategoryEntity.class, categoryId);
+        return category;
+    }
 
-    , propertyId);
-    return property ;
-}
-
-@Override
-        public SectionEntity 
-
-getSectionById(Long sectionId) {
-        SectionEntity section = em.find(SectionEntity.class  
-
-    , sectionId);
-    return section ;
-}
-
-@Override
-        public SectionCategoryEntity 
-
-getCategoryById(Long categoryId) {
-        SectionCategoryEntity category = em.find(SectionCategoryEntity.class  
-
-    , categoryId);
-    return category ;
-}
-
-/**
- * ***********************************************************
- * Get All Property, Section, Seat (List)
- * ***********************************************************
- */
-@Override
-        public List<PropertyEntity> getAllProperties() {
+    /**
+     * ***********************************************************
+     * Get All Property, Section, Seat (List)
+     * ***********************************************************
+     */
+    @Override
+    public List<PropertyEntity> getAllProperties() {
 
         Query query = em.createQuery("SELECT p FROM PropertyEntity p");
         return query.getResultList();
@@ -266,7 +255,7 @@ getCategoryById(Long categoryId) {
     }
 
     @Override
-        public List<SectionCategoryEntity> getAllCategories() {
+    public List<SectionCategoryEntity> getAllCategories() {
 
         Query query = em.createQuery("SELECT sc FROM SectionCategoryEntity sc");
         return query.getResultList();
@@ -282,7 +271,7 @@ getCategoryById(Long categoryId) {
      */
 
     @Override
-        public List<SeatEntity> getAllSeatsInOneSection(Long sectionId) {
+    public List<SeatEntity> getAllSeatsInOneSection(Long sectionId) {
         SectionEntity section = getSectionById(sectionId);
         Query query = em.createQuery("SELECT s FROM SeatEntity s WHERE s.section = :inSection");
         query.setParameter("inSection", section);
@@ -290,7 +279,7 @@ getCategoryById(Long categoryId) {
     }
 
     @Override
-        public List<SectionEntity> getAllSectionsInOneProperty(Long propertyId) {
+    public List<SectionEntity> getAllSectionsInOneProperty(Long propertyId) {
         PropertyEntity property = getPropertyById(propertyId);
         Query query = em.createQuery("SELECT se FROM SectionEntity se WHERE se.property = :inProperty ORDER BY se.numberInProperty");
         query.setParameter("inProperty", property);
@@ -298,7 +287,7 @@ getCategoryById(Long categoryId) {
     }
 
     @Override
-        public List<SectionCategoryEntity> getAllCategoryInOneProperty(Long propertyId) {
+    public List<SectionCategoryEntity> getAllCategoryInOneProperty(Long propertyId) {
 
         PropertyEntity property = getPropertyById(propertyId);
         Query query = em.createQuery("SELECT sc FROM SectionCategoryEntity sc WHERE sc.property = :inProperty");
@@ -308,7 +297,7 @@ getCategoryById(Long categoryId) {
     }
 
     @Override
-        public List<SectionEntity> getAllSectionsInOneCategory(Long categoryId) {
+    public List<SectionEntity> getAllSectionsInOneCategory(Long categoryId) {
         SectionCategoryEntity category = getCategoryById(categoryId);
         Query query = em.createQuery("SELECT se FROM SectionEntity se WHERE se.category = :inCategory");
         query.setParameter("inCategory", category);
@@ -318,10 +307,11 @@ getCategoryById(Long categoryId) {
     /**
      * *************************************************************
      * Link Property, Section, Seat
+     *
      * ************************************************************* @return
      */
     @Override
-        public Boolean linkSeatsToSection() {
+    public Boolean linkSeatsToSection() {
         try {
             for (int i = 0; i <= 26; i++) {
                 List<SeatEntity> seats = getAllSeatsInOneSection(Long.valueOf(i + 1));
@@ -339,14 +329,14 @@ getCategoryById(Long categoryId) {
     }
 
     @Override
-        public List<SeatEntity> getSeatsBySectionId(Long sectionId) {
+    public List<SeatEntity> getSeatsBySectionId(Long sectionId) {
         SectionEntity section = getSectionById(sectionId);
         return section.getSeats();
 
     }
 
     @Override
-        public Boolean linkSectionsToProperty() {
+    public Boolean linkSectionsToProperty() {
         try {
 
             List<SectionEntity> sections = getAllSectionsInOneProperty(Long.valueOf(1));
@@ -363,7 +353,7 @@ getCategoryById(Long categoryId) {
     }
 
     @Override
-        public Boolean linkCategoryToProperty() {
+    public Boolean linkCategoryToProperty() {
         try {
 
             List<SectionCategoryEntity> category = getAllCategoryInOneProperty(Long.valueOf(1));
@@ -400,14 +390,14 @@ getCategoryById(Long categoryId) {
 //    }
 //    
     @Override
-        public List<SectionEntity> getSectionsByPropertyId(Long propertyId) {
+    public List<SectionEntity> getSectionsByPropertyId(Long propertyId) {
         PropertyEntity property = getPropertyById(propertyId);
         return property.getSections();
 
     }
 
     @Override
-        public Long getPropertyByName(String name) {
+    public Long getPropertyByName(String name) {
         Query query = em.createQuery("SELECT p FROM PropertyEntity p WHERE p.propertyName = :inName");
         query.setParameter("inName", name);
         if (query.getSingleResult() != null) {
@@ -416,6 +406,12 @@ getCategoryById(Long categoryId) {
         } else {
             return null;
         }
+    }
+    
+    @Override
+    public SectionEntity getSectionEntityById(Long id){
+        SectionEntity section = em.find(SectionEntity.class, id);
+        return section;
     }
 
     //public List<ArrayList> getSectionStatusBySession(Long sessionId);

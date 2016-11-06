@@ -74,4 +74,6 @@ public interface SeatingPlanManagementBeanLocal {
     public Long CreateNewProperty(CompanyEntity company, Part propertyMain, Part propertyLayout, Part data, String title, Integer capacity, Integer rental, String[] types, String recommend, String ext1, String ext2, String ext3);
 
     public List<PropertyEntity> getAllPropertiesByCompany(CompanyEntity company);
+
+    public SectionEntity getSectionEntityById(Long id);
 }

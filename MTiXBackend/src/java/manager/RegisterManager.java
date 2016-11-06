@@ -89,10 +89,10 @@ public class RegisterManager {
         return newPassword;
     }
 
-    public void adminCreate(String username, String role, String mobileNumber) {
+     public void adminCreate(String username, String role, String mobileNumber, Long company) {
         String password = resetPassword(username);
-
-        registerSessionLocal.sendMail(username, "is3012mtix@gmail.com", "http://localhost:8080/MTiXBackend/BackController?" + "name=" + username + "     username: " + username + "    password: " + password, "MTiX backend account created", "smtp.gmail.com");
+        
+        registerSessionLocal.sendMail(username, "is3012mtix@gmail.com", "http://localhost:8080/MTiXBackend/BackController?" + "name=" + username+"     username: "+username+"    password: "+password, "MTiX backend account created", "smtp.gmail.com");
         System.out.println("Entered here checking registration 2");
         String salt;
         SecurityManager secure = new SecurityManager();
@@ -100,7 +100,7 @@ public class RegisterManager {
         salt = secure.byteArrayToHexString(secureSalt);
         String toBeHashed = salt + password;
         String hashedPassword = secure.doMD5Hashing(toBeHashed);
-        registerSessionLocal.adminCreateUser(username, hashedPassword, mobileNumber, salt, role);
+        registerSessionLocal.adminCreateUser(username, hashedPassword, mobileNumber, salt, role, company);
     }
 
     public CompanyEntity getCompanyEntityById(Long id) {

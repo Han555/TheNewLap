@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-sm-6">
 
-                <img src="contentImageController?id=${property.mainFileName}" alt="concert_main" style="width:100%;"> </div>
+                <img src="contentImageController?id=${property.layoutFileName}" alt="concert_main" style="width:100%;"> </div>
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-header">

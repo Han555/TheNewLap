@@ -30,7 +30,7 @@
                             <!--                        <p style="text-align: justify">The Concert Hall is Merlion's crown jewel, which can seat <span style="font-weight:bold;">2,000</span> spectators. It is one of only five such halls in the world with similar state-of-the-art features, which include reverberation chambers and an acoustic canopy that adapts the hall for different musical performances, producing optimum sound at every concert. </p>-->
                             <br>
 
-                            <p><c:url var="linkHref" value="/BackController?action=concertHallLayout?action=${property.id}" /><a href="${linkHref}" class="btn btn-primary"  role="button">View Seating Plan</a> </p>
+                            <p><c:url var="linkHref" value="/BackPropertyController?action=venueLayout&id=${property.id}" /><a href="${linkHref}" class="btn btn-primary"  role="button">View Seating Plan</a> </p>
                         </div>
                     </div>
                 </div>

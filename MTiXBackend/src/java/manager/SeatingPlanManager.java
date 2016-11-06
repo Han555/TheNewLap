@@ -53,7 +53,6 @@ public class SeatingPlanManager {
 //
 //        return seatingPlanManagementBeanLocal.linkSectionsToCategory();
 //    }
-
     public Boolean linkCategoryToProperty() {
 
         return seatingPlanManagementBeanLocal.linkCategoryToProperty();
@@ -66,22 +65,27 @@ public class SeatingPlanManager {
     public List<SeatEntity> getSeatsBySectionId(Long sectionId) {
         return seatingPlanManagementBeanLocal.getSeatsBySectionId(sectionId);
     }
-    
+
     public PropertyEntity getPropertyById(Long propertyId) {
         return seatingPlanManagementBeanLocal.getPropertyById(propertyId);
     }
-    
-    public Long getPropertyByName(String name){
+
+    public Long getPropertyByName(String name) {
         return seatingPlanManagementBeanLocal.getPropertyByName(name);
     }
-    
-    public Long createNewProperty(CompanyEntity company,Part propertyMain,Part propertyLayout,Part data,String title,Integer capacity,Integer rental,String[] types,String recommend,String ext1,String ext2,String ext3){
-        return seatingPlanManagementBeanLocal.CreateNewProperty(company,propertyMain,propertyLayout, data,title, capacity,rental, types, recommend, ext1,ext2,ext3);
+
+    public Long createNewProperty(CompanyEntity company, Part propertyMain, Part propertyLayout, Part data, String title, Integer capacity, Integer rental, String[] types, String recommend, String ext1, String ext2, String ext3) {
+        return seatingPlanManagementBeanLocal.CreateNewProperty(company, propertyMain, propertyLayout, data, title, capacity, rental, types, recommend, ext1, ext2, ext3);
     }
-     public List<PropertyEntity> getAllPropertiesByCompany(CompanyEntity company) {
+
+    public List<PropertyEntity> getAllPropertiesByCompany(CompanyEntity company) {
         return seatingPlanManagementBeanLocal.getAllPropertiesByCompany(company);
-     }
+    }
     
+    public SectionEntity getSectionEntityById(Long sectionId){
+        return seatingPlanManagementBeanLocal.getSectionEntityById(sectionId);
+    }
+
 //    public Boolean createSectionsUnderProperty(HttpServletRequest request){
 //        
 //        Integer categories = Integer.valueOf(request.getParameter("categories"));
@@ -110,5 +114,4 @@ public class SeatingPlanManager {
 //           
 //        return seatingPlanManagementBeanLocal.createSectionsUnderProperty(propertyId,cNameArr,cSectionsArr,sectionsArr,capacityArr);
 //    }
-
 }

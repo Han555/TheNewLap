@@ -36,43 +36,43 @@ public class ReservationManager {
         this.rpb = rpb;
     }
 
-    public Event addNewEvent(String eventName, String eventDescription, String daterange, Long propertyId, String email,String type) throws ParseException {
-
-        String[] parts = daterange.split(" - ");
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        Date startDate = df.parse(parts[0].trim());
-        Date endDate = df.parse(parts[1].trim());
-
-        return rpb.addNewEvent(eventName, eventDescription, startDate, endDate, propertyId,email,type);
-
-    }
-    
-    public SubEvent addNewSubEvent(String name,  String daterange, Long propertyId, Long eId, String email,String type) throws ParseException {
-
-        String[] parts = daterange.split(" - ");
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        Date startDate = df.parse(parts[0].trim());
-        Date endDate = df.parse(parts[1].trim());
-        System.out.println("=====Manager "+eId);
-        return rpb.addNewSubEvent(name,startDate, endDate, propertyId,eId,email,type);
-
-    }
-    
-    public Event addNewEventWithSub(String name, String eventDes, String eoEmail){
-        return rpb.addNewEventWithSub(name,eventDes,eoEmail);
-    }
-    
-    public boolean checkUser(String email){
-        return rpb.checkUser(email);
-    }
-    public List<PropertyEntity> getAvailableProperties(HttpServletRequest request) throws ParseException {
-        String eventcate = request.getParameter("eventcate");
-        String eventScale = request.getParameter("eventscale");
-        String daterange = request.getParameter("daterange");
-        
-        return rpb.getAvailableProperties(eventcate,eventScale,daterange);
-    }
-    
+//    public Event addNewEvent(String eventName, String eventDescription, String daterange, Long propertyId, String email,String type) throws ParseException {
+//
+//        String[] parts = daterange.split(" - ");
+//        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+//        Date startDate = df.parse(parts[0].trim());
+//        Date endDate = df.parse(parts[1].trim());
+//
+//        return rpb.addNewEvent(eventName, eventDescription, startDate, endDate, propertyId,email,type);
+//
+//    }
+//    
+//    public SubEvent addNewSubEvent(String name,  String daterange, Long propertyId, Long eId, String email,String type) throws ParseException {
+//
+//        String[] parts = daterange.split(" - ");
+//        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+//        Date startDate = df.parse(parts[0].trim());
+//        Date endDate = df.parse(parts[1].trim());
+//        System.out.println("=====Manager "+eId);
+//        return rpb.addNewSubEvent(name,startDate, endDate, propertyId,eId,email,type);
+//
+//    }
+//    
+//    public Event addNewEventWithSub(String name, String eventDes, String eoEmail){
+//        return rpb.addNewEventWithSub(name,eventDes,eoEmail);
+//    }
+//    
+//    public boolean checkUser(String email){
+//        return rpb.checkUser(email);
+//    }
+//    public List<PropertyEntity> getAvailableProperties(HttpServletRequest request) throws ParseException {
+//        String eventcate = request.getParameter("eventcate");
+//        String eventScale = request.getParameter("eventscale");
+//        String daterange = request.getParameter("daterange");
+//        
+//        return rpb.getAvailableProperties(eventcate,eventScale,daterange);
+//    }
+//    
 
     public List<PropertyEntity> getReservationSearchResult(List<PropertyEntity> properties,HttpServletRequest request) throws ParseException {
         String eventcate = request.getParameter("eventcate");

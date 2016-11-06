@@ -64,7 +64,7 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
         List resultList = query.getResultList();
         Query query2 = em.createQuery("SELECT e FROM SubEvent e WHERE e.property = :property AND e.company = :company AND e.start <= :endDate AND e.end >= :startDate");
         query2.setParameter("property", spm.getPropertyById(propertyId));
-        query.setParameter("company", company);
+        query2.setParameter("company", company);
         query2.setParameter("startDate", startDate);
         query2.setParameter("endDate", endDate);
         List resultList2 = query2.getResultList();
@@ -128,6 +128,7 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
             System.out.println("check user entry 1" );
             System.out.println("check user username: " + username);
             Query q = em.createQuery("SELECT a FROM UserEntity a WHERE a.company=:company"); // WHERE a.username=:name
+            q.setParameter("company", company);
             System.out.println("check user entry 2" );
             //q.setParameter("name", username);
             //UserEntity user = (UserEntity) q.getSingleResult(); The user will be point to the real user here

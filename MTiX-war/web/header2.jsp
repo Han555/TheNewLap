@@ -152,7 +152,7 @@
                                         <ul class="dropdown-menu">
                                             <c:url var="profile" value="Controller?action=customerProfile" />
                                             <li><a href="${profile}">Profile</a></li>
-                                                <c:url var="checkout" value="Controller?action=shopCart" />
+                                                
                                                 <c:url var="checkout" value="Controller?action=shopCart" />
                                             <li><a href="${checkout}">Check Out</a></li>
                                                 <c:url var="logout" value="LogOutController" />

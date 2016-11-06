@@ -35,7 +35,7 @@ public interface RegisterSessionLocal {
 
     void createAdmin();
 
-    void adminCreateUser(String username, String password, String mobileNumber, String salt, String role);
+//    void adminCreateUser(String username, String password, String mobileNumber, String salt, String role);
 
    
 
@@ -44,6 +44,12 @@ public interface RegisterSessionLocal {
     public void createCustomer(CompanyEntity company, String username, String password, String mobileNumber, String salt, String first, String last, String birth);
 
     public CompanyEntity getCompanyEntityById(Long id);
+
+    public boolean dynamicUserCheck(String username, Long company);
+
+    public boolean checkDynamicUserComName(String username, String companyName);
+
+    public void adminCreateUser(String username, String password, String mobileNumber, String salt, String role, Long company);
 
   
     

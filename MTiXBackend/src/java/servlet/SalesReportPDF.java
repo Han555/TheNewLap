@@ -72,7 +72,7 @@ public class SalesReportPDF extends HttpServlet {
             //System.out.println(dateFormat.format(date));
 
             @SuppressWarnings("unused")
-            PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("C:/Users/Yong Jing Ying/Desktop/EventRecords.pdf"));
+            PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("/Users/catherinexiong/Desktop/EventRecords.pdf"));
             document.open();
             document.add(new Paragraph("Management Report", FontFactory.getFont(FontFactory.TIMES_BOLD, 18, Font.BOLD, BaseColor.BLUE)));
             document.add(new Paragraph("PDF created on " + dateFormat.format(date).toString() + "\n", FontFactory.getFont(FontFactory.TIMES_BOLD, 12, Font.BOLD, BaseColor.BLACK)));
@@ -210,11 +210,11 @@ public class SalesReportPDF extends HttpServlet {
             
             PrintWriter out = response.getWriter();
             String fileName = "EventRecords.pdf"; 
-            String filePath = "C:/Users/Yong Jing Ying/Desktop/";
+            String filePath = "/Users/catherinexiong/Desktop/";
             response.setContentType("APPLICATION/OCTET-STREAM");
             response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
             
-            FileInputStream fi = new FileInputStream("C:/Users/Yong Jing Ying/Desktop/EventRecords.pdf");
+            FileInputStream fi = new FileInputStream("/Users/catherinexiong/Desktop/EventRecords.pdf");
             int i;
             while((i=fi.read()) != -1){
                 out.write(i);

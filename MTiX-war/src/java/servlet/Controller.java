@@ -426,6 +426,7 @@ public class Controller extends HttpServlet {
                 if (request.getParameter("cap1").toLowerCase().equals(request.getParameter("cap2"))) {
                     if (!(registerManager.checkConflict(request.getParameter("email").trim()))) {
                         if (request.getParameter("password").equals(request.getParameter("password2"))) {
+                            //Now hard code for MTix, later need the company id passed by browser
                             CompanyEntity company = registerManager.getCompanyEntityById(Long.valueOf("1"));
                             registerManager.regisCustomer(company,request.getParameter("email").trim(), request.getParameter("password"), request.getParameter("phone"), request.getParameter("first"), request.getParameter("last"), request.getParameter("day"), request.getParameter("month"), request.getParameter("year"));
 
@@ -610,7 +611,7 @@ public class Controller extends HttpServlet {
                 List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
                 request.setAttribute("propertyData", propertyData);
                 request.setAttribute("CompanyLogo", companyLogo);
-                request.getRequestDispatcher("/bookingTickets.jsp").forward(request, response);
+                request.getRequestDispatcher("/loginCustomer.jsp").forward(request, response);
             } else if (action.equals("addToCartSuccess")) {
 
                 String username = (String) request.getSession(false).getAttribute("username");

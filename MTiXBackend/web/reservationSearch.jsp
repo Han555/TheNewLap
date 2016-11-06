@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <c:url var="formAction" value="/BackController?action=reservationSearchResult" />
+                        <c:url var="formAction" value="/BackPropertyController?action=reservationSearchResult" />
                         <form class="form-horizontal" id="formSubmit" action="${formAction}" method="post">
                             <div class="form-group" style="padding-bottom: 20px;" >
                                 <label for="eventcate" class="col-sm-2 control-label">Event Category</label>

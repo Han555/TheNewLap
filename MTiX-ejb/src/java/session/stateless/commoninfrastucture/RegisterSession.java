@@ -179,7 +179,7 @@ public class RegisterSession implements RegisterSessionLocal {
     }
 
     @Override
-    public void adminCreateUser(String username, String password, String mobileNumber, String salt, String role) {
+   public void adminCreateUser(String username, String password, String mobileNumber, String salt, String role, Long company) {
         UserEntity u = new UserEntity();
         System.out.println("admin creating 1");
         u.createAccount(username, password, mobileNumber, salt);
@@ -195,7 +195,16 @@ public class RegisterSession implements RegisterSessionLocal {
         RightsEntity right = new RightsEntity();
         right.createRight(role, dynamic);
         rights.add(right);
-        entityManager.merge(u);
+
+        Query q2 = entityManager.createQuery("SELECT c FROM CompanyEntity c WHERE c.id=" + company);
+        CompanyEntity c = new CompanyEntity();
+        
+        for(Object y: q2.getResultList()) {
+            c = (CompanyEntity) y;
+        }
+        c.getUsers().add(u);
+        u.setCompany(c);
+        entityManager.merge(c);
 
         System.out.println("admin creating 2");
         Query q = entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.username=" + "'" + username + "'");
@@ -222,6 +231,7 @@ public class RegisterSession implements RegisterSessionLocal {
          */
     }
 
+
     @Override
     public void createCustomer(CompanyEntity company,String username, String password, String mobileNumber, String salt, String first, String last, String birth) {
         try {
@@ -237,6 +247,9 @@ public class RegisterSession implements RegisterSessionLocal {
             System.out.println("====create customer: DOB: "+year1+"  CURRENT: "+year2+"age: "+age);
             u.createCustomer(company,username, password, mobileNumber, salt, first, last, age, dob, 0);
             entityManager.merge(u);
+            entityManager.flush();
+            company.getUsers().add(u);
+            entityManager.merge(company);
         } catch (java.text.ParseException ex) {
             Logger.getLogger(RegisterSession.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -268,6 +281,43 @@ public class RegisterSession implements RegisterSessionLocal {
     public CompanyEntity getCompanyEntityById(Long id){
         CompanyEntity company = entityManager.find(CompanyEntity.class,id);
         return company;
+    }
+    
+      @Override
+    public boolean dynamicUserCheck(String username, Long company) {
+        Query q = entityManager.createQuery("SELECT c FROM CompanyEntity c WHERE c.id = " + company);
+        CompanyEntity c = new CompanyEntity();
+        
+        for (Object o : q.getResultList()) {
+            c = (CompanyEntity) o;
+            for (Object t : c.getUsers()) {
+                UserEntity u = (UserEntity) t;
+                if (u.getUsername().equals(username)) {
+                    System.out.println("Entered dynamic user check if");
+                    return true;
+                }
+            }
+        }
+        entityManager.flush();
+        return false;
+    }
+
+    @Override
+    public boolean checkDynamicUserComName(String username, String companyName) {
+        Query q = entityManager.createQuery("SELECT c FROM CompanyEntity c WHERE c.companyName = " +"'" +companyName+"'");
+        CompanyEntity c = new CompanyEntity();
+        
+        for (Object o : q.getResultList()) {
+            c = (CompanyEntity) o;
+            for (Object t : c.getUsers()) {
+                UserEntity u = (UserEntity) t;
+                if (u.getUsername().equals(username)) {
+                    System.out.println("Entered dynamic user check if");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

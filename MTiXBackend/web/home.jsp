@@ -69,7 +69,13 @@
                         <img src="assets/img/faces/propertymanagement.jpg" style="width:300 px;height:300px">
                         <div class="caption">
                             <h3 style="text-align: center">Property Management System</h3>
-                            <p><c:url var="linkHref" value="/BackPropertyController?action=propertyMain" /><a href="${linkHref}" class="btn btn-primary" role="button">Enter</a> </p>
+                            <c:url var="linkHref" value="/BackPropertyController?action=propertyMain" />
+                            <form id="verifyForm" name="verifyForm" action="${linkHref}" method="post">
+                                <input type="hidden" name="username" value=<%= request.getAttribute("username")%> readonly="readonly" />
+                                <input type="hidden" name="role" value=<%= request.getAttribute("role")%> readonly="readonly" />
+                                <c:url var="formAction" value="/BackPropertyController" />
+                                <input type="submit" class="btn btn-primary" value="Enter" /> 
+                            </form>  
                         </div>
                     </div>
                 </div>
@@ -81,6 +87,7 @@
                         <div class="caption">
                             <h3 style="text-align: center">Product Management System</h3>
                             <p><c:url var="linkHref" value="/BackController?action=productMain" /><a href="${linkHref}" class="btn btn-primary" role="button">Enter</a> </p>
+                            
                         </div>
                     </div>
                 </div>

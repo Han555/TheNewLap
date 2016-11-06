@@ -71,11 +71,11 @@
                             <div class="product-box">
                                 <img src="contentImageController?id=${pList.mainFileName}" alt="${pList.propertyName}" class="align-center img-responsive" style="width:300 px;height:300px">
                                 <c:forEach items="${pRList}" var="pRList">
-                                    <c:choose>
-                                        <c:when test="${pRList.id=='${pList.id}'}">
+                                  
+                                        <c:if test="${pRList.id == pList.id}">
                                             <div class="urun-title"><span class="glyphicon glyphicon-star"></span> Recommended</div>
-                                        </c:when>
-                                    </c:choose>
+                                        </c:if>
+                                   
                                 </c:forEach>
                                 <div class="urun-text">${pList.propertyName}
                                 <div class="click-arrow-right"><c:url var="linkHref" value="/BackPropertyController?action=venueSelected&id=${pList.id}" /><a href="${linkHref}"><span class="glyphicon glyphicon-arrow-right"></span></a>

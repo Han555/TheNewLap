@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -171,12 +172,21 @@ public class BackController extends HttpServlet {
                         if (lockManager.passThrough(username)) {
                             role = loginManager.getRoles(username);
                             System.out.println("role: " + role);
-                            if (loginManager.getRoles(username).equals("super administrator") || loginManager.getRoles(username).equals("property manager") || loginManager.getRoles(username).equals("product manager") || loginManager.getRoles(username).equals("event organizer") || loginManager.getRoles(username).equals("content manager") ||  loginManager.getRoles(username).equals("finance manager") || loginManager.getRoles(username).equals("crm manager")) {
+                            if (loginManager.getRoles(username).equals("super administrator") || loginManager.getRoles(username).equals("property manager") || loginManager.getRoles(username).equals("product manager") || loginManager.getRoles(username).equals("event organizer") || loginManager.getRoles(username).equals("content manager") || loginManager.getRoles(username).equals("finance manager") || loginManager.getRoles(username).equals("crm manager")) {
                                 System.out.println("here new 1");
                                 logManager.logMessage(username + " logged in.");
                                 currentUser = username;
                                 request.setAttribute("username", username);
                                 request.setAttribute("role", role);
+                                /**
+                                 * below add for testing PAS purpose
+                                 */
+                                HttpSession session = request.getSession();
+                                session.setAttribute("company", Long.valueOf("1"));
+                                session.setMaxInactiveInterval(30 * 60);
+                                Cookie company = new Cookie("company", "1");
+                                company.setMaxAge(30 * 60);
+                                response.addCookie(company);
                                 request.getRequestDispatcher("/home.jsp").forward(request, response);
                             } else {
                                 request.setAttribute("role", "true");
@@ -268,17 +278,20 @@ public class BackController extends HttpServlet {
                 request.getRequestDispatcher("/createAccount.jsp").forward(request, response);
             } else if (action.equals("creating")) {
                 System.out.println("creating: " + request.getParameter("username") + "    " + request.getParameter("role") + "    " + request.getParameter("mobileNumber"));
-                if (registerManager.checkConflict(request.getParameter("username"))) {
+                Long companyid = (Long) request.getSession(false).getAttribute("company");
+                System.out.println("creating company id: " + companyid);
+                if (registerSession.dynamicUserCheck(request.getParameter("username"), companyid)) {
                     request.setAttribute("username", currentUser);
                     request.setAttribute("conflict", "true");
                     request.getRequestDispatcher("/createAccount.jsp").forward(request, response);
                 } else {
-                    registerManager.adminCreate(request.getParameter("username"), request.getParameter("role"), request.getParameter("mobileNumber"));
+                    registerManager.adminCreate(request.getParameter("username"), request.getParameter("role"), request.getParameter("mobileNumber"), (Long) request.getSession(false).getAttribute("company"));
                     request.setAttribute("username", currentUser);
                     request.setAttribute("created", "true");
                     request.getRequestDispatcher("/createAccount.jsp").forward(request, response);
                 }
             } else if (action.equals("home")) {
+
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
                 request.getRequestDispatcher("/home.jsp").forward(request, response);
@@ -1256,9 +1269,9 @@ public class BackController extends HttpServlet {
                 List<ArrayList> sectionData = productSession.getReservedSections(i, idType[1]);
                 Date startDate = productSession.getEventStartDate(i, idType[1]);
                 String date = (String) new SimpleDateFormat("yyyy-MM-dd").format(startDate);
-                
+
                 List<ArrayList> coordinates;
-                
+
                 if (data != null) {
                     System.out.println("GET COORDINATES");
                     coordinates = productSession.getPropertyCoordinates(Long.valueOf(data.get(0).get(5).toString()));
@@ -1266,7 +1279,7 @@ public class BackController extends HttpServlet {
                     System.out.println("LEt it be null");
                     coordinates = null;
                 }
-                
+
                 request.setAttribute("coordinates", coordinates);
                 request.setAttribute("date", date);
                 request.setAttribute("data", data);
@@ -1296,9 +1309,9 @@ public class BackController extends HttpServlet {
                 Long i = Long.valueOf(request.getParameter("id"));
                 List<ArrayList> data = productSession.getSessionReservedSections(i);
                 long propertyID = productSession.getPropertyID(i);
-                
-                 List<ArrayList> coordinates;
-                
+
+                List<ArrayList> coordinates;
+
                 if (data != null) {
                     System.out.println("GET COORDINATES");
                     coordinates = productSession.getPropertyCoordinates(propertyID);
@@ -1306,7 +1319,7 @@ public class BackController extends HttpServlet {
                     System.out.println("LEt it be null");
                     coordinates = null;
                 }
-                
+
                 request.setAttribute("coordinates", coordinates);
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
@@ -1340,7 +1353,7 @@ public class BackController extends HttpServlet {
                 List<ArrayList> data = productSession.searchEventSessions(i, idType[1]);
                 List<ArrayList> price = productSession.getSessionsPricing(i, idType[1]);
                 List<ArrayList> coordinates;
-                
+
                 if (data != null) {
                     System.out.println("GET COORDINATES");
                     coordinates = productSession.getPropertyCoordinates(Long.valueOf(data.get(0).get(5).toString()));
@@ -1555,7 +1568,7 @@ public class BackController extends HttpServlet {
                 List<ArrayList> data = productSession.searchEventSessions(i, idType[1]);
                 List<ArrayList> sectionData = productSession.getClosedSections(i, idType[1]);
                 List<ArrayList> coordinates;
-                
+
                 if (data != null) {
                     System.out.println("GET COORDINATES");
                     coordinates = productSession.getPropertyCoordinates(Long.valueOf(data.get(0).get(5).toString()));
@@ -1563,10 +1576,9 @@ public class BackController extends HttpServlet {
                     System.out.println("LEt it be null");
                     coordinates = null;
                 }
-                
+
                 request.setAttribute("coordinates", coordinates);
-                
-                
+
                 request.setAttribute("data", data);
                 request.setAttribute("sectionData", sectionData);
                 request.setAttribute("role", role);
@@ -1608,10 +1620,9 @@ public class BackController extends HttpServlet {
                 Long i = Long.valueOf(request.getParameter("id"));
                 List<ArrayList> data = productSession.getSessionClosedSections(i);
                 long propertyID = productSession.getPropertyID(i);
-                
-                
-                 List<ArrayList> coordinates;
-                
+
+                List<ArrayList> coordinates;
+
                 if (data != null) {
                     System.out.println("GET COORDINATES");
                     coordinates = productSession.getPropertyCoordinates(propertyID);
@@ -1619,10 +1630,9 @@ public class BackController extends HttpServlet {
                     System.out.println("LEt it be null");
                     coordinates = null;
                 }
-                
+
                 request.setAttribute("coordinates", coordinates);
-                
-                
+
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
                 request.setAttribute("data", data);

@@ -8,6 +8,7 @@ package servlet;
 import entity.CompanyEntity;
 import entity.Event;
 import entity.PropertyEntity;
+import entity.SectionEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -100,9 +101,16 @@ public class BackPropertyController extends HttpServlet {
             System.out.println("Action = " + action);
 
             if (action.equals("propertyMain")) {
-
+                currentUser = request.getParameter("username");
+                role = request.getParameter("role");
+                System.out.println("Current User: " + currentUser);
+                System.out.println("Role: " + role);
+                request.setAttribute("username", currentUser);
+                request.setAttribute("role", role);
                 request.getRequestDispatcher("/propertyMain.jsp").forward(request, response);
             } else if (action.equals("seatingMain")) {
+                request.setAttribute("username", currentUser);
+                request.setAttribute("role", role);
                 request.getRequestDispatcher("/seatingMain.jsp").forward(request, response);
             } else if (action.equals("createProperty")) {
 //                currentUser = request.getParameter("username");
@@ -151,7 +159,42 @@ public class BackPropertyController extends HttpServlet {
                 request.setAttribute("role", role);
                 request.getRequestDispatcher("/viewCompanyProperties.jsp").forward(request, response);
 
-            } else if (action.equals("eventReservationSearch")) {
+            } else if (action.equals("venueLayout")) {
+                String idStr = request.getParameter("id");
+                Long pid = Long.valueOf(idStr);
+                PropertyEntity property =spm.getPropertyById(pid);
+                request.setAttribute("property",property);
+                Long companyId = (Long) request.getSession(false).getAttribute("company");
+                CompanyEntity company = rem.getCompanyEntityById(companyId);
+                List<SectionEntity> sections = spm.getAllSectionsInOneProperty(pid);
+                
+                request.setAttribute("sections", sections);
+                request.setAttribute("companyName", company.getCompanyName());
+                request.setAttribute("username", currentUser);
+                request.setAttribute("role", role);
+                request.getRequestDispatcher("/venueLayout.jsp").forward(request, response);
+
+            } 
+            else if (action.equals("seatPlans")) {
+                String sidStr = request.getParameter("sid");
+                String pidStr = request.getParameter("pid");
+                System.out.println("=====seatPlans sid: "+sidStr+" pid: "+pidStr);
+                Long pid = Long.valueOf(pidStr);
+                Long sid = Long.valueOf(sidStr);
+                PropertyEntity property =spm.getPropertyById(pid);
+                SectionEntity section = spm.getSectionEntityById(sid);
+                request.setAttribute("property",property);
+                request.setAttribute("section",section);
+                String seatStr= section.getSeatMap();
+                Long companyId = (Long) request.getSession(false).getAttribute("company");
+                CompanyEntity company = rem.getCompanyEntityById(companyId);
+                request.setAttribute("seatStr",seatStr);
+                request.setAttribute("companyName", company.getCompanyName());
+                request.setAttribute("username", currentUser);
+                request.setAttribute("role", role);
+                request.getRequestDispatcher("/seatPlans.jsp").forward(request, response);
+
+            }else if (action.equals("eventReservationSearch")) {
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
                 Long companyId = (Long) request.getSession(false).getAttribute("company");

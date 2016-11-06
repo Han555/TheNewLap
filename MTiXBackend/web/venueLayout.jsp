@@ -1,8 +1,9 @@
 <%-- 
-    Document   : concertHallLayout
-    Created on : Sep 20, 2016, 4:32:07 PM
+    Document   : venueLayout
+    Created on : Nov 5, 2016, 11:54:06 PM
     Author     : catherinexiong
 --%>
+
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -13,10 +14,10 @@
 <div class="side-body">
     <div class="container">
         <div class="page-title">
-            <span class="title" style="font-size: 40px;color: #22A7F0">Merlion Concert Hall</span>
+            <span class="title" style="font-size: 40px;color: #22A7F0">${property.propertyName}</span>
         </div>
         <div class="row">
-            <img src="../MTiX-war/images/property/Concerthall_layout.png" alt="concert_layout" usemap="#image-map" >
+            <img src="contentImageController?id=${property.layoutFileName}" alt="${property.propertyName}" usemap="#image-map" >
             <map name="image-map">
                 <c:forEach items="${sections}" var="section">
                 <area data-toggle="modal" data-target="#myModal" id="${section.id}" class= "p1" alt="section${section.numberInProperty}" title="section${section.numberInProperty}" href="#" coords="${section.coords}" shape="poly">
@@ -33,7 +34,7 @@ var id = 0;
        
 //        $(".modal-header #myModalLabel").text('Detailed Seats Arrangement #' + id);
         $("#popup").html("LOADING...");
-        $("#popup").html('<iframe id="p1frame" class="embed-responsive-item" frameborder="0" src="BackPropertyController?action=seatPlans&id=' + id + '"></iframe>');
+        $("#popup").html('<iframe id="p1frame" class="embed-responsive-item" frameborder="0" src="http://localhost:8080/MTiXBackend/seatPlans.jsp?sid=' + id + '&pid='+${property.id}+'"></iframe>');
         
         //console.log('"http://localhost:8080/MTiX-war/seat.jsp?id=' + id + '"');
     });
@@ -55,7 +56,7 @@ var id = 0;
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">OK</button>
+<!--                    <button type="button" class="btn btn-primary">OK</button>-->
                 </div>
             </div>
         </div>
