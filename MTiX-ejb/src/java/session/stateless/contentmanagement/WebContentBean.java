@@ -5,6 +5,7 @@
  */
 package session.stateless.contentmanagement;
 
+import entity.CompanyEntity;
 import entity.CompanyProfile;
 import entity.Event;
 import entity.Promotion;
@@ -182,7 +183,7 @@ public class WebContentBean implements WebContentBeanLocal {
             OutputStream out = null;
             InputStream filecontent = null;
 
-            out = new FileOutputStream(new File("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            out = new FileOutputStream(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName + "." + ext));
             filecontent = filePart.getInputStream();
 
@@ -325,7 +326,7 @@ public class WebContentBean implements WebContentBeanLocal {
                 webContentEntity.create(eventTitle, synopsis, fileName + "." + ext, details, rules, programDetails, startDate, endDate);
             }
 
-            Path path = Paths.get("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            Path path = Paths.get("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName + "." + ext);
             Files.delete(path);
             Thread.sleep(1000);
@@ -334,7 +335,7 @@ public class WebContentBean implements WebContentBeanLocal {
             OutputStream out = null;
             InputStream filecontent = null;
 
-            out = new FileOutputStream(new File("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            out = new FileOutputStream(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName + "." + ext));
             filecontent = filePart.getInputStream();
 
@@ -374,7 +375,7 @@ public class WebContentBean implements WebContentBeanLocal {
                 webContentEntity = subevent.getContent();
             }
 
-            Path path = Paths.get("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            Path path = Paths.get("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + webContentEntity.getFileName());
             Files.delete(path);
             Thread.sleep(1000);
@@ -387,7 +388,7 @@ public class WebContentBean implements WebContentBeanLocal {
 
     }
 
-    public List<ArrayList> geWebpageList() {
+    public List<ArrayList> geWebpageList(Long companyid) {
         Query q = em.createQuery("SELECT a FROM WebContentEntity a");
 
         List<ArrayList> webPageList = new ArrayList();
@@ -399,17 +400,21 @@ public class WebContentBean implements WebContentBeanLocal {
             em.refresh(webpage);
 
             if (!webpage.getReviewWebsite()) { //webpage that has yet to reivewed by manager 
-                list.add(webpage.getId()); //0
-                if (webpage.getEvent() != null) {
+                if (webpage.getEvent() != null && webpage.getEvent().getCompany().getId().toString().equals(String.valueOf(companyid))) {
+                    list.add(webpage.getId()); //0
                     list.add(webpage.getEvent().getName()); //1
-                } else {
-                    list.add(webpage.getSubevent().getName()); //2
+                    list.add(webpage.getEventTitle()); //2
+                    list.add((String) new SimpleDateFormat("yyyy-MM-dd").format(webpage.getStart())); //3
+
+                    webPageList.add(list);
+                } else if (webpage.getSubevent() != null && webpage.getSubevent().getCompany().getId().toString().equals(String.valueOf(companyid))) {
+                    list.add(webpage.getId()); //0
+                    list.add(webpage.getSubevent().getName()); //1
+                    list.add(webpage.getEventTitle()); //2
+                    list.add((String) new SimpleDateFormat("yyyy-MM-dd").format(webpage.getStart())); //3
+
+                    webPageList.add(list);
                 }
-
-                list.add(webpage.getEventTitle()); //3
-                list.add((String) new SimpleDateFormat("yyyy-MM-dd").format(webpage.getStart())); //4
-
-                webPageList.add(list);
             }
         }
 
@@ -512,32 +517,20 @@ public class WebContentBean implements WebContentBeanLocal {
     }
 
     @Override
-    public void createCompanyWebpage(Part filePart, String mission, String vision, String aboutUs, String contactDetails, String career, String otherDetails, String ext) {
+    public void createCompanyWebpage(Part filePart, String mission, String vision, String aboutUs, String contactDetails, String career, String otherDetails, String ext, long companyid) {
         try {
-
-            //Link it to super admin 
-            Query q = em.createQuery("SELECT a FROM UserEntity a");
-            UserEntity companySuperAdmin = new UserEntity();
-
-            for (Object o : q.getResultList()) {
-                companySuperAdmin = (UserEntity) o;
-                em.refresh(companySuperAdmin);
-                for (int i = 0; i < companySuperAdmin.getRoles().size(); i++) {
-                    if (companySuperAdmin.getRoles().get(i).equals("super administrator")) {
-                        break;
-                    }
-                }
-            }
-
             CompanyProfile profile = new CompanyProfile();
+            
+            CompanyEntity companyEntity = em.find(CompanyEntity.class, companyid);
+            em.refresh(companyEntity);
 
-            String fileName = "company_" + companySuperAdmin.getUserId() + "." + ext; //Need to plus user*
+            String fileName = "company_" + companyEntity.getId() + "." + ext; //Need to plus user*
 
             //Store the file into system
             OutputStream out = null;
             InputStream filecontent = null;
 
-            out = new FileOutputStream(new File("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            out = new FileOutputStream(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName));
             filecontent = filePart.getInputStream();
 
@@ -558,33 +551,22 @@ public class WebContentBean implements WebContentBeanLocal {
             profile.setMission(mission);
             profile.setOtherDetails(otherDetails);
             profile.setVision(vision);
-            profile.setUser(companySuperAdmin);
+            profile.setCompany(companyEntity);
             em.persist(profile);
 
-            companySuperAdmin.setCompanyProfile(profile);
+            companyEntity.setProfile(profile);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     @Override
-    public ArrayList getCompanyInfo() {//Link it to super admin 
-        Query q = em.createQuery("SELECT a FROM UserEntity a");
-        UserEntity companySuperAdmin = new UserEntity();
-
-        //Get the company super admin and find out the company content link to it. 
-        for (Object o : q.getResultList()) {
-            companySuperAdmin = (UserEntity) o;
-            em.refresh(companySuperAdmin);
-            for (int i = 0; i < companySuperAdmin.getRoles().size(); i++) {
-                if (companySuperAdmin.getRoles().get(i).equals("super administrator")) {
-                    break;
-                }
-            }
-        }
+    public ArrayList getCompanyInfo(long companyid) {//Link it to super admin 
+       CompanyEntity companyEntity = em.find(CompanyEntity.class, companyid);
+            em.refresh(companyEntity);
 
         ArrayList data = new ArrayList();
-        CompanyProfile company = companySuperAdmin.getCompanyProfile();
+        CompanyProfile company = companyEntity.getProfile();
 
         data.add(company.getId()); //0
         data.add(company.getAboutUs()); //1
@@ -605,7 +587,7 @@ public class WebContentBean implements WebContentBeanLocal {
 
             String fileName = companyProfile.getFileName(); 
             
-            Path path = Paths.get("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            Path path = Paths.get("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName);
             Files.delete(path);
             Thread.sleep(1000);
@@ -614,7 +596,7 @@ public class WebContentBean implements WebContentBeanLocal {
             OutputStream out = null;
             InputStream filecontent = null;
 
-            out = new FileOutputStream(new File("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            out = new FileOutputStream(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName));
             filecontent = filePart.getInputStream();
 
@@ -638,6 +620,17 @@ public class WebContentBean implements WebContentBeanLocal {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+    
+    @Override
+    public boolean hasCompanyContent(long companyid){
+        CompanyEntity companyEntity = em.find(CompanyEntity.class, companyid);
+            em.refresh(companyEntity);
+            if (companyEntity.getProfile() != null)
+                return true;
+            else 
+                return false;
+
     }
     
 

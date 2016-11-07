@@ -20,6 +20,7 @@
         List<ArrayList> data = (List<ArrayList>) request.getAttribute("data");
         List<ArrayList> price = (List<ArrayList>) request.getAttribute("price");
         List<ArrayList> coordinates = (List<ArrayList>) request.getAttribute("coordinates");
+        String filename = request.getAttribute("filename").toString();
     %>
 
     <c:url var="formAction" value="/BackController?action=seatsPriceCreated" />
@@ -45,7 +46,6 @@
                         output += "CAT" + j + " | ";
                     }
                     output += "Seats Option";
-                    String x = data.get(0).get(5).toString();
                 %>
                 <table>
                     <tr>
@@ -70,13 +70,8 @@
                         <td>&nbsp</td> 
                     </tr>
                 </table>
-                <%  if (x.equals("1")) {%>
-                <img id="shape1" src="img/property/Concerthall_layout.png" style="width:100%; height: 100%;" usemap="#concertHall" alt="" />
-                <map name="concertHall" id="concertHall">
-                    <%} else {%>
-                    <img id="shape1" src="img/property/Theatre.png" style="width:100%; height: 100%;" usemap="#theatre" alt="" />
-                    <map name="theatre" id="theatre">
-                        <%}%>
+                    <img id="shape1" src="contentImageController?id=<%=filename%>" style="width:100%; height: 100%;" usemap="#property" alt="" />
+                    <map name="property" id="property">
                         <area shape="rect" alt="Image Map" style="outline:none;" title="Image Map"/>
                         <%for (int i = 0; i < coordinates.size(); i++) {
                                 if (storedCategory != Integer.valueOf(coordinates.get(i).get(2).toString())) { //Check the first id for the first category
@@ -160,7 +155,7 @@
                             <td align="right">Seats Option : &nbsp</td>
                             <td><select class="form-control" required="true" id="seatsOption" name="seatsOption">
                                     <option value="Free Seating">Free Seating</option>
-                                    <option value="Fix Seating">Fix Seating within Sector</option>
+                                    <option value="Fix Seating">Free Seating within Sector</option>
                                 </select></td>
                         </tr>
                         <tr>

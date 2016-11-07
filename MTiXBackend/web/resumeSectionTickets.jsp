@@ -20,6 +20,7 @@
         List<ArrayList> data = (List<ArrayList>) request.getAttribute("data");
         String property = request.getAttribute("propertyID").toString();
         List<ArrayList> coordinates = (List<ArrayList>) request.getAttribute("coordinates");
+        String filename = request.getAttribute("filename").toString();
     %>
     <c:url var="formAction" value="/BackController?action=resumedTickets" />
     <div class="side-body padding-top">
@@ -34,29 +35,23 @@
                 <div align="center"><h3>No Closed Section Found!</h3></div><br><br>
                 <%} else {
                 %>
-                <%  if (property.equals("1")) {%>
-                <img id="shape1" src="img/property/ConcerthallNo.png" style="width:100%; height: 100%;" usemap="#concertHall" alt="" />
-                <map name="concertHall" id="concertHall">
-                    <%} else {%>
-                    <img id="shape1" src="img/property/TheatreNo.png" style="width:100%; height: 100%;" usemap="#theatre" alt="" />
-                    <map name="theatre" id="theatre">
-                        <%}%>
-
-                        <area shape="rect" alt="Image Map" style="outline:none;" title="Image Map"/>
-                        <%for (int i = 0; i < coordinates.size(); i++) {
-                        %>
-                        <area id="Seat_<%=coordinates.get(i).get(1)%>" onclick="openNav(<%=coordinates.get(i).get(1)%>)" alt="<%=coordinates.get(i).get(1)%>" title="Seat_<%=coordinates.get(i).get(1)%>" color="<%=coordinates.get(i).get(2)%>" href="#" shape="poly" coords="<%=coordinates.get(i).get(0)%>" style="outline:none;" target="_self"/>
-                        <%}%>
-                    </map>
-                    <script lang="javascript">
-                        $(document).ready(function () {
-                            $('#shape1').mapster({
-                                singleSelect: false,
-                                fillColor: 'ff000c',
-                                fillOpacity: 0.5
-                            });
+                <img id="shape1" src="contentImageController?id=<%=filename%>" style="width:100%; height: 100%;" usemap="#property" alt="" />
+                <map name="property" id="property">
+                    <area shape="rect" alt="Image Map" style="outline:none;" title="Image Map"/>
+                    <%for (int i = 0; i < coordinates.size(); i++) {
+                    %>
+                    <area id="Seat_<%=coordinates.get(i).get(1)%>" onclick="openNav(<%=coordinates.get(i).get(1)%>)" alt="<%=coordinates.get(i).get(1)%>" title="Seat_<%=coordinates.get(i).get(1)%>" color="<%=coordinates.get(i).get(2)%>" href="#" shape="poly" coords="<%=coordinates.get(i).get(0)%>" style="outline:none;" target="_self"/>
+                    <%}%>
+                </map>
+                <script lang="javascript">
+                    $(document).ready(function () {
+                        $('#shape1').mapster({
+                            singleSelect: false,
+                            fillColor: 'ff000c',
+                            fillOpacity: 0.5
                         });
-                    </script>
+                    });
+                </script>
             </div>
             <div class="col-md-6">
                 <table align="center">

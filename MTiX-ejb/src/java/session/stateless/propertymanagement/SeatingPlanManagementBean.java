@@ -124,7 +124,7 @@ public class SeatingPlanManagementBean implements SeatingPlanManagementBeanLocal
             OutputStream out1 = null;
             InputStream filecontent1 = null;
 
-            out1 = new FileOutputStream(new File("/Users/catherinexiong/Desktop/contentManagement" + File.separator
+            out1 = new FileOutputStream(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName1 + "." + ext1));
             filecontent1 = propertyMain.getInputStream();
 
@@ -140,7 +140,7 @@ public class SeatingPlanManagementBean implements SeatingPlanManagementBeanLocal
             OutputStream out2 = null;
             InputStream filecontent2 = null;
 
-            out2 = new FileOutputStream(new File("/Users/catherinexiong/Desktop/contentManagement" + File.separator
+            out2 = new FileOutputStream(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName2 + "." + ext2));
             filecontent2 = propertyLayout.getInputStream();
 
@@ -156,7 +156,7 @@ public class SeatingPlanManagementBean implements SeatingPlanManagementBeanLocal
             OutputStream out3 = null;
             InputStream filecontent3 = null;
 
-            out3 = new FileOutputStream(new File("/Users/catherinexiong/Desktop/contentManagement" + File.separator
+            out3 = new FileOutputStream(new File("C:/Users/Yong Jing Ying/Desktop/contentManagement" + File.separator
                     + fileName3 + "." + ext3));
             filecontent3 = data.getInputStream();
 

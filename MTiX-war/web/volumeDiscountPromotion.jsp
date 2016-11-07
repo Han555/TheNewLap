@@ -18,6 +18,7 @@
 <div class="container">
     <%
         List<ArrayList> data = (List<ArrayList>) request.getAttribute("data");
+        String companyname = request.getAttribute("companyname").toString();
     %>
     <div class="row">
         <div class="col-md-1">
@@ -42,7 +43,7 @@
             <p><h5><b>Promotion Requirement : </b><%=data.get(i).get(5)%></h5></p>
             <p><h5><b>Promotion Discount Rate : </b><%=data.get(i).get(2)%></h5></p>
             <p><h5><b>Promotion Description : </b><%=data.get(i).get(1)%></h5></p>
-            <a href="/MTiX-war/ContentController/MTiX/viewEventWebpage/<%=data.get(i).get(4)%>/<%=data.get(i).get(3).toString().replaceAll("\\s","")%>"><button type="button" class="btn btn-info" style="width: 250px">View Event Webpage</button></a>
+            <a href="/MTiX-war/ContentController/<%=companyname%>/viewEventWebpage/<%=data.get(i).get(4)%>/<%=data.get(i).get(3).toString().replaceAll("\\s","")%>"><button type="button" class="btn btn-info" style="width: 250px">View Event Webpage</button></a>
         </div></div><br>
     <%}}%>
 </div>

@@ -5,6 +5,7 @@
  */
 package session.stateless.commoninfrastucture;
 
+import entity.CompanyEntity;
 import entity.SectionEntity;
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,11 +84,15 @@ public interface ProductSessionLocal {
 
     public List<ArrayList> getAlerts(long id, String type);
 
-    public ArrayList getEventOrganizersEmail();
+    public ArrayList getEventOrganizersEmail(CompanyEntity company);
 
     public List<ArrayList> getEventSessionNo();
 
     public List<ArrayList> getPropertyCoordinates(long id);
+
+    public String getPropertyFileNameWithoutNo(Long id);
+
+    public String getPropertyFileNameWithNo(Long id);
     
   
 

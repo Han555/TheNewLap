@@ -14,6 +14,9 @@
 <!-- Main Content -->
 <!-- Main Content -->
 <div class="container-fluid">
+    <%
+        String hascompanycontent = request.getAttribute("hascompanycontent").toString();
+    %>
     <div class="side-body padding-top">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
@@ -30,6 +33,7 @@
                     </div>
                 </a>
             </div>
+            <%if (hascompanycontent.equals("false")) { %>
             <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
                 <c:url var="linkHref" value="/ContentBackController?action=createCompanyContent" />
                 <a href="${linkHref}">
@@ -43,9 +47,7 @@
                         </div>
                     </div>
                 </a>
-            </div>
-        </div>
-        <div class="row">
+            </div><%} else {%>
             <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
                 <c:url var="linkHref" value="/ContentBackController?action=editCompanyContent" />
                 <a href="${linkHref}">
@@ -60,6 +62,7 @@
                     </div>
                 </a>
             </div>
+            <%}%>
         </div>
     </div>
 

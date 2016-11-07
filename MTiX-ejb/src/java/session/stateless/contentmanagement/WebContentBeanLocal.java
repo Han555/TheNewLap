@@ -33,16 +33,18 @@ public interface WebContentBeanLocal {
 
     public void deleteEventWebpage(String id, String type);
 
-    public List<ArrayList> geWebpageList();
+    public List<ArrayList> geWebpageList(Long companyid);
 
     public ArrayList reviewWebpageInfo(String id);
 
     public void webpageReviewed(String id, String review, String apply);
     
-    public void createCompanyWebpage(Part filePart, String mission, String vision, String aboutUs, String contactDetails, String career, String otherDetails, String ext);
+    public void createCompanyWebpage(Part filePart, String mission, String vision, String aboutUs, String contactDetails, String career, String otherDetails, String ext, long companyid);
 
-    public ArrayList getCompanyInfo();
+    public ArrayList getCompanyInfo(long companyid);
 
     public void editCompanyWebpage(long id, Part filePart, String mission, String vision, String aboutUs, String contactDetails, String career, String otherDetails, String ext);
+
+    public boolean hasCompanyContent(long companyid);
 
 }

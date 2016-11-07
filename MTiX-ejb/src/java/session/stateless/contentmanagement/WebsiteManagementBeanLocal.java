@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface WebsiteManagementBeanLocal {
 
-    public List<ArrayList> getWebpageList();
+    public List<ArrayList> getWebpageList(String companyName);
 
     public ArrayList getEventWebpageInfo(String id);
 
@@ -24,26 +24,26 @@ public interface WebsiteManagementBeanLocal {
 
     public List<ArrayList> getEventPromotionInfo(String id);
 
-    public List<ArrayList> getCreditCardEvents();
+    public List<ArrayList> getCreditCardEvents(String company);
 
-    public List<ArrayList> getVolumeDiscountEvents();
+    public List<ArrayList> getVolumeDiscountEvents(String company);
 
-    public List<ArrayList> getWebpageListByType(String type);
+    public List<ArrayList> getWebpageListByType(String type, String companyname);
 
-    public String getCompanyLogo();
+    public String getCompanyLogo(String companyName);
 
-    public ArrayList getCompanyInfo();
+    public ArrayList getCompanyInfo(String companyName);
 
-    public List<ArrayList> getEventConcert(String type);
+    public List<ArrayList> getEventConcert(String type, String company);
 
-    public List<ArrayList> getAllPropertyName();
+    public List<ArrayList> getAllPropertyName(String company);
 
     public List<ArrayList> getPropertyEvents(String id);
 
     public String getPropertyName(Long id);
 
-    public List<ArrayList> searchEngineBasedOnTypes(String keyword);
+    public List<ArrayList> searchEngineBasedOnTypes(String keyword, String company);
 
-    public List<ArrayList> searchEvents(String keyword);
+    public List<ArrayList> searchEvents(String keyword, String company);
     
 }

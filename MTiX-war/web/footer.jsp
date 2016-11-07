@@ -1,5 +1,6 @@
 <div class="foot-top">
 	<div class="container">
+            <%String companyName = request.getAttribute("companyname").toString(); %>
 		<div class="col-md-6 s-c">
 			<li>
 				<div class="fooll">
@@ -43,7 +44,7 @@
 	<div class="container">
             <div class="col-md-3 abt">
 			<h4>ABOUT US</h4>
-				<li><a href="/MTiX-war/ContentController/MTiX/companyStory">Company Information</a></li>
+				<li><a href="/MTiX-war/ContentController/<%=companyName%>/companyStory">Company Information</a></li>
                 </div>
 		<div class="col-md-2 cust">
 			<h4>CUSTOMER CARE</h4>

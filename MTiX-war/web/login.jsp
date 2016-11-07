@@ -24,7 +24,7 @@
     <body>
 
 
-        <c:url var="formAction" value="ContentController/MTIX/Home" />
+        <c:url var="formAction" value="ContentController/MTiX/Home" />
         <div class="container">
             <section id="content">
 

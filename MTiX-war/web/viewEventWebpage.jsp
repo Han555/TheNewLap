@@ -28,6 +28,7 @@
         ArrayList data = (ArrayList) request.getAttribute("data");
         List<ArrayList> sessions = (List<ArrayList>) request.getAttribute("sessions");
         List<ArrayList> promotions = (List<ArrayList>) request.getAttribute("promotions");
+        String companyName = request.getAttribute("companyname").toString();
     %>
     <div class="row">
         <!--        <div class="col-md-1">
@@ -96,7 +97,7 @@
                  border-radius: 2px 2px 2px 2px;">
 
                 <%if (sessions.size() != 0) {%>
-                <a href="/MTiX-war/Controller?action=bookTicket&id=<%=data.get(14)%>"><button type="button" class="btn btn-info" style="margin-top:20px;margin-left:25px;width: 200px">Buy Ticket</button></a>
+                    <a href="/MTiX-war/Controller?action=bookTicket&company=<%=companyName%>&id=<%=data.get(14)%>"><button type="button" class="btn btn-info" style="margin-top:20px;margin-left:25px;width: 200px">Buy Ticket</button></a>
                 <%}%>
                 <p><br></p>
                 <div style="margin-left:20px;margin-bottom:20px" ><b>Event Name</b><br><%=data.get(9)%></div>
@@ -120,13 +121,13 @@
                 var str = "";
                 var x = $('#eventType').val();
                 $.ajax({
-                    url: "/MTiX-war/ContentEventTypeController?type=" + "<%=data.get(15)%>",
+                    url: "/MTiX-war/ContentEventTypeController?type=" + "<%=data.get(15)%>" + "&company=<%=companyName%>",
                     success: function (result) {
                         eventList = result;
                         for (var i = 1; i <= result.length; i++) {
                             if (result[i - 1].id != <%=data.get(0).toString()%>) {
                                 str += "<div class=\"card-body \"> <div class=\"col-md-4 \"><div class=\"image\">";
-                                str += "<a href=\"/MTiX-war/ContentController/MTiX/viewEventWebpage/" + result[i - 1].id + "/" + result[i - 1].linkName + "\"><img src=\"/MTiX-war/ContentImageController?id=" + result[i - 1].fileName + "\" width=\"150px\" height=\"150px\"></a>";
+                                str += "<a href=\"/MTiX-war/ContentController/<%=companyName%>/viewEventWebpage/" + result[i - 1].id + "/" + result[i - 1].linkName + "\"><img src=\"/MTiX-war/ContentImageController?id=" + result[i - 1].fileName + "\" width=\"150px\" height=\"150px\"></a>";
                                 str += "<h6>" + result[i - 1].eventTitle + "</h6></div></div>";
                                 if (i % no == 0) {
                                     str += "</div><div class=\"card-body \">"

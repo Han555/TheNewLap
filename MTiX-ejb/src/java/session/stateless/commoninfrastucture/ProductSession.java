@@ -6,6 +6,7 @@
 package session.stateless.commoninfrastucture;
 
 import entity.Alert;
+import entity.CompanyEntity;
 import javax.ejb.Stateless;
 import entity.Event;
 import entity.Promotion;
@@ -1534,9 +1535,10 @@ public class ProductSession implements ProductSessionLocal {
     }
     
     @Override
-    public ArrayList getEventOrganizersEmail(){
+    public ArrayList getEventOrganizersEmail(CompanyEntity company){
         ArrayList userEmail = new ArrayList();
-        Query q = em.createQuery("SELECT a FROM UserEntity a");
+        Query q = em.createQuery("SELECT a FROM UserEntity a WHERE a.company.id=:id");
+        q.setParameter("id", company.getId());
         boolean isEventOrganizer = false;
         for (Object o: q.getResultList()){
             UserEntity user = (UserEntity) o;
@@ -1603,5 +1605,19 @@ public class ProductSession implements ProductSessionLocal {
         }
         
         return property;
+    }
+    
+    @Override
+    public String getPropertyFileNameWithoutNo (Long id){
+        PropertyEntity propertyEntity = em.find(PropertyEntity.class, id);
+        em.refresh(propertyEntity);
+        return propertyEntity.getMainFileName();
+    }
+    
+    @Override
+    public String getPropertyFileNameWithNo (Long id){
+        PropertyEntity propertyEntity = em.find(PropertyEntity.class, id);
+        em.refresh(propertyEntity);
+        return propertyEntity.getLayoutFileName();
     }
 }

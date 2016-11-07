@@ -20,6 +20,7 @@
         List<ArrayList> data = (List<ArrayList>) request.getAttribute("data");
         String property = request.getAttribute("propertyID").toString();
         List<ArrayList> coordinates = (List<ArrayList>) request.getAttribute("coordinates");
+        String filename = request.getAttribute("filename").toString();
     %>
     <c:url var="formAction" value="/BackController?action=deletedTickets" />
     <div class="side-body padding-top">
@@ -34,14 +35,8 @@
                 <div align="center"><h3>No Reserved Section Found!</h3></div><br><br>
                 <%} else {
                 %>
-                <%  if (property.equals("1")) {%>
-                <img id="shape1" src="img/property/ConcerthallNo.png" style="width:100%; height: 100%;" usemap="#concertHall" alt="" />
-                <map name="concertHall" id="concertHall">
-                    <%} else {%>
-                    <img id="shape1" src="img/property/TheatreNo.png" style="width:100%; height: 100%;" usemap="#theatre" alt="" />
-                    <map name="theatre" id="theatre">
-                        <%}%>
-
+                <img id="shape1" src="contentImageController?id=<%=filename%>" style="width:100%; height: 100%;" usemap="#property" alt="" />
+                    <map name="property" id="property">
                         <area shape="rect" alt="Image Map" style="outline:none;" title="Image Map"/>
                         <%for (int i = 0; i < coordinates.size(); i++) {
                         %>

@@ -78,9 +78,6 @@ public class UserEntity implements Serializable {
     @OneToMany
     private Collection<LicensePaymentEntity> licensePayments = new ArrayList<LicensePaymentEntity>();
 
-    @OneToOne(orphanRemoval = true, mappedBy = "user")
-    private CompanyProfile companyProfile;
-    
     @OneToMany
     private Collection<TicketTakingsEntity> ticketTakings = new ArrayList<TicketTakingsEntity> ();
     
@@ -278,14 +275,6 @@ public class UserEntity implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public CompanyProfile getCompanyProfile() {
-        return companyProfile;
-    }
-
-    public void setCompanyProfile(CompanyProfile companyProfile) {
-        this.companyProfile = companyProfile;
     }
 
     @Override

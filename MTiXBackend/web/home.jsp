@@ -170,6 +170,7 @@
                             <form id="verifyForm" name="verifyForm" action="${formAction}" method="post">
                                 <input type="hidden" name="username" value=<%= request.getAttribute("username")%> readonly="readonly" />
                                 <input type="hidden" name="role" value=<%= request.getAttribute("role")%> readonly="readonly" />
+                                 <input type="hidden" name="company" value=<%= session.getAttribute("company")%> readonly="readonly" />
                                 <c:url var="formAction" value="/ContentBackController" />
                                 <input type="submit" class="btn btn-primary" value="Enter" /> 
                             </form>  

@@ -36,7 +36,7 @@
                                 <%
                                     if (data.size() == 0) {
                                 %>
-                                <div align="center"><h5>No Event Found! / You have created webpage for all the events</h5></div><br><br>
+                                <div align="center"><h5>Currently, there is no events associated to your account! / You have created webpage for all the events</h5></div><br><br>
                                 <%} else {
                                 %>
                                 <table id="table" class="table table-hover">

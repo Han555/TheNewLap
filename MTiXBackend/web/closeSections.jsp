@@ -20,6 +20,7 @@
         List<ArrayList> data = (List<ArrayList>) request.getAttribute("data"); //sessionData
         List<ArrayList> sectionData = (List<ArrayList>) request.getAttribute("sectionData"); //SectionData
         List<ArrayList> coordinates = (List<ArrayList>) request.getAttribute("coordinates");
+        String filename = request.getAttribute("filename").toString();
     %>
 
     <c:url var="formAction" value="/BackController?action=closedSections" />
@@ -40,13 +41,8 @@
                     <div class="header">
                         <h4 class="title">Close Sections</h4>   
                     </div> 
-                     <%  if (x.equals("1")) {%>
-                    <img id="shape1" src="img/property/ConcerthallNo.png" style="width:100%; height: 100%;" usemap="#concertHall" alt="" />
-                    <map name="concertHall" id="concertHall">
-                        <%} else {%>
-                        <img id="shape1" src="img/property/TheatreNo.png" style="width:100%; height: 100%;" usemap="#theatre" alt="" />
-                        <map name="theatre" id="theatre">
-                            <%}%>
+                     <img id="shape1" src="contentImageController?id=<%=filename%>" style="width:100%; height: 100%;" usemap="#property" alt="" />
+                        <map name="property" id="property">
                             <area shape="rect" alt="Image Map" style="outline:none;" title="Image Map"/>
                             <%for (int i = 0; i < coordinates.size(); i++) {
                                     storeSection.add("#Seat_" + coordinates.get(i).get(1));

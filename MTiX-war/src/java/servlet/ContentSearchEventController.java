@@ -21,9 +21,10 @@ import session.stateless.contentmanagement.WebsiteManagementBeanLocal;
  *
  * @author JingYing
  */
-@WebServlet(name = "ContentSearchEventController", urlPatterns = {"/ContentSearchEventController"})
+@WebServlet(name = "ContentSearchEventController", urlPatterns = {"/ContentSearchEventController", "/ContentSearchEventController/*"})
 public class ContentSearchEventController extends HttpServlet {
-     @EJB
+
+    @EJB
     private WebsiteManagementBeanLocal webManagementBean;
 
     /**
@@ -37,20 +38,26 @@ public class ContentSearchEventController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String requestURL = request.getRequestURI();
+        String url[] = requestURL.split("/");
+        String companyname = url[3];
+        System.out.println(requestURL);
+        System.out.println("kkkkkkkkkk" + companyname);
         
-            String keyword = request.getParameter("search");;
-            String companyLogo = webManagementBean.getCompanyLogo();
-            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-            
-            List<ArrayList> byTypes = webManagementBean.searchEngineBasedOnTypes(keyword);
-            List<ArrayList> byEvents = webManagementBean.searchEvents(keyword);
-            
-            System.out.println("BY EVENT SIZE IS " + byEvents.size());
-            request.setAttribute("byTypes", byTypes);
-            request.setAttribute("byEvents", byEvents);
-            request.setAttribute("propertyData", propertyData);
-            request.setAttribute("CompanyLogo", companyLogo);
-            request.getRequestDispatcher("/searchEngine.jsp").forward(request, response); 
+        String keyword = request.getParameter("search");
+        String companyLogo = webManagementBean.getCompanyLogo(companyname);
+        List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+
+        List<ArrayList> byTypes = webManagementBean.searchEngineBasedOnTypes(keyword, companyname);
+        List<ArrayList> byEvents = webManagementBean.searchEvents(keyword, companyname);
+
+        System.out.println("BY EVENT SIZE IS " + byEvents.size());
+        request.setAttribute("byTypes", byTypes);
+        request.setAttribute("byEvents", byEvents);
+        request.setAttribute("propertyData", propertyData);
+        request.setAttribute("companyname", companyname);
+        request.setAttribute("CompanyLogo", companyLogo);
+        request.getRequestDispatcher("/searchEngine.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

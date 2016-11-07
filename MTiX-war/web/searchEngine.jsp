@@ -16,6 +16,7 @@
      <%
         List<ArrayList> byTypes = (List<ArrayList>) request.getAttribute("byTypes");
         List<ArrayList> byEvents = (List<ArrayList>) request.getAttribute("byEvents");
+        String companyName = request.getAttribute("companyname").toString();
     %>
     <div class="row">
     <div class="panel panel-default col-lg-4" style="box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
@@ -77,7 +78,7 @@
             for (int i = 0; i < byEvents.size(); i++){ %>
             <div class="row">
                 <div class="col-md-4" style="margin-top:15px">
-                    <a href="/MTiX-war/ContentController/MTiX/viewEventWebpage/<%=byEvents.get(i).get(0)%>/<%=byEvents.get(i).get(1).toString().replaceAll("\\s","")%>"><img src="/MTiX-war/ContentImageController?id=<%=byEvents.get(i).get(2) %>" width="150px" height="150px"></a></div>
+                    <a href="/MTiX-war/ContentController/<%=companyName%>/viewEventWebpage/<%=byEvents.get(i).get(0)%>/<%=byEvents.get(i).get(1).toString().replaceAll("\\s","")%>"><img src="/MTiX-war/ContentImageController?id=<%=byEvents.get(i).get(2) %>" width="150px" height="150px"></a></div>
                     <div class="col-md-3" style="margin-top:15px"><p><%=byEvents.get(i).get(1)%></p></div>
                     <div class="col-md-3" style="margin-top:15px"><p><%=byEvents.get(i).get(3)%></p></div>
                     <div class="col-md-2" style="margin-top:15px"><p><%=byEvents.get(i).get(4)%></p></div>

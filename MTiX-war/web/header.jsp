@@ -78,6 +78,7 @@
         <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
         <% String fileName = request.getAttribute("CompanyLogo").toString();
             List<ArrayList> propertyData = (List<ArrayList>) request.getAttribute("propertyData");
+            String companyName = request.getAttribute("companyname").toString();
         %>
     </head>
     <body>
@@ -155,7 +156,7 @@
                 <div class="header">
                     <div class="head-t">
                         <div class="logo">
-                            <a href="/MTiX-war/ContentController/MTiX/Home"><img src="/MTiX-war/ContentImageController?id=<%=fileName%>" style="width:60px;height:60px;" class="img-responsive" alt=""/> </a>
+                            <a href="/MTiX-war/ContentController/<%=companyName%>/Home"><img src="/MTiX-war/ContentImageController?id=<%=fileName%>" style="width:60px;height:60px;" class="img-responsive" alt=""/> </a>
                         </div>
                         <!--		<div class="logo">
                                                 <a href="index.html"><img src="images/sistic.png" style="width:80px;height:80px;" class="img-responsive" alt=""/> </a>
@@ -167,11 +168,11 @@
                             <div class="rgt-bottom" style="margin-top:40px;">
 
                                 <div class="reg" style="float:right">
-                                    <a href="/MTiX-war/Controller?action=loginCustomer"><span style=" color:#696763;">&nbsp&nbspREGISTER</span></a>
+                                    <a href="/MTiX-war/Controller?action=loginCustomer&company=<%=companyName%>"><span style=" color:#696763;">&nbsp&nbspREGISTER</span></a>
                                 </div>
                                 <div class="reg" style="float:right" >
                                     <div class="login"  >
-                                        <div id="loginContainer"><a href="/MTiX-war/Controller?action=loginCustomer" ><span style=" color:#696763;text-align:center;">Login</span></a>
+                                        <div id="loginContainer"><a href="/MTiX-war/Controller?action=loginCustomer&company=<%=companyName%>" ><span style=" color:#696763;text-align:center;">Login</span></a>
 
                                         </div>
                                     </div>
@@ -179,7 +180,7 @@
 
                                 <div class="clearfix"> </div>
                             </div>
-                            <div><form action="/MTiX-war/ContentSearchEventController" class="search-form">
+                            <div><form action="/MTiX-war/ContentSearchEventController/<%=companyName%>" class="search-form">
                                     <div class="form-group has-feedback">
                                         <label for="search" class="sr-only">Search</label>
                                         <input type="text" class="form-control" name="search" id="search" placeholder="search">
@@ -258,7 +259,7 @@
 
                     <!-- start header menu -->
                     <ul class="megamenu skyblue" style="background-color:white;">
-                        <li class="grid"><a class="color1" href="/MTiX-war/ContentController/MTiX/Home"><span style=" color:#696763;">Home</span></a></li>
+                        <li class="grid"><a class="color1" href="/MTiX-war/ContentController/<%=companyName%>/Home"><span style=" color:#696763;">Home</span></a></li>
                         <li class="grid"><a class="color2" href="#"><span style=" color:#696763;">Find an event</span></a>
                             <div class="megapanel">
                                 <div class="row">
@@ -266,9 +267,9 @@
                                         <div class="h_nav">
                                             <h4 style=" color:#696763;"><b>Categories</b></h4>
                                             <ul>
-                                                <li><a href="/MTiX-war/ContentController/MTIX/displayConcertEvents">Concert</a></li>
-                                                <li><a href="/MTiX-war/ContentController/MTIX/displayDanceEvents">Dance</a></li>
-                                                <li><a href="/MTiX-war/ContentController/MTIX/displaySportsEvents">Sports</a></li>
+                                                <li><a href="/MTiX-war/ContentController/<%=companyName%>/displayConcertEvents">Concert</a></li>
+                                                <li><a href="/MTiX-war/ContentController/<%=companyName%>/displayDanceEvents">Dance</a></li>
+                                                <li><a href="/MTiX-war/ContentController/<%=companyName%>/displaySportsEvents">Sports</a></li>
                                             </ul>	
                                         </div>							
                                     </div>
@@ -277,7 +278,7 @@
                                             <h4 style=" color:#696763;">Venues</h4>
                                             <ul>
                                                 <%for (int i = 0; i < propertyData.size(); i++) {%>
-                                                <li><a href="/MTiX-war/ContentController/MTIX/displayVenueEvents/<%=propertyData.get(i).get(0)%>/<%=propertyData.get(i).get(1).toString().replaceAll("\\s", "")%>"><%=propertyData.get(i).get(1)%></a></li>
+                                                <li><a href="/MTiX-war/ContentController/<%=companyName%>/displayVenueEvents/<%=propertyData.get(i).get(0)%>/<%=propertyData.get(i).get(1).toString().replaceAll("\\s", "")%>"><%=propertyData.get(i).get(1)%></a></li>
                                                     <%}%>
                                             </ul>	
                                         </div>												

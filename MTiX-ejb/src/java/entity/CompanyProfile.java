@@ -30,7 +30,6 @@ public class CompanyProfile implements Serializable {
     private String career;
     private String otherDetails;
     
-    private UserEntity user;     
     private CompanyEntity company;
 
     public Long getId() {
@@ -95,14 +94,6 @@ public class CompanyProfile implements Serializable {
 
     public void setOtherDetails(String otherDetails) {
         this.otherDetails = otherDetails;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
     }
 
     public CompanyEntity getCompany() {

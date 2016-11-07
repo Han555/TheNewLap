@@ -22,6 +22,7 @@
         List<ArrayList> sectionData = (List<ArrayList>) request.getAttribute("sectionData");
         String date = (String) request.getAttribute("date");
         List<ArrayList> coordinates = (List<ArrayList>) request.getAttribute("coordinates");
+        String filename = request.getAttribute("filename").toString();
     %>
 
     <c:url var="formAction" value="/BackController?action=addTickets" />
@@ -35,20 +36,14 @@
                 <div align="center"><h3>No SESSION Found!</h3></div><br><br>
                 <%} else {
                     ArrayList storeSection = new ArrayList();
-                    String x = data.get(0).get(5).toString();
                 %>
 
                 <div class="col-sm-6">
                     <div class="header">
                         <h4 class="title">Reserve/Edit Sections</h4>   
                     </div> 
-                    <%  if (x.equals("1")) {%>
-                    <img id="shape1" src="img/property/ConcerthallNo.png" style="width:100%; height: 100%;" usemap="#concertHall" alt="" />
-                    <map name="concertHall" id="concertHall">
-                        <%} else {%>
-                        <img id="shape1" src="img/property/TheatreNo.png" style="width:100%; height: 100%;" usemap="#theatre" alt="" />
-                        <map name="theatre" id="theatre">
-                            <%}%>
+                    <img id="shape1" src="contentImageController?id=<%=filename%>" style="width:100%; height: 100%;" usemap="#property" alt="" />
+                    <map name="property" id="property">
                             <area shape="rect" alt="Image Map" style="outline:none;" title="Image Map"/>
                             <%for (int i = 0; i < coordinates.size(); i++) {
                                     storeSection.add("#Seat_" + coordinates.get(i).get(1));

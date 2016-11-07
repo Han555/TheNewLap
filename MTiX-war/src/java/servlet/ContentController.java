@@ -52,13 +52,15 @@ public class ContentController extends HttpServlet {
         String url[] = requestURL.split("/");
         System.err.println(url[4]);
         String action = url[4];
+        String company = url[3];
         RegisterManager registerManager = new RegisterManager(registerSession);
 
         //String action = request.getParameter("action");
         if (action.equals("Home")) {
-            List<ArrayList> data = webManagementBean.getWebpageList();
-            String companyLogo = webManagementBean.getCompanyLogo();
-            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            List<ArrayList> data = webManagementBean.getWebpageList(company);
+            String companyLogo = webManagementBean.getCompanyLogo(company);
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName(company);
+            request.setAttribute("companyname", company);
             request.setAttribute("propertyData", propertyData);
             request.setAttribute("CompanyLogo", companyLogo);
             request.setAttribute("data", data);
@@ -69,59 +71,65 @@ public class ContentController extends HttpServlet {
             List<ArrayList> sessions = webManagementBean.getEventSessionInfo(id);
             List<ArrayList> promotions = webManagementBean.getEventPromotionInfo(id);
 
-            String companyLogo = webManagementBean.getCompanyLogo();
-            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            String companyLogo = webManagementBean.getCompanyLogo(company);
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName(company);
             request.setAttribute("propertyData", propertyData);
             request.setAttribute("CompanyLogo", companyLogo);
-
+            request.setAttribute("companyname", company);
             request.setAttribute("data", data);
             request.setAttribute("promotions", promotions);
             request.setAttribute("sessions", sessions);
             request.getRequestDispatcher("/viewEventWebpage.jsp").forward(request, response);
         } else if (action.equals("creditCardPromotion")) {
-            List<ArrayList> data = webManagementBean.getCreditCardEvents();
-            String companyLogo = webManagementBean.getCompanyLogo();
-            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            List<ArrayList> data = webManagementBean.getCreditCardEvents(company);
+            String companyLogo = webManagementBean.getCompanyLogo(company);
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName(company);
+            request.setAttribute("companyname", company);
             request.setAttribute("propertyData", propertyData);
             request.setAttribute("CompanyLogo", companyLogo);
             request.setAttribute("data", data);
             request.getRequestDispatcher("/creditCardPromotion.jsp").forward(request, response);
         } else if (action.equals("volumeDiscountPromotion")) {
-            List<ArrayList> data = webManagementBean.getVolumeDiscountEvents();
-            String companyLogo = webManagementBean.getCompanyLogo();
-            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            List<ArrayList> data = webManagementBean.getVolumeDiscountEvents(company);
+            String companyLogo = webManagementBean.getCompanyLogo(company);
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName(company);
+            request.setAttribute("companyname", company);
             request.setAttribute("propertyData", propertyData);
             request.setAttribute("CompanyLogo", companyLogo);
             request.setAttribute("data", data);
             request.getRequestDispatcher("/volumeDiscountPromotion.jsp").forward(request, response);
         } else if (action.equals("companyStory")) {
-            ArrayList data = webManagementBean.getCompanyInfo();
-            String companyLogo = webManagementBean.getCompanyLogo();
-            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            ArrayList data = webManagementBean.getCompanyInfo(company);
+            String companyLogo = webManagementBean.getCompanyLogo(company);
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName(company);
+            request.setAttribute("companyname", company);
             request.setAttribute("propertyData", propertyData);
             request.setAttribute("CompanyLogo", companyLogo);
             request.setAttribute("data", data);
             request.getRequestDispatcher("/companyStory.jsp").forward(request, response);
         } else if (action.equals("displayConcertEvents")) {
-            List<ArrayList> data = webManagementBean.getEventConcert("concert");
-            String companyLogo = webManagementBean.getCompanyLogo();
-            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            List<ArrayList> data = webManagementBean.getEventConcert("concert", company);
+            String companyLogo = webManagementBean.getCompanyLogo(company);
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName(company);
+            request.setAttribute("companyname", company);
             request.setAttribute("propertyData", propertyData);
             request.setAttribute("CompanyLogo", companyLogo);
             request.setAttribute("data", data);
             request.getRequestDispatcher("/displayConcertEvents.jsp").forward(request, response);
         } else if (action.equals("displayDanceEvents")) {
-            List<ArrayList> data = webManagementBean.getEventConcert("dance");
-            String companyLogo = webManagementBean.getCompanyLogo();
-            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            List<ArrayList> data = webManagementBean.getEventConcert("dance", company);
+            String companyLogo = webManagementBean.getCompanyLogo(company);
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName(company);
+            request.setAttribute("companyname", company);
             request.setAttribute("propertyData", propertyData);
             request.setAttribute("CompanyLogo", companyLogo);
             request.setAttribute("data", data);
             request.getRequestDispatcher("/displayDanceEvents.jsp").forward(request, response);
         } else if (action.equals("displaySportsEvents")) {
-            List<ArrayList> data = webManagementBean.getEventConcert("sports");
-            String companyLogo = webManagementBean.getCompanyLogo();
-            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            List<ArrayList> data = webManagementBean.getEventConcert("sports", company);
+            String companyLogo = webManagementBean.getCompanyLogo(company);
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName(company);
+            request.setAttribute("companyname", company);
             request.setAttribute("propertyData", propertyData);
             request.setAttribute("CompanyLogo", companyLogo);
             request.setAttribute("data", data);
@@ -129,9 +137,10 @@ public class ContentController extends HttpServlet {
         } else if (action.equals("displayVenueEvents")) {
             String id = url[5];
             List<ArrayList> data = webManagementBean.getPropertyEvents(id);
-            String companyLogo = webManagementBean.getCompanyLogo();
-            List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            String companyLogo = webManagementBean.getCompanyLogo(company);
+            List<ArrayList> propertyData = webManagementBean.getAllPropertyName(company);
             String propertyName = webManagementBean.getPropertyName(Long.valueOf(id));
+            request.setAttribute("companyname", company);
             request.setAttribute("propertyName", propertyName);
             request.setAttribute("propertyData", propertyData);
             request.setAttribute("CompanyLogo", companyLogo);

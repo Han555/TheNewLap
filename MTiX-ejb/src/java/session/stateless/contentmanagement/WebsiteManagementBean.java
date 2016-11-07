@@ -5,6 +5,7 @@
  */
 package session.stateless.contentmanagement;
 
+import entity.CompanyEntity;
 import entity.CompanyProfile;
 import entity.Promotion;
 import entity.PromotionType;
@@ -33,7 +34,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
     EntityManager em;
 
     @Override
-    public List<ArrayList> getWebpageList() {
+    public List<ArrayList> getWebpageList(String companyName) {
         Query q = em.createQuery("SELECT a FROM WebContentEntity a");
 
         List<ArrayList> webPageList = new ArrayList();
@@ -47,11 +48,17 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
 
             if (webpage.getApproved() && (today.after(webpage.getStart()) || today.equals(webpage.getStart()))
                     && today.before(webpage.getEnd())) {
-                list.add(webpage.getId()); //0
-                list.add(webpage.getEventTitle()); //1
-                list.add(webpage.getFileName()); //2
-
-                webPageList.add(list);
+                if (webpage.getEvent() != null && webpage.getEvent().getCompany().getCompanyName().equals(companyName)){
+                    list.add(webpage.getId()); //0
+                    list.add(webpage.getEventTitle()); //1
+                    list.add(webpage.getFileName()); //2
+                    webPageList.add(list);
+                } else if (webpage.getSubevent() != null && webpage.getSubevent().getCompany().getCompanyName().equals(companyName)){
+                    list.add(webpage.getId()); //0
+                    list.add(webpage.getEventTitle()); //1
+                    list.add(webpage.getFileName()); //2
+                    webPageList.add(list);
+                }   
             }
         }
 
@@ -59,7 +66,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
     }
 
     @Override
-    public List<ArrayList> getWebpageListByType(String type) {
+    public List<ArrayList> getWebpageListByType(String type, String companyname) {
         Query q = em.createQuery("SELECT a FROM WebContentEntity a");
 
         List<ArrayList> webPageList = new ArrayList();
@@ -71,7 +78,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
             em.refresh(webpage);
             Date today = Calendar.getInstance().getTime();
 
-            if (webpage.getEvent() != null) {
+            if (webpage.getEvent() != null && webpage.getEvent().getCompany().getCompanyName().equals(companyname)) {
 
                 if (webpage.getApproved() && today.before(webpage.getEnd()) && (today.after(webpage.getStart()) || today.equals(webpage.getStart()))
                         && webpage.getEvent().getType().equals(type)) {
@@ -81,7 +88,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
 
                     webPageList.add(list);
                 }
-            } else {
+            } else if (webpage.getSubevent() != null && webpage.getSubevent().getCompany().getCompanyName().equals(companyname)){
                 if (webpage.getApproved() && today.before(webpage.getEnd()) && (today.after(webpage.getStart()) || today.equals(webpage.getStart()))
                         && webpage.getSubevent().getType().equals(type)) {
                     list.add(webpage.getId()); //0
@@ -240,7 +247,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
     }
 
     @Override
-    public List<ArrayList> getCreditCardEvents() {
+    public List<ArrayList> getCreditCardEvents(String company) {
         List<ArrayList> arr = new ArrayList();
 
         ArrayList data = new ArrayList();
@@ -261,7 +268,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
             }
 
             if (isCreditCard) {
-                if (promotion.getEvent() != null) {
+                if (promotion.getEvent() != null && promotion.getEvent().getCompany().getCompanyName().equals(company)) {
                     if (promotion.getEvent().getContent() != null) {
                         Date today = Calendar.getInstance().getTime();
                         if (promotion.getEvent().getContent().getApproved() && today.before(promotion.getEvent().getContent().getEnd()) && (today.after(promotion.getEvent().getContent().getStart())
@@ -278,7 +285,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
                         }
                     }
 
-                } else {
+                } else if (promotion.getSubEvent() != null && promotion.getSubEvent().getCompany().getCompanyName().equals(company)) {
                     if (promotion.getSubEvent().getContent() != null) {
                         Date today = Calendar.getInstance().getTime();
                         if (promotion.getSubEvent().getContent().getApproved() && today.before(promotion.getSubEvent().getContent().getEnd()) && (today.after(promotion.getSubEvent().getContent().getStart())
@@ -300,7 +307,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
     }
 
     @Override
-    public List<ArrayList> getVolumeDiscountEvents() {
+    public List<ArrayList> getVolumeDiscountEvents(String company) {
         List<ArrayList> arr = new ArrayList();
 
         ArrayList data = new ArrayList();
@@ -319,7 +326,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
             }
 
             if (isCreditCard) {
-                if (promotion.getEvent() != null) {
+                if (promotion.getEvent() != null && promotion.getEvent().getCompany().getCompanyName().equals(company)) {
                     if (promotion.getEvent().getContent() != null) {
                         Date today = Calendar.getInstance().getTime();
                         if (promotion.getEvent().getContent().getApproved() && today.before(promotion.getEvent().getContent().getEnd()) && (today.after(promotion.getEvent().getContent().getStart())
@@ -335,7 +342,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
                         }
                     }
 
-                } else {
+                } else if (promotion.getSubEvent() != null && promotion.getSubEvent().getCompany().getCompanyName().equals(company)) {
                     if (promotion.getSubEvent().getContent() != null) {
                         Date today = Calendar.getInstance().getTime();
                         if (promotion.getSubEvent().getContent().getApproved() && today.before(promotion.getSubEvent().getContent().getEnd()) && (today.after(promotion.getSubEvent().getContent().getStart())
@@ -357,35 +364,35 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
     }
 
     @Override
-    public String getCompanyLogo() {
-        //Need to get company name for dynamic!
-        Query q = em.createQuery("SELECT a FROM CompanyProfile a");
-        for (Object o : q.getResultList()) {
-            CompanyProfile company = (CompanyProfile) o;
-            return company.getFileName();
-        }
-        return null;
+    public String getCompanyLogo(String companyName) {
+        Query q = em.createQuery("SELECT a FROM CompanyEntity a WHERE a.companyName=:name");
+        q.setParameter("name", companyName);
+        System.out.println("companyname + " + companyName);
+        CompanyEntity company = (CompanyEntity) q.getSingleResult();
+        System.out.println("companyname + " + company.getProfile().getFileName());
+        
+        return company.getProfile().getFileName();
     }
 
     @Override
-    public ArrayList getCompanyInfo() {
+    public ArrayList getCompanyInfo(String companyName) {
         //Need to get company name for dynamic!
-        Query q = em.createQuery("SELECT a FROM CompanyProfile a");
+        Query q = em.createQuery("SELECT a FROM CompanyProfile a WHERE a.company.companyName=:name");
+        q.setParameter("name", companyName);
+        CompanyProfile company = (CompanyProfile) q.getSingleResult();
+        
         ArrayList data = new ArrayList();
-        for (Object o : q.getResultList()) {
-            CompanyProfile company = (CompanyProfile) o;
             data.add(company.getAboutUs()); //0
             data.add(company.getCareer()); //1
             data.add(company.getContactDetails()); //2
             data.add(company.getMission()); //3
             data.add(company.getOtherDetails()); //4
             data.add(company.getVision()); //5
-        }
         return data;
     }
 
     @Override
-    public List<ArrayList> getEventConcert(String type) {
+    public List<ArrayList> getEventConcert(String type, String company) {
         Query q = em.createQuery("SELECT a FROM WebContentEntity a");
 
         List<ArrayList> webPageList = new ArrayList();
@@ -397,7 +404,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
             em.refresh(webpage);
             Date today = Calendar.getInstance().getTime();
 
-            if (webpage.getEvent() != null) {
+            if (webpage.getEvent() != null && webpage.getEvent().getCompany().getCompanyName().equals(company)) {
 
                 if (webpage.getApproved() && today.before(webpage.getEnd()) && (today.after(webpage.getStart()) || today.equals(webpage.getStart()))
                         && webpage.getEvent().getType().equals(type)) {
@@ -409,7 +416,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
 
                     webPageList.add(list);
                 }
-            } else {
+            } else if (webpage.getSubevent() != null && webpage.getSubevent().getCompany().getCompanyName().equals(company)) {
                 if (webpage.getApproved() && today.before(webpage.getEnd()) && (today.after(webpage.getStart()) || today.equals(webpage.getStart()))
                         && webpage.getSubevent().getType().equals(type)) {
                     list.add(webpage.getId()); //0
@@ -428,9 +435,11 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
     }
 
     @Override
-    public List<ArrayList> getAllPropertyName() {
-        //Must put company contraints here
-        Query q = em.createQuery("SELECT a FROM PropertyEntity a");
+    public List<ArrayList> getAllPropertyName(String company) {
+        //Must put company contraints here  
+        Query q = em.createQuery("SELECT a FROM PropertyEntity a WHERE a.company.companyName=:name");
+        q.setParameter("name", company);
+        
         List<ArrayList> data = new ArrayList();
         for (Object o : q.getResultList()) {
             PropertyEntity property = (PropertyEntity) o;
@@ -494,7 +503,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
     }
 
     @Override
-    public List<ArrayList> searchEngineBasedOnTypes(String keyword) {
+    public List<ArrayList> searchEngineBasedOnTypes(String keyword, String company) {
         ArrayList str = new ArrayList();
         str.add("creditcardpromotions");
         str.add("volumediscountpromotions");
@@ -502,7 +511,9 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
         str.add("danceevents");
         str.add("sportsevents");
 
-        Query q = em.createQuery("SELECT a FROM PropertyEntity a");
+        Query q = em.createQuery("SELECT a FROM PropertyEntity a WHERE a.company.companyName=:name");
+        q.setParameter("name", company);
+        
 
         for (Object o : q.getResultList()) {
             PropertyEntity property = (PropertyEntity) o;
@@ -519,35 +530,35 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
         if (str.get(0).toString().contains(cs1)) {
             ArrayList arr = new ArrayList();
             arr.add("CreditCard");
-            arr.add("http://localhost:8080/MTiX-war/ContentController/MTiX/creditCardPromotion");
+            arr.add("http://localhost:8080/MTiX-war/ContentController/" + company + "/creditCardPromotion");
             data.add(arr);
         }
         
         if (str.get(1).toString().contains(cs1)) {
             ArrayList arr = new ArrayList();
             arr.add("Volume Discount");
-            arr.add("http://localhost:8080/MTiX-war/ContentController/MTiX/volumeDiscountPromotion");
+            arr.add("http://localhost:8080/MTiX-war/ContentController/" + company + "/volumeDiscountPromotion");
             data.add(arr);
         }
         
         if (str.get(2).toString().contains(cs1)) {
             ArrayList arr = new ArrayList();
             arr.add("Concert");
-            arr.add("http://localhost:8080/MTiX-war/ContentController/MTIX/displayConcertEvents");
+            arr.add("http://localhost:8080/MTiX-war/ContentController/" + company + "/displayConcertEvents");
             data.add(arr);
         }
         
         if (str.get(3).toString().contains(cs1)) {
             ArrayList arr = new ArrayList();
             arr.add("Dance");
-            arr.add("http://localhost:8080/MTiX-war/ContentController/MTIX/displayDanceEvents");
+            arr.add("http://localhost:8080/MTiX-war/ContentController/" + company + "/displayDanceEvents");
             data.add(arr);
         }
         
         if (str.get(4).toString().contains(cs1)) {
             ArrayList arr = new ArrayList();
             arr.add("Sports");
-            arr.add("http://localhost:8080/MTiX-war/ContentController/MTIX/displaySportsEvents");
+            arr.add("http://localhost:8080/MTiX-war/ContentController/" + company + "/displaySportsEvents");
             data.add(arr);
         }
         
@@ -555,7 +566,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
             if (str.get(i).toString().replaceAll("\\s", "").contains(cs1)) {
             ArrayList arr = new ArrayList();
             arr.add(str.get(i));
-            arr.add("http://localhost:8080/MTiX-war/ContentController/MTIX/displayVenueEvents/" + str.get(i+1) + "/" + str.get(i).toString().replaceAll("\\s", ""));
+            arr.add("http://localhost:8080/MTiX-war/ContentController/" + company + "/displayVenueEvents/" + str.get(i+1) + "/" + str.get(i).toString().replaceAll("\\s", ""));
             data.add(arr);}
         }
         return data;
@@ -563,18 +574,18 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
 
     private String keywordReplace(String keyword) {
         keyword = keyword.replaceAll("\\s", "");
-        keyword = keyword.replaceAll("!", "");
-        keyword = keyword.replaceAll("@", "");
-        keyword = keyword.replaceAll("#", "");
-        keyword = keyword.replaceAll("$", "");
-        keyword = keyword.replaceAll("%", "");
-        keyword = keyword.replaceAll("^", "");
-        keyword = keyword.replaceAll("&", "");
+        keyword = keyword.replaceAll("\\!", "");
+        keyword = keyword.replaceAll("\\@", "");
+        keyword = keyword.replaceAll("\\#", "");
+        keyword = keyword.replaceAll("\\$", "");
+        keyword = keyword.replaceAll("\\%", "");
+        keyword = keyword.replaceAll("\\^", "");
+        keyword = keyword.replaceAll("\\&", "");
         keyword = keyword.replaceAll("\\*", "");
         keyword = keyword.replaceAll("\\(", "");
         keyword = keyword.replaceAll("\\)", "");
         keyword = keyword.replaceAll("\\-", "");
-        keyword = keyword.replaceAll("_", "");
+        keyword = keyword.replaceAll("\\_", "");
         keyword = keyword.replaceAll("\\+", "");
         keyword = keyword.replaceAll("\\=", "");
         keyword = keyword.replaceAll("\\<", "");
@@ -582,7 +593,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
         keyword = keyword.replaceAll("\\,", "");
         keyword = keyword.replaceAll("\\.", "");
         keyword = keyword.replaceAll("\\?", "");
-        keyword = keyword.replaceAll("/", "");
+        keyword = keyword.replaceAll("\\/", "");
         keyword = keyword.replaceAll("\\:", "");
         keyword = keyword.replaceAll("\\;", "");
         keyword = keyword.replaceAll("\"", "");
@@ -591,9 +602,8 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
         keyword = keyword.replaceAll("\\}", "");
         keyword = keyword.replaceAll("\\[", "");
         keyword = keyword.replaceAll("\\]", "");
-        keyword = keyword.replaceAll("/", "");
         //keyword = keyword.replaceAll("\", "");
-        keyword = keyword.replaceAll("|", "");
+        keyword = keyword.replaceAll("\\|", "");
 
         keyword = keyword.replaceAll("1", "");
         keyword = keyword.replaceAll("2", "");
@@ -612,7 +622,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
     }
     
     @Override
-    public List<ArrayList> searchEvents(String keyword) {
+    public List<ArrayList> searchEvents(String keyword, String company) {
         
         keyword = keyword.toLowerCase();
         keyword = this.keywordReplace(keyword);
@@ -631,7 +641,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
             em.refresh(webpage);
             Date today = Calendar.getInstance().getTime();
 
-            if (webpage.getEvent() != null) {
+            if (webpage.getEvent() != null && webpage.getEvent().getCompany().getCompanyName().equals(company)) {
 
                 if (webpage.getApproved() && today.before(webpage.getEnd()) && (today.after(webpage.getStart()) || today.equals(webpage.getStart()))
                         && (webpage.getEventTitle().toLowerCase().replaceAll("\\s", "").contains(cs1) || cs2.contains(cs1))) {
@@ -643,7 +653,7 @@ public class WebsiteManagementBean implements WebsiteManagementBeanLocal {
 
                     webPageList.add(list);
                 }
-            } else {
+            } else  if (webpage.getSubevent() != null && webpage.getSubevent().getCompany().getCompanyName().equals(company)){
                 if (webpage.getApproved() && today.before(webpage.getEnd()) && (today.after(webpage.getStart()) || today.equals(webpage.getStart()))
                         && (webpage.getEventTitle().toLowerCase().replaceAll("\\s", "").contains(cs1) || cs2.contains(cs1))) {
                     list.add(webpage.getId()); //0
