@@ -213,13 +213,9 @@
                                         <button class="btn btn-sucess dropdown-toggle" type="button" data-toggle="dropdown"><%=username%>
                                             <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
-                                            <c:url var="profile" value="Controller?action=customerProfile" />
-                                            <li><a href="${profile}">Profile</a></li>
-                                                <c:url var="checkout" value="Controller?action=shopCart" />
-                                                <c:url var="checkout" value="Controller?action=shopCart" />
-                                            <li><a href="${checkout}">Check Out</a></li>
-                                                <c:url var="logout" value="LogOutController" />
-                                            <li><a href="${logout}">Log Out</a></li>
+                                            <li><a href="/MTiX-war/Controller?action=customerProfile&company=<%=companyName%>">Profile</a></li>
+                                            <li><a href="/MTiX-war/Controller?action=shopCart&company=<%=companyName%>">Check Out</a></li>
+                                            <li><a href="/MTiX-war/LogOutController?company=<%=companyName%>">Log Out</a></li>
 
                                         </ul>
                                     </div>
@@ -231,7 +227,7 @@
                             </div>
                             <div style="float:right">
                                 <div class="cart box_1" >
-                                    <a href="/MTiX-war/Controller?action=shopCart">
+                                    <a href="/MTiX-war/Controller?action=shopCart&company=<%=companyName%>">
                                         <!--                                <h3> <span class="simpleCart_total" style=" color:#696763;">$0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity" style=" color:#696763;">0</span> <span style=" color:#696763;">items</span>)
                                         --><img src="/MTiX-war/images/bag.png" alt="">
                                     </a>	
@@ -239,7 +235,7 @@
                                     <div class="clearfix"> </div><div class="clearfix"> </div>
                                 </div>
                                 <div class="create_btn" style="margin-left:10px">
-                                    <a href="/MTiX-war/Controller?action=shopCart">CHECKOUT</a>
+                                    <a href="/MTiX-war/Controller?action=shopCart&company=<%=companyName%>">CHECKOUT</a>
                                 </div>
                             </div>
                             <div class="clearfix"> </div>

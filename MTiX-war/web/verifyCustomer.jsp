@@ -16,6 +16,7 @@
 <script type="text/javascript" src="lib/js/intlTelInput.js"></script>
 
 <div class="container">
+    <% String companyName = request.getAttribute("companyname").toString(); %>
     <div class="main">
         <!-- start registration -->
 
@@ -80,7 +81,7 @@
                 <c:if test="${mismatch == 'mismatch'}">
                     <div style="color:red">Passwords mismatch</div>
                 </c:if>
-                        <form id="registration_form" action="Controller?action=customerDoLogin" method="post">
+                        <form id="registration_form" action="Controller?action=customerDoLogin&company=<%=companyName%>" method="post">
                             <div>
                                 <label>
                                     <input placeholder="email:" name="userName" type="email" tabindex="3" required>
@@ -109,7 +110,7 @@
                 <c:if test="${matchpass == 'true'}">
                     <div style="color:red">New Passwords mismatch!</div>
                 </c:if>
-                <form id="registration_form" action="Controller?action=verifyCustomer1" method="post">
+                <form id="registration_form" action="Controller?action=verifyCustomer1&company=<%=companyName%>" method="post">
 
                     <div>
                         <label>

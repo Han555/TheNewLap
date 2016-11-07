@@ -31,7 +31,6 @@ import session.stateless.contentmanagement.WebContentBeanLocal;
 @WebServlet(name = "ContentBackController", urlPatterns = {"/ContentBackController"})
 @MultipartConfig
 public class ContentBackController extends HttpServlet {
-    HttpSession session;
 
     @EJB
     private WebContentBeanLocal webContentBean;
@@ -85,15 +84,6 @@ public class ContentBackController extends HttpServlet {
         } else */if (action.equals("contentMain")) {
             currentUser = request.getParameter("username");
             role = request.getParameter("role");
-                   
-            //session = request.getSession();
-            //session.setAttribute("user", currentUser);
-            //session.setAttribute("userole", role);
-            //session.setAttribute("company", Long.valueOf(findUserCompany.findcompany(currentUser)));
-            response.reset();
-            
-            
-            
             boolean signin = webContentBean.signIn(currentUser);
             request.setAttribute("role", role);
             request.setAttribute("username", currentUser);
@@ -204,22 +194,13 @@ public class ContentBackController extends HttpServlet {
         } else if (action.equals("contentReviewMain")) {
             currentUser = request.getParameter("username");
             role = request.getParameter("role");
-            
-            //session = request.getSession();
-            //session.setAttribute("user", currentUser);
-            //session.setAttribute("userole", role);
-            //session.setAttribute("company", Long.valueOf(findUserCompany.findcompany(currentUser)));
             response.reset(); 
              
             request.setAttribute("hascompanycontent", String.valueOf(webContentBean.hasCompanyContent(Long.valueOf(findUserCompany.findcompany(currentUser)))));
             request.setAttribute("role", role);
             request.setAttribute("username", currentUser);
             request.getRequestDispatcher("/contentReviewMain.jsp").forward(request, response);
-        } else if (action.equals("contentReviewSelect")) {
-            //session=request.getSession(); 
-            //Long companyId = Long.valueOf(session.getAttribute("company").toString());
-            //System.out.println("ContentReviewMain + " + companyId);                
-                
+        } else if (action.equals("contentReviewSelect")) {    
             List<ArrayList> data = webContentBean.geWebpageList( Long.valueOf(findUserCompany.findcompany(currentUser)));
             request.setAttribute("data", data);
             request.setAttribute("role", role);

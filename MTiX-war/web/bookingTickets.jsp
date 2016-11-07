@@ -32,6 +32,7 @@
 <% HashMap<Long, List<Double>> map = (HashMap<Long, List<Double>>) request.getAttribute("pricingHashMap"); %>
 
 <div class="container">
+    <% String companyName = request.getAttribute("companyname").toString();%>
     <div class="panel panel-default col-lg-12" style="box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
          -moz-box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
          -webkit-box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);">
@@ -338,7 +339,7 @@
                                 <div class="registration_form" style="width:60%;">
                                     <!-- Form -->
 
-                                    <form id="regis-form"  method="post">
+                                    <form id="regis-form"  method="post" action="/MTiX-war/Controller?action=loginCustomer&company=<%=companyName%>">
 
 
 
@@ -452,9 +453,7 @@
                                                         <div class="registration_form" style="width:60%;">
                                                             <!-- Form -->
 
-                                                            <form id="regis-form"  method="post">
-
-
+                                                            <form id="regis-form"  method="post" action="/MTiX-war/Controller?action=loginCustomer&company=<%=companyName%>">
 
 
                                                                 <div>
@@ -793,13 +792,13 @@
 
 
                             <%} else {%>
-                            <c:url var="addToCartSuccess" value="Controller?action=addToCartSuccess"/>
+                            <c:url var="addToCartSuccess" value="Controller?action=addToCartSuccess&company=<%=companyName%>"/>
                                 $.ajax({
                                     url: "AddToCartController?username=<%=username%>&sid=" + selectedSession + "&pid=" + selectedPromotion + "&numT=" + numOfTickets1 + "&price=" + currentPrice,
                                     success: function (result) {
                                         if (result = "\"success\"") {
 
-                                            window.location.href = "${addToCartSuccess}";
+                                            window.location.href = "Controller?action=addToCartSuccess&company=<%=companyName%>";
                                         }
                                     }
                                 });
@@ -825,13 +824,13 @@
 
 
                             <%} else {%>
-                            <c:url var="addToCartSuccessSection" value="Controller?action=addToCartSuccessSection"/>
+                            <c:url var="addToCartSuccessSection" value="Controller?action=addToCartSuccessSection&company=<%=companyName%>"/>
                                 $.ajax({
                                     url: "AddToCartSectionController?username=<%=username%>&sid=" + selectedSession + "&pid=" + selectedPromotion + "&numT=" + numOfTickets1 + "&price=" + currentPrice + "&section=" + selectedSection,
                                     success: function (result) {
                                         if (result = "\"success\"") {
 
-                                            window.location.href = "${addToCartSuccessSection}";
+                                            window.location.href = "Controller?action=addToCartSuccessSection&company=<%=companyName%>";
                                         }
                                     }
                                 });
@@ -844,8 +843,8 @@
 
                             $("#login-submit").click(function () {
                                 console.log("===login-submit: " + currentPrice);
-                            <c:url var="loginSuccess" value="Controller?action=loginSuccess"/>
-                            <c:url var="shopCart" value="Controller?action=shopCart"/>
+                            <c:url var="loginSuccess" value="Controller?action=loginSuccess&company=<%=companyName%>"/>
+                            <c:url var="shopCart" value="Controller?action=shopCart&company=<%=companyName%>"/>
                                 $.ajax({
                                     type: "POST",
                                     url: "promptLoginCheckController",
@@ -858,9 +857,9 @@
                                         } else if (result == "\"nouser\"") {
                                             $("#notifyLoginError").html("Username is not Exist.").css("color", "red");
                                         } else if (result == "\"successadd\"") {
-                                            window.location.href = "${shopCart}";
+                                            window.location.href = "Controller?action=shopCart&company=<%=companyName%>";
                                         } else if (result == "\"failtoadd\"") {
-                                            window.location.href = "${loginSuccess}";
+                                            window.location.href = "Controller?action=loginSuccess&company=<%=companyName%>";
                                         }
                                     }
                                 });

@@ -40,10 +40,8 @@ public class LogOutController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String requestURL = request.getRequestURI();
-        String url[] = requestURL.split("/");
-        String company = url[3];
-
+        
+        String company = request.getParameter("company");
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -57,7 +55,8 @@ public class LogOutController extends HttpServlet {
         System.out.println("User=" + session.getAttribute("username"));
         if (session != null) {
             session.invalidate();
-        }
+        }            
+            
         List<ArrayList> data = webManagementBean.getWebpageList(company);
          request.setAttribute("data", data);
         String companyname = request.getParameter("company");
@@ -66,7 +65,8 @@ public class LogOutController extends HttpServlet {
         request.setAttribute("companyname", companyname);
         request.setAttribute("propertyData", propertyData);
         request.setAttribute("CompanyLogo", companyLogo);
-        request.getRequestDispatcher("/MTiX-war/ContentController/" + company + "/Home").forward(request, response);
+        ///MTiX-war/ContentController/" + company + "/Home
+        request.getRequestDispatcher("/home.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

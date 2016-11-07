@@ -1419,9 +1419,7 @@ public class BackController extends HttpServlet {
                 request.setAttribute("success", "true");
                 request.getRequestDispatcher("/displaySeatsMain.jsp").forward(request, response);
             } else if (action.equals("productEnterUser")) {
-                session=request.getSession(); 
-                Long companyId = Long.valueOf(session.getAttribute("company").toString());
-                CompanyEntity company = registerManager.getCompanyEntityById(companyId);
+                CompanyEntity company = registerManager.getCompanyEntityById(Long.valueOf(findUserCompany.findcompany(currentUser)));
                 
                 ArrayList email = productSession.getEventOrganizersEmail(company);
                 request.setAttribute("data", email);
@@ -1762,9 +1760,7 @@ public class BackController extends HttpServlet {
                 request.setAttribute("username", currentUser);
                 request.getRequestDispatcher("/seatConfiguration.jsp").forward(request, response);
             } else if (action.equals("displaySeatsEnterUser")) {
-                session=request.getSession(); 
-                Long companyId = Long.valueOf(session.getAttribute("company").toString());
-                CompanyEntity company = registerManager.getCompanyEntityById(companyId);
+                CompanyEntity company = registerManager.getCompanyEntityById(Long.valueOf(findUserCompany.findcompany(currentUser)));
                 
                 ArrayList email = productSession.getEventOrganizersEmail(company);
                 request.setAttribute("data", email);
@@ -1772,9 +1768,7 @@ public class BackController extends HttpServlet {
                 request.setAttribute("username", currentUser);
                 request.getRequestDispatcher("/displaySeatsEnterUser.jsp").forward(request, response);
             } else if (action.equals("promotionEnterUser")) {
-                session=request.getSession(); 
-                Long companyId = Long.valueOf(session.getAttribute("company").toString());
-                CompanyEntity company = registerManager.getCompanyEntityById(companyId);
+                CompanyEntity company = registerManager.getCompanyEntityById(Long.valueOf(findUserCompany.findcompany(currentUser)));
                 
                 ArrayList email = productSession.getEventOrganizersEmail(company);
                 request.setAttribute("data", email);
@@ -1782,9 +1776,7 @@ public class BackController extends HttpServlet {
                 request.setAttribute("username", currentUser);
                 request.getRequestDispatcher("/promotionEnterUser.jsp").forward(request, response);
             } else if (action.equals("ticketReservationEnterUser")) {
-                session=request.getSession(); 
-                Long companyId = Long.valueOf(session.getAttribute("company").toString());
-                CompanyEntity company = registerManager.getCompanyEntityById(companyId);
+                CompanyEntity company = registerManager.getCompanyEntityById(Long.valueOf(findUserCompany.findcompany(currentUser)));
                 
                 ArrayList email = productSession.getEventOrganizersEmail(company);
                 request.setAttribute("data", email);
@@ -1792,9 +1784,7 @@ public class BackController extends HttpServlet {
                 request.setAttribute("username", currentUser);
                 request.getRequestDispatcher("/ticketReservationEnterUser.jsp").forward(request, response);
             } else if (action.equals("alertEnterUser")) {
-                session=request.getSession(); 
-                Long companyId = Long.valueOf(session.getAttribute("company").toString());
-                CompanyEntity company = registerManager.getCompanyEntityById(companyId);
+                CompanyEntity company = registerManager.getCompanyEntityById(Long.valueOf(findUserCompany.findcompany(currentUser)));
                 
                 ArrayList email = productSession.getEventOrganizersEmail(company);
                 request.setAttribute("data", email);

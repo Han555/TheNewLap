@@ -16,6 +16,7 @@
 <script type="text/javascript" src="lib/js/intlTelInput.js"></script>
 
 <div class="container">
+    <% String companyName = request.getAttribute("companyname").toString();%>
     <div class="main " >
         <div class="panel panel-default col-lg-12" style="box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
              -moz-box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
@@ -82,7 +83,7 @@
                         </c:if>
 
 
-                        <form id="registration_form" action="Controller?action=editProfile" method="post">
+                        <form id="registration_form" action="Controller?action=editProfile&company=<%=companyName%>" method="post">
                             <label for="username">Username:</label>
                             <div>
 

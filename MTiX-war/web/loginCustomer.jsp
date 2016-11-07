@@ -90,7 +90,7 @@
                      <c:if test="${registered == 'true'}">
                         <div style="color:red" >Account has been Registered! Please verify it through your email!</div>
                     </c:if>
-                    <form id="registration_form" action="Controller?action=regisCustomer" method="post">
+                    <form id="registration_form" action="Controller?action=regisCustomer&company=<%=companyName%>" method="post">
                         <div>
                             <label>
                                 <input placeholder="email address:" type="email" name="email" value="${email}" required>

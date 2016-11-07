@@ -431,13 +431,16 @@ public class Controller extends HttpServlet {
                             //Now hard code for MTix, later need the company id passed by browser
                             CompanyEntity company = registerManager.getCompanyEntityById(Long.valueOf("1"));
                             registerManager.regisCustomer(company, request.getParameter("email").trim(), request.getParameter("password"), request.getParameter("phone"), request.getParameter("first"), request.getParameter("last"), request.getParameter("day"), request.getParameter("month"), request.getParameter("year"));
+                            String companyname = request.getParameter("company");
 
-                            registerManager.sendEmail(request.getParameter("email").trim(), "is3102mtix@gmail.com", "Please click the link to do the verfication of your account http://localhost:8080/MTiX-war/Controller?action=verifyCustomerMain" + "&name=" + request.getParameter("email").trim(), "MTiX Account Verification", "smtp.gmail.com");
+                            registerManager.sendEmail(request.getParameter("email").trim(), "is3102mtix@gmail.com", "Please click the link to do the verfication of your account http://localhost:8080/MTiX-war/Controller?action=verifyCustomerMain" + "&name=" + request.getParameter("email").trim() + "&company=" + companyname, "MTiX Account Verification", "smtp.gmail.com");
                             request.setAttribute("registered", "true");
-                            //String companyLogo = webManagementBean.getCompanyLogo();
-                            //List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                            //  request.setAttribute("propertyData", propertyData);
-                            //  request.setAttribute("CompanyLogo", companyLogo);
+
+                            String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                            List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                            request.setAttribute("companyname", companyname);
+                            request.setAttribute("propertyData", propertyData);
+                            request.setAttribute("CompanyLogo", companyLogo);
                             request.getRequestDispatcher("/loginCustomer.jsp").forward(request, response);
                         } else {
                             request.setAttribute("mismatch", "true");
@@ -448,10 +451,12 @@ public class Controller extends HttpServlet {
                             request.setAttribute("day", request.getParameter("day"));
                             request.setAttribute("month", request.getParameter("month"));
                             request.setAttribute("year", request.getParameter("year"));
-                            //String companyLogo = webManagementBean.getCompanyLogo();
-                            // List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                            //  request.setAttribute("propertyData", propertyData);
-                            //   request.setAttribute("CompanyLogo", companyLogo);
+                            String companyname = request.getParameter("company");
+                            String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                            List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                            request.setAttribute("companyname", companyname);
+                            request.setAttribute("propertyData", propertyData);
+                            request.setAttribute("CompanyLogo", companyLogo);
                             request.getRequestDispatcher("/loginCustomer.jsp").forward(request, response);
                         }
                     } else {
@@ -462,10 +467,12 @@ public class Controller extends HttpServlet {
                         request.setAttribute("day", request.getParameter("day"));
                         request.setAttribute("month", request.getParameter("month"));
                         request.setAttribute("year", request.getParameter("year"));
-                        // String companyLogo = webManagementBean.getCompanyLogo();
-                        // List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                        // request.setAttribute("propertyData", propertyData);
-                        //  request.setAttribute("CompanyLogo", companyLogo);
+                        String companyname = request.getParameter("company");
+                        String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                        List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                        request.setAttribute("companyname", companyname);
+                        request.setAttribute("propertyData", propertyData);
+                        request.setAttribute("CompanyLogo", companyLogo);
 
                         request.getRequestDispatcher("/loginCustomer.jsp").forward(request, response);
                     }
@@ -478,10 +485,12 @@ public class Controller extends HttpServlet {
                     request.setAttribute("day", request.getParameter("day"));
                     request.setAttribute("month", request.getParameter("month"));
                     request.setAttribute("year", request.getParameter("year"));
-                    //String companyLogo = webManagementBean.getCompanyLogo();
-                    // List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                    //request.setAttribute("propertyData", propertyData);
-                    // request.setAttribute("CompanyLogo", companyLogo);
+                    String companyname = request.getParameter("company");
+                    String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                    List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                    request.setAttribute("companyname", companyname);
+                    request.setAttribute("propertyData", propertyData);
+                    request.setAttribute("CompanyLogo", companyLogo);
                     request.getRequestDispatcher("/loginCustomer.jsp").forward(request, response);
                 }
             } else if (action.equals("verifyCustomer1")) {
@@ -493,37 +502,45 @@ public class Controller extends HttpServlet {
                         registerManager.verify(request.getParameter("userName"));
                         registerManager.changePassword(request.getParameter("userName"), request.getParameter("newPass"));
                         request.setAttribute("accountverified", "true");
-                        //String companyLogo = webManagementBean.getCompanyLogo();
-                        //List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                        // request.setAttribute("propertyData", propertyData);
-                        //  request.setAttribute("CompanyLogo", companyLogo);
+                        String companyname = request.getParameter("company");
+                        String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                        List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                        request.setAttribute("companyname", companyname);
+                        request.setAttribute("propertyData", propertyData);
+                        request.setAttribute("CompanyLogo", companyLogo);
                         request.getRequestDispatcher("/verifyCustomer.jsp").forward(request, response);
                     } else {
                         request.setAttribute("matchpass", "true");
                         request.setAttribute("verifyUser", verifyUser);
                         request.setAttribute("accountverified", "false");
-                        //String companyLogo = webManagementBean.getCompanyLogo();
-                        // List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                        //   request.setAttribute("propertyData", propertyData);
-                        //  request.setAttribute("CompanyLogo", companyLogo);
+                        String companyname = request.getParameter("company");
+                        String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                        List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                        request.setAttribute("companyname", companyname);
+                        request.setAttribute("propertyData", propertyData);
+                        request.setAttribute("CompanyLogo", companyLogo);
                         request.getRequestDispatcher("/verifyCustomer.jsp").forward(request, response);
                     }
                 } else {
                     request.setAttribute("oldpass", "true");
                     request.setAttribute("verifyUser", verifyUser);
                     request.setAttribute("accountverified", "false");
-                    //String companyLogo = webManagementBean.getCompanyLogo();
-                    // request.setAttribute("CompanyLogo", companyLogo);
-                    // List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                    //request.setAttribute("propertyData", propertyData);
+                    String companyname = request.getParameter("company");
+                    String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                    List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                    request.setAttribute("companyname", companyname);
+                    request.setAttribute("propertyData", propertyData);
+                    request.setAttribute("CompanyLogo", companyLogo);
                     request.getRequestDispatcher("/verifyCustomer.jsp").forward(request, response);
                 }
             } else if (action.equals("verifyCustomerMain")) {
                 request.setAttribute("accountverified", "false");
-                //String companyLogo = webManagementBean.getCompanyLogo();
-                // List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                // request.setAttribute("propertyData", propertyData);
-                // request.setAttribute("CompanyLogo", companyLogo);
+                String companyname = request.getParameter("company");
+                String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                request.setAttribute("companyname", companyname);
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
                 request.getRequestDispatcher("/verifyCustomer.jsp").forward(request, response);
 
             } else if (action.equals("bookTicket")) {
@@ -619,13 +636,14 @@ public class Controller extends HttpServlet {
 
                 }
                 //request.getRequestDispatcher("/bookingTickets.jsp").forward(request, response);
-            } else if (action.equals("promptRegister")) {
-                //String companyLogo = webManagementBean.getCompanyLogo();
-                //   List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                // request.setAttribute("propertyData", propertyData);
-                // request.setAttribute("CompanyLogo", companyLogo);
-                request.getRequestDispatcher("/loginCustomer.jsp").forward(request, response);
-            } else if (action.equals("addToCartSuccess")) {
+            } //                else if (action.equals("promptRegister")) {
+            //String companyLogo = webManagementBean.getCompanyLogo();
+            //   List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+            // request.setAttribute("propertyData", propertyData);
+            // request.setAttribute("CompanyLogo", companyLogo);
+            //                request.getRequestDispatcher("/loginCustomer.jsp").forward(request, response);
+            //            } 
+            else if (action.equals("addToCartSuccess")) {
 
                 String username = (String) request.getSession(false).getAttribute("username");
                 System.out.println("====addToCartSuccess Username: " + username);
@@ -637,10 +655,12 @@ public class Controller extends HttpServlet {
                     request.setAttribute("norecords", "false");
                 }
                 request.setAttribute("records", records);
-                //String companyLogo = webManagementBean.getCompanyLogo();
-                // List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                //request.setAttribute("propertyData", propertyData);
-                // request.setAttribute("CompanyLogo", companyLogo);
+                String companyname = request.getParameter("company");
+                String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                request.setAttribute("companyname", companyname);
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
                 request.getRequestDispatcher("/shoppingCart.jsp").forward(request, response);
             } else if (action.equals("customerProfile")) {
                 String username = (String) request.getSession(false).getAttribute("username");
@@ -655,10 +675,12 @@ public class Controller extends HttpServlet {
                 Date dob = u.getDOB();
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(dob);
-                //String companyLogo = webManagementBean.getCompanyLogo();
-                //   List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                //  request.setAttribute("propertyData", propertyData);
-                //request.setAttribute("CompanyLogo", companyLogo);
+                String companyname = request.getParameter("company");
+                String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                request.setAttribute("companyname", companyname);
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
                 request.setAttribute("day", cal.get(Calendar.DAY_OF_MONTH));
                 request.setAttribute("month", cal.get(Calendar.MONTH));
                 request.setAttribute("year", cal.get(Calendar.YEAR));
@@ -683,10 +705,12 @@ public class Controller extends HttpServlet {
                 Date dob = u.getDOB();
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(dob);
-                //String companyLogo = webManagementBean.getCompanyLogo();
-                //   List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                //  request.setAttribute("propertyData", propertyData);
-                //request.setAttribute("CompanyLogo", companyLogo);
+                String companyname = request.getParameter("company");
+                String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                request.setAttribute("companyname", companyname);
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
                 request.setAttribute("day", cal.get(Calendar.DAY_OF_MONTH));
                 request.setAttribute("month", cal.get(Calendar.MONTH));
                 request.setAttribute("year", cal.get(Calendar.YEAR));
@@ -701,28 +725,36 @@ public class Controller extends HttpServlet {
                 } else {
                     request.setAttribute("norecords", "false");
                 }
-                //String companyLogo = webManagementBean.getCompanyLogo();
-                //     List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                //   request.setAttribute("propertyData", propertyData);
-                //request.setAttribute("CompanyLogo", companyLogo);
+                String companyname = request.getParameter("company");
+                String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                request.setAttribute("companyname", companyname);
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
                 request.setAttribute("records", records);
                 request.getRequestDispatcher("/shoppingCart.jsp").forward(request, response);
             } else if (action.equals("loginSuccess")) {
-                // List<ArrayList> data = webManagementBean.getWebpageList();
-                //request.setAttribute("data", data);
-                //String companyLogo = webManagementBean.getCompanyLogo();
-                //      List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                //    request.setAttribute("propertyData", propertyData);
-                //request.setAttribute("CompanyLogo", companyLogo);
+                String companyname = request.getParameter("company");
+                List<ArrayList> data = webManagementBean.getWebpageList(companyname);
+                String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                request.setAttribute("companyname", companyname);
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
+                request.setAttribute("data", data);
                 request.getRequestDispatcher("/home.jsp").forward(request, response);
             } else if (action.equals("continueShop")) {
-                //List<ArrayList> data = webManagementBean.getWebpageList();
-                //request.setAttribute("data", data);
-                //String companyLogo = webManagementBean.getCompanyLogo();
-                //     List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                //   request.setAttribute("propertyData", propertyData);
-                //request.setAttribute("CompanyLogo", companyLogo);
+                String company = request.getParameter("company");
+
+                List<ArrayList> data = webManagementBean.getWebpageList(company);
+                String companyLogo = webManagementBean.getCompanyLogo(company);
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName(company);
+                request.setAttribute("companyname", company);
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
+                request.setAttribute("data", data);
                 request.getRequestDispatcher("/home.jsp").forward(request, response);
+
             } else if (action.equals("shopCart")) {
                 String username = (String) request.getSession(false).getAttribute("username");
                 System.out.println("====shopCart Username: " + username);
@@ -732,22 +764,25 @@ public class Controller extends HttpServlet {
                 } else {
                     request.setAttribute("norecords", "false");
                 }
-                //String companyLogo = webManagementBean.getCompanyLogo();
-                //      List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                //    request.setAttribute("propertyData", propertyData);
-                //request.setAttribute("CompanyLogo", companyLogo);
+                String companyname = request.getParameter("company");
+                String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                request.setAttribute("companyname", companyname);
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
                 request.setAttribute("records", records);
                 request.getRequestDispatcher("/shoppingCart.jsp").forward(request, response);
-            } else if (action.equals("finances")) {
-                request.setAttribute("username", currentUser);
-                // String companyLogo = webManagementBean.getCompanyLogo();
-                //   List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                // request.setAttribute("propertyData", propertyData);
-                //request.setAttribute("CompanyLogo", companyLogo);
-                request.getRequestDispatcher("/finances.jsp").forward(request, response);
-            } else if (action.equals("createAdmin")) {
-                registerManager.createAdministrator();
-            }
+            } /*else if (action.equals("finances")) {
+             request.setAttribute("username", currentUser);
+             // String companyLogo = webManagementBean.getCompanyLogo();
+             //   List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+             // request.setAttribute("propertyData", propertyData);
+             //request.setAttribute("CompanyLogo", companyLogo);
+             request.getRequestDispatcher("/finances.jsp").forward(request, response);
+             } else if (action.equals("createAdmin")) {
+             registerManager.createAdministrator();
+             }*/
+
         } catch (Exception ex) {
             ex.printStackTrace();
             //request.getRequestDispatcher("/error.jsp").forward(request, response);

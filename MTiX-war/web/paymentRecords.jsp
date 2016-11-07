@@ -15,6 +15,7 @@
 <!-- Main Content -->
 <!-- Main Content -->
 <div class="container">
+    <%String companyName = request.getAttribute("companyname").toString();%>
     <div class="panel panel-default col-lg-12" style="box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
          -moz-box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
          -webkit-box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);">
@@ -75,8 +76,8 @@
                                         String status = inboxPage.get(i).get(4);
                                 %>
 
-                                <c:url var="formAction" value="/FinanceController?action=makePayment" />
-                                <c:url var="formAction2" value="/FinanceController?action=requestRefund" />
+                                <c:url var="formAction" value="FinanceController?action=makePayment&company=<%=companyName%>" />
+                                <c:url var="formAction2" value="FinanceController?action=requestRefund&company=<%=companyName%>" />
 
                                 <tr class="unread">
 
@@ -89,7 +90,7 @@
                                     <% if (status.equals("unpaid")) {%>
                                     <td class="view-message"><%= status%></td>
                                     <td class="view-message">
-                                        <form id="verifyForm" name="verifyForm" action="${formAction}" method="post">
+                                        <form id="verifyForm" name="verifyForm" action="FinanceController?action=makePayment&company=<%=companyName%>" method="post">
 
                                             <input type="hidden" name="paymentid" value=<%= id%> readonly="readonly" />
                                             <input type="hidden" name="event" value=<%= eventName%> readonly="readonly" />
@@ -101,7 +102,7 @@
                                         <% } else if (status.equals("paid")) {%>
                                     <td class="view-message"><%= status%></td>
                                     <td class="view-message">
-                                        <form id="verifyForm" name="verifyForm" action="${formAction2}" method="post">
+                                        <form id="verifyForm" name="verifyForm" action="FinanceController?action=requestRefund&company=<%=companyName%>" method="post">
 
                                             <input type="hidden" name="paymentid" value=<%= id%> readonly="readonly" />
                                             <input type="hidden" name="event" value=<%= eventName%> readonly="readonly" />

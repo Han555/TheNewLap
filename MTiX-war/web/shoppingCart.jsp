@@ -12,6 +12,7 @@
 <jsp:include page="header.jsp" />
 
 <div class="container">
+     <% String companyName = request.getAttribute("companyname").toString();%>
     <div class="panel panel-default col-lg-12" style="box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
          -moz-box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
          -webkit-box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);margin-bottom:50px;">
@@ -26,11 +27,11 @@
             <c:if test="${norecords == 'true'}">
                 <div class="col-md-3 cart-total">
 
-                    <a class="continue" href="Controller?action=continueShop">Continue Shopping</a>
+                    <a class="continue" href="Controller?action=continueShop&company=<%=companyName%>">Continue Shopping</a>
                 </div>
                 <div class="col-md-3 cart-total">
-                    <c:url var="linkHref" value="/FinanceController?action=getUser" />
-                    <a class="continue" href="${linkHref}">Request For Refund</a>
+                    <c:url var="linkHref" value="FinanceController?action=getUser&company=<%=companyName%>" />
+                    <a class="continue" href="FinanceController?action=getUser&company=<%=companyName%>">Request For Refund</a>
                 </div>
                 <div class="col-md-9 cart-items">
                     <div style="font-size:24px;margin-left:110px; ">No Shopping Cart Records</div>
@@ -40,13 +41,13 @@
             <c:if test="${norecords == 'false'}">
                 <div class="col-md-3 cart-total">
 
-                    <a class="continue" href="Controller?action=continueShop">Continue to basket</a>
+                    <a class="continue" href="Controller?action=continueShop&company=<%=companyName%>">Continue to basket</a>
 
 
 
                     <div class="clearfix"></div>
-                    <c:url var="linkHref" value="/FinanceController?action=getUser" />
-                    <a class="order" href="${linkHref}">Place Order</a>
+                    <c:url var="linkHref" value="FinanceController?action=getUser&company=<%=companyName%>" />
+                    <a class="order" href="FinanceController?action=getUser&company=<%=companyName%>">Place Order</a>
 
                 </div>    
 

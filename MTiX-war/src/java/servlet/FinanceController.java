@@ -80,9 +80,9 @@ public class FinanceController extends HttpServlet {
                 String promotion = request.getParameter("promotion");
                 paymentManager.createRecord(currentUser, receiver, eventName, ticketQuantity, amount, promotion);
                 request.setAttribute("username", currentUser);
-               // String companyLogo = webManagementBean.getCompanyLogo();
-         //       List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-           //     request.setAttribute("propertyData", propertyData);
+                // String companyLogo = webManagementBean.getCompanyLogo();
+                //       List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
+                //     request.setAttribute("propertyData", propertyData);
                 //request.setAttribute("CompanyLogo", companyLogo);
                 request.getRequestDispatcher("/testBuy.jsp").forward(request, response);
             } else if (action.equals("viewPayment")) {
@@ -113,10 +113,14 @@ public class FinanceController extends HttpServlet {
                     String timeStamp = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
                     double finalPrice = (3.0 * Double.parseDouble(paymentRecord.get(5))) + Double.parseDouble(paymentRecord.get(6));
                     String amount = String.valueOf(finalPrice);
-                 //   String companyLogo = webManagementBean.getCompanyLogo();
-               //     List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                 //   request.setAttribute("propertyData", propertyData);
-                   // request.setAttribute("CompanyLogo", companyLogo);
+
+                    String companyname = request.getParameter("company");
+                    String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                    List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                    request.setAttribute("companyname", companyname);
+                    request.setAttribute("propertyData", propertyData);
+                    request.setAttribute("CompanyLogo", companyLogo);
+
                     paymentManager.sendEmail(name, "is3102mtix@gmail.com", "Invoice From MTiX\nInvoice date: " + timeStamp + "\nInvoiced to: " + name + "\nAddress: " + paymentRecord.get(0) + "\nCountry: " + paymentRecord.get(1) + "\nZip Code: " + paymentRecord.get(2) + " " + paymentRecord.get(3) + "\nEvent: " + paymentRecord.get(4) + "\nTicket Qunatity: " + paymentRecord.get(5) + "\nTotal Amount($): " + amount + "\nTransaction Date: " + timeStamp + "\n\nNote: This is a Computer generated invoice and thus requires no signature.", "MTiX Invoice", "smtp.gmail.com");
                     request.getRequestDispatcher("/paymentRecords.jsp").forward(request, response);
 
@@ -137,10 +141,14 @@ public class FinanceController extends HttpServlet {
                     request.setAttribute("recordSize", String.valueOf(recordPage.size()));
                     request.setAttribute("currentPage", page);
                     request.setAttribute("inbox", recordPage);
-                  //  String companyLogo = webManagementBean.getCompanyLogo();
-               //     List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                 //   request.setAttribute("propertyData", propertyData);
-                  //  request.setAttribute("CompanyLogo", companyLogo);
+
+                    String companyname = request.getParameter("company");
+                    String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                    List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                    request.setAttribute("companyname", companyname);
+                    request.setAttribute("propertyData", propertyData);
+                    request.setAttribute("CompanyLogo", companyLogo);
+
                     request.getRequestDispatcher("/paymentRecords.jsp").forward(request, response);
                 }
 
@@ -153,10 +161,12 @@ public class FinanceController extends HttpServlet {
 
                 request.setAttribute("quantity", request.getParameter("ticket"));
                 request.setAttribute("price", paymentManager.convertPrices(request.getParameter("ticket"), request.getParameter("amount")));
-           //     String companyLogo = webManagementBean.getCompanyLogo();
-            //    request.setAttribute("CompanyLogo", companyLogo);
-                  //     List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                 //   request.setAttribute("propertyData", propertyData);
+                String companyname = request.getParameter("company");
+                String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                request.setAttribute("companyname", companyname);
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
                 request.setAttribute("paymentid", request.getParameter("paymentid"));
                 request.getRequestDispatcher("/makePayment.jsp").forward(request, response);
             } else if (action.equals("addAddress")) {
@@ -175,10 +185,12 @@ public class FinanceController extends HttpServlet {
                 request.setAttribute("city", city);
                 request.setAttribute("zip", zip);
                 paymentManager.addAddress(id, address, country, city, zip);
-              //  String companyLogo = webManagementBean.getCompanyLogo();
-             //   List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-               // request.setAttribute("propertyData", propertyData);
-               // request.setAttribute("CompanyLogo", companyLogo);
+                String companyname = request.getParameter("company");
+                String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                request.setAttribute("companyname", companyname);
+                request.setAttribute("propertyData", propertyData);
+                request.setAttribute("CompanyLogo", companyLogo);
                 request.getRequestDispatcher("/paymentConfirmation.jsp").forward(request, response);
             } else if (action.equals("requestRefund")) {
                 String id = request.getParameter("paymentid");
@@ -201,10 +213,12 @@ public class FinanceController extends HttpServlet {
                     request.setAttribute("recordSize", String.valueOf(recordPage.size()));
                     request.setAttribute("currentPage", page);
                     request.setAttribute("inbox", recordPage);
-                //    String companyLogo = webManagementBean.getCompanyLogo();
-                 //   List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                   // request.setAttribute("propertyData", propertyData);
-                   // request.setAttribute("CompanyLogo", companyLogo);
+                    String companyname = request.getParameter("company");
+                    String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                    List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                    request.setAttribute("companyname", companyname);
+                    request.setAttribute("propertyData", propertyData);
+                    request.setAttribute("CompanyLogo", companyLogo);
                     request.getRequestDispatcher("/paymentRecords.jsp").forward(request, response);
                 } else {
 
@@ -222,10 +236,12 @@ public class FinanceController extends HttpServlet {
                     request.setAttribute("recordSize", String.valueOf(recordPage.size()));
                     request.setAttribute("currentPage", page);
                     request.setAttribute("inbox", recordPage);
-                  //  String companyLogo = webManagementBean.getCompanyLogo();
-                 //   List<ArrayList> propertyData = webManagementBean.getAllPropertyName();
-                   // request.setAttribute("propertyData", propertyData);
-                  //  request.setAttribute("CompanyLogo", companyLogo);
+                    String companyname = request.getParameter("company");
+                    String companyLogo = webManagementBean.getCompanyLogo(companyname);
+                    List<ArrayList> propertyData = webManagementBean.getAllPropertyName(companyname);
+                    request.setAttribute("companyname", companyname);
+                    request.setAttribute("propertyData", propertyData);
+                    request.setAttribute("CompanyLogo", companyLogo);
                     request.getRequestDispatcher("/paymentRecords.jsp").forward(request, response);
                 }
 

@@ -16,6 +16,7 @@
 <!-- Main Content -->
 <!-- Main Content -->
 <div class="container">
+    <%String companyName = request.getAttribute("companyname").toString();%>
     <div class="panel panel-default col-lg-12" style="box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
          -moz-box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
          -webkit-box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);">
@@ -81,7 +82,7 @@
                                                 username = "&name=" + username;
                                             %>
 
-                                            <%String address = "http://localhost:8080/MTiX-war/FinanceController?action=viewPayment&id=" + id +username;%>
+                                            <%String address = "http://localhost:8080/MTiX-war/FinanceController?action=viewPayment&id=" + id +username + "&company=" + companyName;%>
                                             <input type="hidden" name="cmd" value="_xclick">
                                             <input type="hidden" name="business" value="nicefood555@gmail.com">
                                             <input type="hidden" name="item_name" value="<%= request.getAttribute("event")%>">

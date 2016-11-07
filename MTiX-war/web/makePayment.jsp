@@ -15,6 +15,7 @@
 <!-- Main Content -->
 <!-- Main Content -->
 <div class="container">
+    <%String companyName = request.getAttribute("companyname").toString();%>
     <div class="panel panel-default col-lg-12" style="box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
          -moz-box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);
          -webkit-box-shadow: 0px 3px 10px 1px rgba(119, 119, 119, 0.75);">
@@ -26,7 +27,7 @@
              transparent 3px
              );">My Shopping Bag</div> 
     <div class="check">	
-    <c:url var="formAction" value="/FinanceController?action=addAddress" />
+    <c:url var="formAction" value="FinanceController?action=addAddress&company=<%=companyName%>" />
     
         <div class="row">
             <c:if test="${missend == 'true'}">
@@ -47,7 +48,7 @@
                                         <h4 class="title">Payment Details</h4>   
                                     </div>
                                     <div class="content">             
-                                        <form id="contact_form" action="${formAction}" method="POST">
+                                        <form id="contact_form" action="FinanceController?action=addAddress&company=<%=companyName%>" method="POST">
                                             <div class="row">
                                                 <h5 class="title">Event Name: </h5> <label style="text-align: justify" for="email"><%= request.getAttribute("event")%></label><br />
                                             </div>
