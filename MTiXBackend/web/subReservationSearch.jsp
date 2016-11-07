@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <div class="side-body">
         <div class="page-title">
-            <span class="title">Search Avaliable Venues</span>
+            <span class="title">Search Avaliable Venues ${companyName}</span>
 
         </div>
 
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <c:url var="formAction" value="/BackController?action=subReservationSearchResult" />
+                        <c:url var="formAction" value="/BackPropertyController?action=subReservationSearchResult" />
                         <form class="form-horizontal" id="formSubmit" action="${formAction}" method="post">
                            <div class="form-group" style="padding-bottom: 20px;" >
                                 <label for="eventcate" class="col-sm-2 control-label">Event Category</label>
@@ -62,6 +62,9 @@
 
                                 </div> 
                             </div>
+                                    <div class="form-group" style="display:none">
+                                        <input type="text" name="eventid" value="${eventid}">
+                                        </div>
 
                             <div class="form-group" style="padding-bottom: 20px;">
                                 

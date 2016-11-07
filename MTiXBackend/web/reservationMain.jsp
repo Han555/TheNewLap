@@ -49,6 +49,43 @@
                 <!--    </div> -->
             </div>
         </div>
+                    
+                      <div class="row" >
+            <div class="col-sm-6">
+                <!--    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12"> -->
+                <c:url var="linkHref" value="/BackPropertyController?action=addSubEventUnderMain" />
+                <a href="${linkHref}">
+                    <div class="card green summary-inline">
+                        <div class="card-body">
+                            <i class="icon fa fa-share-alt fa-4x"></i>
+                            <div class="content">
+                                <div class="title" style="font-size:25px;">Create Sub Events Under Main Event </div>
+                                <div class ="description" style="color:#000000;">Click here if want to add more sub events to main event</div>
+                            </div>
+                            <div class="clear-both"></div>
+                        </div>
+                    </div>
+                </a>
+                <!--    </div> -->
+            </div>
+<!--            <div class="col-sm-6">
+                   <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12"> 
+                <c:url var="linkHref" value="/BackPropertyController?action=createEventWithSub" />
+                <a href="${linkHref}">
+                    <div class="card green summary-inline">
+                        <div class="card-body">
+                            <i class="icon fa fa-share-alt fa-4x"></i>
+                            <div class="content">
+                                <div class="title" style="font-size:25px;">Create Event<span style="color:#000000"> <u>with</u></span> Sub Events</div>
+                                <div class ="description" style="color:#000000;">Click here if the event has any sub events</div>
+                            </div>
+                            <div class="clear-both"></div>
+                        </div>
+                    </div>
+                </a>
+                    </div> 
+            </div>-->
+        </div>
 <!--        <div class="row">
             <div class="col-sm-6">
                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12"> 

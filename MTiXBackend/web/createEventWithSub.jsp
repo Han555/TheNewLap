@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <c:url var="formAction" value="/BackController?action=saveEventWithSub" />
+                        <c:url var="formAction" value="/BackPropertyController?action=saveEventWithSub" />
                         <form class="form-horizontal" id="formSubmit" action="${formAction}" method="post">
                             <div class="form-group" style="padding-bottom: 20px;" >
                                 <label for="eventname" class="col-sm-2 control-label">Event Name<span style="color:#FF0000;">*</span></label>
@@ -45,8 +45,14 @@
                             <div class="form-group" style="padding-bottom: 20px;" >
                                 <label for="eoemail" class="col-sm-2 control-label">Event Organizer Email<span style="color:#FF0000;">*</span></label>
                                 <div class="col-sm-8">
-                                    <Input type="email" id="eoemail" name="eoemail" required>
-                                    <span style="color:#FF0000">${userResult}</span>
+
+                                    <select class="js-example-basic-single js-states" id="eoemail" name="eoemail">
+                                        <c:forEach items="${organizers}" var="organizer">
+                                            <option value="${organizer.userId}">${organizer.username}</option>
+                                        </c:forEach>	
+                                    </select>
+
+
                                 </div> 
                             </div>
 

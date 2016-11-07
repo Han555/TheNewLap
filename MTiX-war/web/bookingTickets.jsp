@@ -181,14 +181,11 @@
                     Step 2: Select Section
                 </div>
                 <div class="panel-body" id="ssection-panel-body">
-                    <c:if test="${property.propertyName == 'Merlion Concert Hall'}">
+                   
 
-                        <img src="images/property/Concerthall_layout.png" alt="concert_layout" usemap="#image-map" >
-                    </c:if>
-                    <c:if test="${property.propertyName == 'Merlion Star Theater'}">
-
-                        <img src="images/property/Theatre.png" alt="concert_layout" usemap="#image-map" >
-                    </c:if>
+                        <img src="/MTiX-war/ContentImageController?id=${property.layoutFileName}" alt="concert_layout" usemap="#image-map" >
+                   
+                   
                     <map name="image-map">
                         <c:forEach items="${sections}" var="section">
                             <area id="${section.numberInProperty}" class= "p1" href="#"  coords="${section.coords}"  shape="poly"  >
