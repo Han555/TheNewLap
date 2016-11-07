@@ -605,7 +605,7 @@ public class WebContentBean implements WebContentBeanLocal {
 
             String fileName = companyProfile.getFileName(); 
             
-            Path path = Paths.get("/Users/catherinexiong/Desktop/contentManagement/" + File.separator
+            Path path = Paths.get("/Users/catherinexiong/Desktop/contentManagement" + File.separator
                     + fileName);
             Files.delete(path);
             Thread.sleep(1000);

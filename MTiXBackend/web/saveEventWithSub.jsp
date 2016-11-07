@@ -45,8 +45,7 @@
                             </tbody>
                         </table>
                     </div>
-                                    <% 
-                                        session.setAttribute("eventid", event.getId()); %>
+                                   
                     <div class="sub-title">Please Press the Button Below to Create Sub Event <span class="description">( To Search Avaliable Properties for Sub Event )</span>  
                     </div>
                     
@@ -54,7 +53,7 @@
 
                         
                         <div class="form-group" style="padding-bottom: 60px;">
-                            <c:url var="linkHref" value="/BackController?action=subReservationSearch" />
+                            <c:url var="linkHref" value="/BackPropertyController?action=subReservationSearch&eventid=${event.id}" />
                             <div class="col-sm-offset-2 col-sm-10">
                               <a href="${linkHref}">
                                 <button type="button" class="btn btn-default" value="seSubmit">Create Sub Event</button></a>

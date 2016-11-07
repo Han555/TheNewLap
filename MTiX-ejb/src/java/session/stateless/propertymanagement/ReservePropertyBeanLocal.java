@@ -37,7 +37,7 @@ public interface ReservePropertyBeanLocal {
 
     public UserEntity getUserByEmail(String email);
 
-    public Event addNewEventWithSub(String eventName, String eventDescription, String eoEmail);
+//    public Event addNewEventWithSub(String eventName, String eventDescription, String eoEmail);
 
 //    public Boolean checkUser(String username);
 
@@ -88,6 +88,12 @@ public interface ReservePropertyBeanLocal {
     public SubEvent addNewSubEvent(CompanyEntity company, String eventName, Date start, Date end, Long propertyId, Long eId, String email, String type);
 
     public Boolean checkUser(CompanyEntity company, String username);
+
+    public List<UserEntity> getEventOrganizersInOneComany(CompanyEntity company);
+
+    public Event addNewEventWithSub(CompanyEntity company, String eventName, String eventDescription, Long userId);
+
+    public List<Event> getAllEventsWithSubEvents(CompanyEntity company);
 
 
     

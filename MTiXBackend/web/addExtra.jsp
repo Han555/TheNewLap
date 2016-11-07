@@ -83,11 +83,11 @@
 
                         </div>
 
-                        <div class="form-group" >
+<!--                        <div class="form-group" >
                             <div class="col-sm-10">
                                 <button type="submit" class="btn btn-default" value="formSubmit">No More Sub Event</button><span>${msg}</span>
                             </div>
-                        </div>
+                        </div>-->
                     </form>
 
 

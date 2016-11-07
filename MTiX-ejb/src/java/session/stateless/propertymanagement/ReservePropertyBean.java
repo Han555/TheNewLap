@@ -181,13 +181,14 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
     }
 
     @Override
-    public SubEvent addNewSubEvent(CompanyEntity company,String eventName, Date start, Date end, Long propertyId, Long eId, String email,String type) {
+    public SubEvent addNewSubEvent(CompanyEntity company,String eventName, Date start, Date end, Long propertyId, Long eId, String uId,String type) {
         if (!checkPropertyConflict(start, end, propertyId,company) && !checkMaintenanceConflict(start, end, propertyId)) {
-            UserEntity user = getUserByEmail(email);
+            UserEntity user = getUserEntityById(Long.valueOf(uId));
             Event event = getEventById(eId);
             System.out.println(eId + event.getName());
             SubEvent subevent = new SubEvent();
             subevent.setName(eventName);
+            subevent.setCompany(company);
             // event.setDescription(eventDescription);
             subevent.setStart(start);
             subevent.setEnd(end);
@@ -211,11 +212,12 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
     }
 
     @Override
-    public Event addNewEventWithSub(String eventName, String eventDescription, String eoEmail) {
+    public Event addNewEventWithSub(CompanyEntity company,String eventName, String eventDescription,Long userId) {
 
-        UserEntity user = getUserByEmail(eoEmail);
+        UserEntity user = getUserEntityById(userId);
         Event event = new Event();
         event.setName(eventName);
+        event.setCompany(company);
         event.setDescription(eventDescription);
         event.setHasSubEvent(true);
 
@@ -490,6 +492,38 @@ public class ReservePropertyBean implements ReservePropertyBeanLocal {
         }
         return resultList;
 
+    }
+    
+    @Override
+    public List<UserEntity> getEventOrganizersInOneComany(CompanyEntity company){
+        Query query = em.createQuery("SELECT u FROM UserEntity u WHERE u.company=:company");
+        query.setParameter("company", company);
+        List <UserEntity> resultList = query.getResultList();
+        List <UserEntity> organizers = new ArrayList();
+        for(UserEntity u:resultList){
+            for(String role:u.getRoles()){
+                if(role.equals("event organizer")){
+                    organizers.add(u);
+                }
+            }
+        }
+        
+        return organizers;
+    }
+    
+    @Override
+    public List<Event> getAllEventsWithSubEvents(CompanyEntity company){
+        Query query = em.createQuery("SELECT e FROM Event e WHERE e.company=:company");
+        query.setParameter("company", company);
+        List <Event> resultList = query.getResultList();
+        List <Event> eventList = new ArrayList();
+        for(Event e:resultList){
+            if(e.isHasSubEvent()){
+                eventList.add(e);
+            }
+        }
+        
+        return eventList;
     }
 
     // Add business logic below. (Right-click in editor and choose

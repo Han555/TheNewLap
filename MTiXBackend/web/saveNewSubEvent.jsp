@@ -65,9 +65,9 @@
                             <input type="hidden" name="eventid" value="${eventid}">
 
                         </div>
-
+                      <div class="row">
                         <div class="form-group" >
-                            <div class="col-sm-10">
+                            <div class="col-sm-4">
                                 <button type="submit" class="btn btn-default" value="formSubmit">Create Another Sub Event</button><span>${msg}</span>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
 
                     <c:url var="formAction" value="/BackController?action=addExtra" />
                     <form class="form-horizontal" id="formSubmit" action="${formAction}" method="post">
-                        <div class="form-group">
+                        <div class="form-group" style="display:none">
 
 
                             <input type="hidden" name="eventid" value="${eventid}">
@@ -83,12 +83,12 @@
                         </div>
 
                         <div class="form-group" >
-                            <div class="col-sm-10">
-                                <button type="submit" class="btn btn-default" value="formSubmit">No More Sub Event</button><span>${msg}</span>
+                            <div class="col-sm-4">
+                                <button type="submit" class="btn btn-success" value="formSubmit">No More Sub Event</button><span>${msg}</span>
                             </div>
                         </div>
                     </form>
-
+</div>
                 </div>
             </div>
 

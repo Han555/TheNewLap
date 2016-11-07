@@ -9,6 +9,8 @@ import entity.CompanyEntity;
 import entity.Event;
 import entity.PropertyEntity;
 import entity.SectionEntity;
+import entity.SubEvent;
+import entity.UserEntity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -83,7 +85,7 @@ public class BackPropertyController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String action;
@@ -162,39 +164,39 @@ public class BackPropertyController extends HttpServlet {
             } else if (action.equals("venueLayout")) {
                 String idStr = request.getParameter("id");
                 Long pid = Long.valueOf(idStr);
-                PropertyEntity property =spm.getPropertyById(pid);
-                request.setAttribute("property",property);
+                PropertyEntity property = spm.getPropertyById(pid);
+                request.setAttribute("property", property);
                 Long companyId = (Long) request.getSession(false).getAttribute("company");
                 CompanyEntity company = rem.getCompanyEntityById(companyId);
                 List<SectionEntity> sections = spm.getAllSectionsInOneProperty(pid);
-                
+
                 request.setAttribute("sections", sections);
                 request.setAttribute("companyName", company.getCompanyName());
                 request.setAttribute("username", currentUser);
                 request.setAttribute("role", role);
                 request.getRequestDispatcher("/venueLayout.jsp").forward(request, response);
 
-            } 
-            else if (action.equals("seatPlans")) {
-                String sidStr = request.getParameter("sid");
-                String pidStr = request.getParameter("pid");
-                System.out.println("=====seatPlans sid: "+sidStr+" pid: "+pidStr);
-                Long pid = Long.valueOf(pidStr);
-                Long sid = Long.valueOf(sidStr);
-                PropertyEntity property =spm.getPropertyById(pid);
-                SectionEntity section = spm.getSectionEntityById(sid);
-                request.setAttribute("property",property);
-                request.setAttribute("section",section);
-                String seatStr= section.getSeatMap();
-                Long companyId = (Long) request.getSession(false).getAttribute("company");
-                CompanyEntity company = rem.getCompanyEntityById(companyId);
-                request.setAttribute("seatStr",seatStr);
-                request.setAttribute("companyName", company.getCompanyName());
-                request.setAttribute("username", currentUser);
-                request.setAttribute("role", role);
-                request.getRequestDispatcher("/seatPlans.jsp").forward(request, response);
-
-            }else if (action.equals("eventReservationSearch")) {
+            } //            else if (action.equals("seatPlans")) {
+            //                String sidStr = request.getParameter("sid");
+            //                String pidStr = request.getParameter("pid");
+            //                System.out.println("=====seatPlans sid: "+sidStr+" pid: "+pidStr);
+            //                Long pid = Long.valueOf(pidStr);
+            //                Long sid = Long.valueOf(sidStr);
+            //                PropertyEntity property =spm.getPropertyById(pid);
+            //                SectionEntity section = spm.getSectionEntityById(sid);
+            //                request.setAttribute("property",property);
+            //                request.setAttribute("section",section);
+            //                String seatStr= section.getSeatMap();
+            //                Long companyId = (Long) request.getSession(false).getAttribute("company");
+            //                CompanyEntity company = rem.getCompanyEntityById(companyId);
+            //                request.setAttribute("seatStr",seatStr);
+            //                request.setAttribute("companyName", company.getCompanyName());
+            //                request.setAttribute("username", currentUser);
+            //                request.setAttribute("role", role);
+            //                request.getRequestDispatcher("/seatPlans.jsp").forward(request, response);
+            //
+            //            }
+            else if (action.equals("eventReservationSearch")) {
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
                 Long companyId = (Long) request.getSession(false).getAttribute("company");
@@ -261,7 +263,7 @@ public class BackPropertyController extends HttpServlet {
                 String type = request.getParameter("type");
                 System.out.println("Entered save new event 1.");
                 System.out.println("email save new event: " + email);
-                boolean checkUser = rm.checkUser(company,email);
+                boolean checkUser = rm.checkUser(company, email);
 
                 request.setAttribute("role", role);
                 request.setAttribute("username", currentUser);
@@ -286,23 +288,92 @@ public class BackPropertyController extends HttpServlet {
                     }
                 } else {
                     request.setAttribute("userResult", "Please note: The email you entered is not a valid user. Please enter again.");
-                   
-                        PropertyEntity property = spm.getPropertyById(pid);
-                        request.setAttribute("property", property);
-                        request.setAttribute("eventname", ename);
-                        request.setAttribute("eventdes", eDes);
 
-                        request.setAttribute("eventdes", eDes);
-                        request.getRequestDispatcher("/venueSelected.jsp").forward(request, response);
-                   
+                    PropertyEntity property = spm.getPropertyById(pid);
+                    request.setAttribute("property", property);
+                    request.setAttribute("eventname", ename);
+                    request.setAttribute("eventdes", eDes);
+
+                    request.setAttribute("eventdes", eDes);
+                    request.getRequestDispatcher("/venueSelected.jsp").forward(request, response);
+
                 }
 
                 // 
+            } else if (action.equals("createEventWithSub")) {
+                Long companyId = (Long) request.getSession(false).getAttribute("company");
+                CompanyEntity company = rem.getCompanyEntityById(companyId);
+                request.setAttribute("role", role);
+                request.setAttribute("username", currentUser);
+                List<UserEntity> organizers = rm.getEventOrganizersInOneComany(company);
+                request.setAttribute("organizers", organizers);
+
+                request.getRequestDispatcher("/createEventWithSub.jsp").forward(request, response);
+            } else if (action.equals("saveEventWithSub")) {
+                Long companyId = (Long) request.getSession(false).getAttribute("company");
+                CompanyEntity company = rem.getCompanyEntityById(companyId);
+                String eventName = request.getParameter("eventname");
+                String eventDes = request.getParameter("eventdes");
+                String organizerIdStr = request.getParameter("eoemail");
+                System.out.println(eventName + "  " + eventDes + "== == " + organizerIdStr);
+
+                request.setAttribute("role", role);
+                request.setAttribute("username", currentUser);
+
+                request.setAttribute("event", rm.addNewEventWithSub(company, eventName, eventDes, Long.valueOf(organizerIdStr)));
+
+                request.getRequestDispatcher("/saveEventWithSub.jsp").forward(request, response);
+
+            } else if (action.equals("subReservationSearch")) {
+                System.out.println("===subReservationSearch eventid: "+request.getParameter("eventid"));
+                request.setAttribute("eventid",request.getParameter("eventid"));
+                request.setAttribute("role", role);
+                request.setAttribute("username", currentUser);
+                Long companyId = (Long) request.getSession(false).getAttribute("company");
+                CompanyEntity company = rem.getCompanyEntityById(companyId);
+                request.setAttribute("companyName", company.getCompanyName());
+                request.getRequestDispatcher("/subReservationSearch.jsp").forward(request, response);
+
+            } else if (action.equals("reservationSearchResult")) {
+                try {
+
+                    String type = request.getParameter("eventcate");
+                    Long companyId = (Long) request.getSession(false).getAttribute("company");
+                    CompanyEntity company = rem.getCompanyEntityById(companyId);
+                    List<PropertyEntity> aProperties = rm.getAvailableProperties(company, request);
+                    if (aProperties.isEmpty()) {
+                        request.setAttribute("errormsg", " No venues are available ");
+                        request.setAttribute("role", role);
+                        request.setAttribute("username", currentUser);
+                        request.getRequestDispatcher("/reservationSearch.jsp").forward(request, response);
+                    } else {
+                        List<PropertyEntity> properties = rm.getReservationSearchResult(aProperties, request);
+                        List<PropertyEntity> pRList = rm.checkRecommendation(properties, request);
+                        String daterange = request.getParameter("daterange");
+                        if (properties.isEmpty()) {
+                            request.setAttribute("errormsg", " Please note: There are no suitable venues matching the number of your expected auidence and type of event  ");
+                            request.setAttribute("role", role);
+                            request.setAttribute("username", currentUser);
+                            request.getRequestDispatcher("/reservationSearch.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("pList", properties);
+                            request.setAttribute("pRList", pRList);
+                            request.setAttribute("daterange", daterange);
+                            request.setAttribute("type", type);
+                            request.setAttribute("role", role);
+                            request.setAttribute("username", currentUser);
+                            request.getRequestDispatcher("/reservationSearchResult.jsp").forward(request, response);
+                        }
+                    }
+                } catch (ParseException ex) {
+                    Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else if (action.equals("subReservationSearchResult")) {
 
                 try {
-                    HttpSession session = request.getSession();
-                    Long eventid = (Long) session.getAttribute("eventid");
+//                    HttpSession session = request.getSession();
+//                    Long eventid = (Long) session.getAttribute("eventid");
+                    Long eventid = Long.valueOf(request.getParameter("eventid"));
                     Long companyId = (Long) request.getSession(false).getAttribute("company");
                     CompanyEntity company = rem.getCompanyEntityById(companyId);
                     String type = request.getParameter("eventcate");
@@ -310,7 +381,7 @@ public class BackPropertyController extends HttpServlet {
                     request.setAttribute("eventid", eventid);
                     List<PropertyEntity> aProperties = rm.getAvailableProperties(company, request);
                     if (aProperties.isEmpty()) {
-                        request.setAttribute("errormsg", " Please note: The date range you entered conflicts with an exsiting reservation or a maintenance shedule  ");
+                        request.setAttribute("errormsg", " No available property ");
                         request.setAttribute("role", role);
                         request.setAttribute("username", currentUser);
                         request.getRequestDispatcher("/subReservationSearch.jsp").forward(request, response);
@@ -337,7 +408,72 @@ public class BackPropertyController extends HttpServlet {
                     Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
+            } else if (action.equals("subVenueSelected")) {
+                HttpSession session = request.getSession();
+                Long companyId = (Long) request.getSession(false).getAttribute("company");
+                CompanyEntity company = rem.getCompanyEntityById(companyId);
+                String daterange = (String) session.getAttribute("daterange");
+                Long eventid = (Long) session.getAttribute("eventid");
+                String type = (String) session.getAttribute("type");
+                String idStr = request.getParameter("id");
+                PropertyEntity property = spm.getPropertyById(Long.valueOf(idStr));
+                List<UserEntity> organizers = rm.getEventOrganizersInOneComany(company);
+                request.setAttribute("organizers", organizers);
+                request.setAttribute("type", type);
+                request.setAttribute("eventid", eventid);
+                request.setAttribute("daterange", daterange);
+                request.setAttribute("property", property);
+                request.setAttribute("role", role);
+                request.setAttribute("username", currentUser);
+                request.getRequestDispatcher("/subVenueSelected.jsp").forward(request, response);
+            } else if (action.equals("saveNewSubEvent")) {
+                Long companyId = (Long) request.getSession(false).getAttribute("company");
+                CompanyEntity company = rem.getCompanyEntityById(companyId);
+                String daterange = request.getParameter("daterange");
+               
+                // String idStr = request.getParameter("propertyId");
+                String eidStr = request.getParameter("eventid");
+                String pidStr = request.getParameter("pid");
+                String ename = request.getParameter("eventname");
+                //String eDes = request.getParameter("eventdes");
+                String email = request.getParameter("eoemail");
+                String type = request.getParameter("type");
+                System.out.println("========Add New Sub Event" + daterange  + eidStr + ename + email + type);
+
+
+                request.setAttribute("role", role);
+                request.setAttribute("username", currentUser);
+
+                SubEvent subevent = rm.addNewSubEvent(company, ename, daterange,Long.valueOf(pidStr) , Long.valueOf(eidStr), email, type);
+                if (subevent != null) {
+                    List<SubEvent> subevents = rm.getListOfSubEvent(subevent.getEvent());
+                    request.setAttribute("subevents", subevents);
+                    
+                    request.setAttribute("eventid", eidStr);
+                        // DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    //request.setAttribute("start", format.format(subevent.getStart()));
+                    //request.setAttribute("end", format.format(subevent.getEnd()));
+                    request.getRequestDispatcher("/saveNewSubEvent.jsp").forward(request, response);
+                } else {
+                    List<UserEntity> organizers = rm.getEventOrganizersInOneComany(company);
+                request.setAttribute("organizers", organizers);
+               
+                request.setAttribute("eventname",ename);
+                request.getRequestDispatcher("/subVenueSelected.jsp").forward(request, response);
+                
+                }
+            } else if (action.equals("addSubEventUnderMain")){
+                Long companyId = (Long) request.getSession(false).getAttribute("company");
+                CompanyEntity company = rem.getCompanyEntityById(companyId);
+                
+                
+                List<Event> eventList= rm.getAllEventsWithSubEvents(company);
+                request.setAttribute("events",eventList);
+                request.setAttribute("role", role);
+                request.setAttribute("username", currentUser);
+                request.getRequestDispatcher("/addSubEventUnderMain.jsp").forward(request, response);
             }
+
 //            } else if (action.equals("sectionCreated")) {
 //                Boolean success = spm.createSectionsUnderProperty(request);
 //                request.setAttribute("username", currentUser);
@@ -364,7 +500,11 @@ public class BackPropertyController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(BackPropertyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -378,7 +518,11 @@ public class BackPropertyController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(BackPropertyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
